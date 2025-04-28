@@ -1,0 +1,111 @@
+###################################
+# Cosmic Archive Deposit
+###################################
+
+d_cosmic_archive = {
+	icon = d_ancient_data_cache
+	time = 90
+	
+	is_for_colonizeable = yes
+	
+	category = deposit_cat_rare
+	
+	resources = {
+		category = planet_deposits
+		produces = {
+			physics_research = 2
+			society_research = 2
+			engineering_research = 2
+		}
+	}
+	
+	planet_modifier = {
+		planet_researchers_produces_mult = 0.10
+	}
+	
+	triggered_planet_modifier = {
+		potential = {
+			has_deposit_flag = cosmic_archive_activated
+		}
+		modifier = {
+			planet_researchers_physics_research_produces_mult = 0.15
+			planet_researchers_society_research_produces_mult = 0.10
+			planet_researchers_engineering_research_produces_mult = 0.10
+		}
+	}
+	
+	drop_weight = {
+		weight = 0
+	}
+}
+
+# Remnants of a dismantled Cosmic Archive - player chose to abandon it
+d_cosmic_archive_remnants = {
+	icon = d_engineer_2
+	time = 30
+	
+	is_for_colonizeable = yes
+	
+	category = deposit_cat_rare
+	
+	resources = {
+		category = planet_deposits
+		produces = {
+			physics_research = 1
+			society_research = 1
+			engineering_research = 1
+		}
+	}
+	
+	drop_weight = {
+		weight = 0
+	}
+}
+
+# Dormant Cosmic Archive - player safely shut down after protocols triggered
+d_cosmic_archive_dormant = {
+	icon = d_ancient_data_cache
+	time = 60
+	
+	is_for_colonizeable = yes
+	
+	category = deposit_cat_rare
+	
+	resources = {
+		category = planet_deposits
+		produces = {
+			physics_research = 1
+			society_research = 1
+			engineering_research = 1
+		}
+	}
+	
+	planet_modifier = {
+		planet_researchers_produces_mult = 0.05
+	}
+	
+	drop_weight = {
+		weight = 0
+	}
+}
+
+# Damaged Cosmic Archive - result of failed protocol containment
+d_cosmic_archive_damaged = {
+	icon = d_ruined_buildings
+	time = 45
+	
+	is_for_colonizeable = yes
+	
+	category = deposit_cat_rare
+	
+	resources = {
+		category = planet_deposits
+		produces = {
+			physics_research = 1
+		}
+	}
+	
+	drop_weight = {
+		weight = 0
+	}
+}

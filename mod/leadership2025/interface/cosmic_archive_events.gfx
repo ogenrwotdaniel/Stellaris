@@ -1,0 +1,129 @@
+spriteTypes = {
+	# Cosmic Archive Discovery
+	spriteType = {
+		name = "GFX_evt_cosmic_archive_discovery"
+		texturefile = "gfx/event_pictures/cosmic_archive_discovery.dds"
+		masking_texture = "gfx/interface/situation_log/event_mask.dds"
+		alwaystransparent = yes
+	}
+	
+	# Archive First Signal
+	spriteType = {
+		name = "GFX_evt_cosmic_archive_first_signal"
+		texturefile = "gfx/event_pictures/cosmic_archive_first_signal.dds"
+		masking_texture = "gfx/interface/situation_log/event_mask.dds"
+		alwaystransparent = yes
+	}
+	
+	# Archive Hidden Protocols
+	spriteType = {
+		name = "GFX_evt_cosmic_archive_protocols"
+		texturefile = "gfx/event_pictures/cosmic_archive_protocols.dds"
+		masking_texture = "gfx/interface/situation_log/event_mask.dds"
+		alwaystransparent = yes
+	}
+	
+	# Archive Activation - Safe
+	spriteType = {
+		name = "GFX_evt_cosmic_archive_activation_safe"
+		texturefile = "gfx/event_pictures/cosmic_archive_activation_safe.dds"
+		masking_texture = "gfx/interface/situation_log/event_mask.dds"
+		alwaystransparent = yes
+	}
+	
+	# Archive Activation - Risky
+	spriteType = {
+		name = "GFX_evt_cosmic_archive_activation_risky"
+		texturefile = "gfx/event_pictures/cosmic_archive_activation_risky.dds"
+		masking_texture = "gfx/interface/situation_log/event_mask.dds"
+		alwaystransparent = yes
+	}
+	
+	# Archive Malfunction
+	spriteType = {
+		name = "GFX_evt_cosmic_archive_malfunction"
+		texturefile = "gfx/event_pictures/cosmic_archive_malfunction.dds"
+		masking_texture = "gfx/interface/situation_log/event_mask.dds"
+		alwaystransparent = yes
+	}
+	
+	# Archive Pulse
+	spriteType = {
+		name = "GFX_evt_cosmic_archive_pulse"
+		texturefile = "gfx/event_pictures/cosmic_archive_pulse.dds"
+		masking_texture = "gfx/interface/situation_log/event_mask.dds"
+		alwaystransparent = yes
+	}
+	
+	# Archive Echoes
+	spriteType = {
+		name = "GFX_evt_cosmic_archive_echoes"
+		texturefile = "gfx/event_pictures/cosmic_archive_echoes.dds"
+		masking_texture = "gfx/interface/situation_log/event_mask.dds"
+		alwaystransparent = yes
+	}
+	
+	# Guardian Awakening
+	spriteType = {
+		name = "GFX_evt_cosmic_archive_guardian_awakening"
+		texturefile = "gfx/event_pictures/cosmic_archive_guardian_awakening.dds"
+		masking_texture = "gfx/interface/situation_log/event_mask.dds"
+		alwaystransparent = yes
+	}
+	
+	# Guardian Test
+	spriteType = {
+		name = "GFX_evt_cosmic_archive_guardian_test"
+		texturefile = "gfx/event_pictures/cosmic_archive_guardian_test.dds"
+		masking_texture = "gfx/interface/situation_log/event_mask.dds"
+		alwaystransparent = yes
+	}
+	
+	# Guardian Military Confrontation
+	spriteType = {
+		name = "GFX_evt_cosmic_archive_guardian_military"
+		texturefile = "gfx/event_pictures/cosmic_archive_guardian_military.dds"
+		masking_texture = "gfx/interface/situation_log/event_mask.dds"
+		alwaystransparent = yes
+	}
+	
+	# Guardian Diplomatic Resolution
+	spriteType = {
+		name = "GFX_evt_cosmic_archive_guardian_diplomatic"
+		texturefile = "gfx/event_pictures/cosmic_archive_guardian_diplomatic.dds"
+		masking_texture = "gfx/interface/situation_log/event_mask.dds"
+		alwaystransparent = yes
+	}
+	
+	# Archive Aftermath - Military Victory
+	spriteType = {
+		name = "GFX_evt_cosmic_archive_military_victory"
+		texturefile = "gfx/event_pictures/cosmic_archive_military_victory.dds"
+		masking_texture = "gfx/interface/situation_log/event_mask.dds"
+		alwaystransparent = yes
+	}
+	
+	# Archive Aftermath - Diplomatic Success
+	spriteType = {
+		name = "GFX_evt_cosmic_archive_diplomatic_success"
+		texturefile = "gfx/event_pictures/cosmic_archive_diplomatic_success.dds"
+		masking_texture = "gfx/interface/situation_log/event_mask.dds"
+		alwaystransparent = yes
+	}
+	
+	# Dreams and Visions
+	spriteType = {
+		name = "GFX_evt_cosmic_archive_dreams"
+		texturefile = "gfx/event_pictures/cosmic_archive_dreams.dds"
+		masking_texture = "gfx/interface/situation_log/event_mask.dds"
+		alwaystransparent = yes
+	}
+	
+	# Final Warning
+	spriteType = {
+		name = "GFX_evt_cosmic_archive_final_warning"
+		texturefile = "gfx/event_pictures/cosmic_archive_final_warning.dds"
+		masking_texture = "gfx/interface/situation_log/event_mask.dds"
+		alwaystransparent = yes
+	}
+}

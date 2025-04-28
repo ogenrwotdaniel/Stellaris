@@ -1,0 +1,195 @@
+l_english:
+ # Deposit
+ d_cosmic_archive:0 "Cosmic Archive"
+ d_cosmic_archive_desc:0 "This mysterious repository of ancient knowledge contains vast stores of scientific data from an unknown precursor civilization. Researchers are eager to study its contents."
+ d_cosmic_archive_remnants:0 "Cosmic Archive Remnants"
+ d_cosmic_archive_remnants_desc:0 "The remains of a dismantled Cosmic Archive. Though most of its systems have been harvested for resources, a small portion of its data storage still functions."
+ d_cosmic_archive_dormant:0 "Dormant Cosmic Archive"
+ d_cosmic_archive_dormant_desc:0 "This Cosmic Archive has been safely deactivated after triggering potentially dangerous protocols. It retains some basic functionality but its advanced features are locked down."
+ d_cosmic_archive_damaged:0 "Damaged Cosmic Archive"
+ d_cosmic_archive_damaged_desc:0 "The remains of a Cosmic Archive that experienced a catastrophic failure during research. Most of its systems are irreparably damaged, but some data can still be salvaged."
+ 
+ # Planetary Decisions
+ cosmic_archive_interaction:0 "Interact with Cosmic Archive"
+ cosmic_archive_interaction_desc:0 "The Cosmic Archive found on this planet appears dormant but functional. We can choose to investigate its full capabilities or dismantle it for immediate resources."
+ cosmic_archive_interaction_tooltip:0 "Investigating the Cosmic Archive will unlock its potential but may trigger hidden protocols. Dismantling it will provide immediate resources but permanently lose access to its full capabilities."
+ 
+ # Phase 2 Protocol Decisions
+ cosmic_archive_enhance_technologies:0 "Enhance Technologies"
+ cosmic_archive_enhance_technologies_desc:0 "Channel the archive's hidden protocols into enhancing our empire's research capabilities. This provides a modest but permanent boost to our research speed, with a lower risk of triggering defensive mechanisms."
+ cosmic_archive_enhance_technologies_tooltip:0 "Gain a permanent §G+5%§! bonus to research speed in all categories. This option has a moderate risk of triggering dangerous protocols."
+ 
+ cosmic_archive_stabilize_relic:0 "Stabilize the Archive"
+ cosmic_archive_stabilize_relic_desc:0 "Invest significant resources to contain and stabilize the potentially dangerous protocols within the Cosmic Archive. This provides smaller benefits but is much safer."
+ cosmic_archive_stabilize_relic_tooltip:0 "Spend §Y100§! §SInfluence§! and §Y50§! §SZro§! to stabilize the archive. Gain a permanent §G+3%§! bonus to research speed and §G+3%§! to pop happiness. This option has a very low risk of triggering dangerous protocols."
+ 
+ cosmic_archive_risk_it_all:0 "Risk It All"
+ cosmic_archive_risk_it_all_desc:0 "Allow the archive's protocols to unfold with minimal intervention. This approach could unlock extraordinary benefits, but also risks awakening something far more dangerous."
+ cosmic_archive_risk_it_all_tooltip:0 "Gain a temporary §G+10%§! bonus to all research speed and §G+1§! research alternative for 5 years. This option has a high risk of triggering dangerous protocols, but could lead to the greatest discoveries."
+ 
+ # Events
+ cosmic_archive.3.name:0 "Ancient Cosmic Archive Discovered"
+ cosmic_archive.3.desc:0 "Our survey team has made a remarkable discovery on [FROM.GetName] - a previously undetected repository of scientific knowledge, which our experts are calling a 'Cosmic Archive.' This mysterious facility appears to have been deliberately hidden, only revealing itself after our thorough planetary survey.\n\nThis archive contains what appears to be scientific data spanning millennia, stored in a format that has remained intact and accessible. Initial assessments suggest that research conducted here will be significantly more efficient, and our scientists are eager to begin studying its contents."
+ cosmic_archive.3.a:0 "This could advance our understanding considerably."
+ 
+ # Pulse Events
+ cosmic_archive.4.name:0 "Cosmic Archive Energy Fluctuation"
+ cosmic_archive.4.desc:0 "The Cosmic Archive on [archive_pulse_planet.GetName] is experiencing an unusual surge of activity. Mysterious energies are emanating from the ancient structure, causing its systems to resonate in ways our scientists don't fully understand.\n\nThese energy patterns have temporarily reconfigured themselves into useful resources. Our scientists recommend we harness this unexpected bounty while the fluctuation lasts."
+ cosmic_archive.4.a:0 "Convert the energy into credits."
+ cosmic_archive.4.b:0 "Extract mineral compounds."
+ cosmic_archive.4.c:0 "Refine the energy into alloys."
+ 
+ # Interaction Events
+ cosmic_archive.10.name:0 "The Cosmic Archive"
+ cosmic_archive.10.desc:0 "Now that we have established a colony on [archive_planet.GetName], our scientists have gained direct access to the Cosmic Archive. The ancient structure is clearly designed for interaction, with control interfaces that respond to our presence.\n\nOur research team has presented two options: we can either investigate the archive further, potentially unlocking its full capabilities but risking unknown dangers, or we can dismantle it for immediate resources while avoiding any hidden risks."
+ cosmic_archive.10.a:0 "Investigate the archive's secrets."
+ cosmic_archive.10.b:0 "Dismantle it for immediate resources."
+
+ # Archive Unveiled - Phase 1: The First Signal
+ cosmic_archive.11.name:0 "The First Signal"
+ cosmic_archive.11.desc:0 "As our scientists begin their initial examination of the Cosmic Archive on [archive_planet.GetName], the ancient structure suddenly emits a series of faint, rhythmic signals. These patterns appear to be neither random nor entirely predictable, suggesting some form of encoded information or dormant protocol.\n\nOur researchers have detected what appears to be a dormant intelligence embedded within the archive's core systems. Whether this represents an advanced AI, a repository of consciousness, or merely a sophisticated automated response system remains unclear. What is evident, however, is that the archive is responding to our presence in ways that hint at far greater complexity than initially assumed.\n\nThe signals have already begun to influence our research methodologies, accelerating our understanding across multiple scientific disciplines. Our scientists suggest two approaches moving forward."
+ cosmic_archive.11.a:0 "Proceed cautiously with standard research protocols."
+ cosmic_archive.11.b:0 "Conduct intensive analysis to accelerate our understanding."
+ 
+ # Archive Unveiled - Phase 2: The Hidden Protocol
+ cosmic_archive.12.name:0 "Hidden Protocols Surface"
+ cosmic_archive.12.desc:0 "After several weeks of research, our scientists have made a significant breakthrough in understanding the Cosmic Archive. Deep within its systems, they've discovered complex hidden protocols that appear to be awakening in response to our continued interaction.\n\nThese protocols are unlike any technology we've encountered before. They seem designed to interface directly with our own research networks, with the potential to dramatically enhance our scientific capabilities. However, they also exhibit behaviors that suggest sophisticated self-preservation mechanisms.\n\nOur research team has prepared a detailed report outlining several possible approaches to handling these emerging protocols. Each comes with its own potential benefits and risks."
+ cosmic_archive.12.a:0 "We must consider our options carefully."
+ 
+ cosmic_archive.30.name:0 "The Hidden Protocol"
+ cosmic_archive.30.desc:0 "The hidden protocols within the Cosmic Archive on [archive_protocol_planet.GetName] have fully surfaced. Their design suggests they were created as an adaptive interface between the archive and whatever civilization might discover it.\n\nOur scientists have developed three distinct approaches for proceeding:\n\n§YEnhance Technologies§!: Focus the protocols on enhancing our research capabilities, gaining a modest but permanent research bonus across all fields. This approach bears some risk but is relatively balanced.\n\n§YStabilize the Relic§!: Invest significant resources to contain and stabilize the potentially dangerous protocols. This is the safest option but offers smaller benefits.\n\n§YRisk It All§!: Allow the protocols to unfold with minimal intervention, potentially unlocking extraordinary benefits but risking awakening something far more dangerous.\n\nThis decision must be made through a planetary decision on [archive_protocol_planet.GetName]."
+ cosmic_archive.30.a:0 "We will choose our path forward carefully."
+ 
+ cosmic_archive.31.name:0 "Enhanced Technologies"
+ cosmic_archive.31.desc:0 "Our research team has successfully channeled the archive's protocols into enhancing our empire's scientific capabilities. By carefully modulating the flow of information between the archive and our research networks, we've established a stable connection that accelerates our understanding across all scientific disciplines.\n\nWhile some of the archive's more advanced functions remain inaccessible, this approach has yielded a permanent enhancement to our research capabilities without unduly risking the activation of defensive measures. The protocols appear to be functioning within expected parameters, though our scientists remain vigilant for any signs of unexpected behavior."
+ cosmic_archive.31.a:0 "A prudent choice with immediate benefits."
+ 
+ cosmic_archive.32.name:0 "Archive Stabilized"
+ cosmic_archive.32.desc:0 "Using the rare Zro substance and considerable influence, our scientists have successfully stabilized the Cosmic Archive's emerging protocols. The psionic properties of Zro proved instrumental in creating a containment matrix that allows for controlled interaction with the archive while suppressing its more unpredictable aspects.\n\nWhile this approach has limited our access to some of the archive's more advanced capabilities, it has created an exceptionally stable interface that provides consistent, if modest, benefits. The stabilization process has also had the unexpected effect of creating a subtle harmonic resonance that appears to positively influence the well-being of our population."
+ cosmic_archive.32.a:0 "Safety and stability are their own rewards."
+ 
+ cosmic_archive.33.name:0 "Protocols Unleashed"
+ cosmic_archive.33.desc:0 "We have chosen to allow the archive's protocols to unfold with minimal intervention. Almost immediately, the ancient systems began to integrate with our research networks at an unprecedented rate, granting our scientists access to methodologies and perspectives that dramatically accelerate our technological progress.\n\nHowever, this approach is not without risk. Our monitoring systems have detected unusual patterns that suggest the protocols may be evolving beyond our initial understanding. Whether this represents a previously dormant functionality or something more concerning remains to be seen.\n\nFor now, the benefits are substantial, including the ability to pursue multiple research paths simultaneously that were previously beyond our capabilities."
+ cosmic_archive.33.a:0 "The rewards outweigh the risks... for now."
+ 
+ cosmic_archive.34.name:0 "Deepening Connection"
+ cosmic_archive.34.desc:0 "The integration between our research networks and the unleashed protocols of the Cosmic Archive on [archive_risky_planet.GetName] continues to deepen. Our scientists report that the archive seems to be adapting to our specific research interests in ways that suggest a level of intelligence that transcends mere programming.\n\nOccasionally, our researchers have experienced what they describe as 'insights' that seem to originate from outside their normal thought processes. These insights have led to several research breakthroughs, but some scientists are concerned about the nature of this influence.\n\nStrange energy fluctuations are becoming more frequent within the archive, and some systems are operating in ways we cannot fully explain. We stand at a critical juncture in our interaction with this ancient technology."
+ cosmic_archive.34.a:0 "Continue to allow the connection to develop."
+ 
+ # Protocol Activation Events
+ cosmic_archive.20.name:0 "Hidden Protocols Activated"
+ cosmic_archive.20.desc:0 "Our attempts to access deeper layers of the Cosmic Archive have triggered previously dormant security protocols. The archive has initiated a series of defensive measures, causing widespread disruption across [protocol_incident_planet.GetName].\n\nPower fluctuations are affecting planetary infrastructure, and some of our researchers report experiencing strange visions or compulsions. We need to take immediate action before the situation deteriorates further."
+ cosmic_archive.20.a:0 "Attempt to contain the incident."
+ cosmic_archive.20.b:0 "Shut down the archive immediately."
+ 
+ cosmic_archive.21.name:0 "Protocols Contained"
+ cosmic_archive.21.desc:0 "Through quick action and innovative solutions, our research team has successfully contained the archive's defensive protocols. The disruptions across [protocol_incident_planet.GetName] are subsiding, and control systems have been stabilized.\n\nThis experience has actually provided valuable insights into the archive's operational parameters, potentially making future research safer and more productive."
+ cosmic_archive.21.a:0 "Resume research with caution."
+ 
+ cosmic_archive.22.name:0 "Archive Breakdown"
+ cosmic_archive.22.desc:0 "Despite our best efforts, the archive's defensive protocols have overwhelmed our containment measures. Critical systems within the Cosmic Archive have begun to break down, causing cascading failures throughout the structure.\n\nTo prevent further damage to [protocol_incident_planet.GetName], we have no choice but to permanently shut down the archive. Much of its knowledge will be lost, but we may still salvage some components and data."
+ cosmic_archive.22.a:0 "Salvage what we can from the ruins."
+ 
+ # Successful Culmination Event
+ cosmic_archive.13.name:0 "Archive Fully Unlocked"
+ cosmic_archive.13.desc:0 "After extensive research and careful manipulation of the archive's systems, our scientists have successfully unlocked the full potential of the Cosmic Archive. The wealth of knowledge now accessible to us represents one of the greatest scientific treasures ever discovered.\n\nThe archive has begun integrating with our research networks, permanently enhancing our empire's scientific capabilities and offering insights that will benefit our civilization for generations to come."
+ cosmic_archive.13.a:0 "A momentous achievement for our civilization."
+ 
+ # Phase 3: Echoes of the Past Events
+ cosmic_archive.40.name:0 "Echoes from the Archive"
+ cosmic_archive.40.desc:0 "Over the past few days, scientists across multiple research stations have reported unusual data patterns in systems connected to the Cosmic Archive. These patterns manifest as brief, almost imperceptible echoes in our communications networks, mathematical anomalies in research equations, and unexplained energy signatures.\n\nOur chief researchers have compiled these incidents and identified a disturbing pattern: the frequency and intensity of these anomalies is steadily increasing. More concerning still, the patterns seem to contain embedded sequences that some of our more psionically sensitive researchers describe as 'whispers' or 'warnings.'\n\nWhether this represents some form of automated defense mechanism or something else entirely remains unclear."
+ cosmic_archive.40.a:0 "Monitor these patterns carefully."
+ 
+ cosmic_archive.41.name:0 "Researcher Reports"
+ cosmic_archive.41.desc:0 "Several of our leading scientists studying the Cosmic Archive have independently submitted reports of unusual phenomena occurring during their research. They describe experiencing moments of heightened insight followed by disturbing visions that seem unrelated to their work.\n\nThese episodes have yielded substantial research breakthroughs, but the scientists involved report feeling increasingly uneasy about the source of these insights. Some have begun to theorize that the archive may be attempting to communicate directly through unconventional means.\n\nOur research director has proposed two potential responses: we can collect and analyze the data conservatively, or we can actively encourage researchers to pursue these insights despite the potential risks."
+ cosmic_archive.41.a:0 "Gather data conservatively."
+ cosmic_archive.41.b:0 "Actively pursue these insights."
+ 
+ cosmic_archive.42.name:0 "Energy Fluctuations"
+ cosmic_archive.42.desc:0 "A series of unexplained energy fluctuations has begun affecting power systems throughout our empire. These fluctuations appear to originate from the Cosmic Archive but propagate through our communication and research networks to distant systems.\n\nEngineers report that the energy patterns match no known technological signature in our databases, instead exhibiting qualities that suggest a deliberate modulation - as if attempting to establish a resonance pattern across multiple systems.\n\nWhile the immediate impact is a minor drain on our energy resources, the concerning aspect is that these fluctuations are growing both in frequency and intensity."
+ cosmic_archive.42.a:0 "Compensate for the energy drain."
+ 
+ cosmic_archive.43.name:0 "Troubling Dreams"
+ cosmic_archive.43.desc:0 "Reports are flooding in from colonies across our empire of citizens experiencing similar dreams - all featuring strange, geometric structures and a sense of an ancient consciousness stirring. The highest concentration of these reports comes from planets housing Cosmic Archives or those with strong research connections to them.\n\nEven more disturbing, several citizens affected by these dreams have been found dead in their sleep, with neural scans showing patterns consistent with massive synaptic overload. Whatever is causing these dreams appears to be attempting to transmit information at a rate and density that organic minds cannot safely process.\n\nPsychologists and xenobiologists alike are baffled by this phenomenon, though some are beginning to suggest these may not be dreams at all, but rather attempted communications."
+ cosmic_archive.43.a:0 "Issue an empire-wide warning about these dreams."
+ 
+ cosmic_archive.44.name:0 "Final Warning"
+ cosmic_archive.44.desc:0 "A massive, synchronized burst of energy has erupted from all Cosmic Archives across our empire, overriding every communication channel with a single, crystalline message that translates across all known languages. The message is brief but chilling:\n\n\"GUARDIAN AWAKENS. CYCLE REPEATS. PREPARE OR PERISH.\"\n\nIn the wake of this message, our scientists report that all Cosmic Archives have entered a new state of activity. Deep scans reveal movement within sections previously thought to be solid material. Something is stirring within the very structure of the archives themselves.\n\nOur experts believe we have two options: allow events to unfold and prepare our defenses, or attempt an emergency shutdown of all archives to potentially prevent whatever is about to occur."
+ cosmic_archive.44.a:0 "Prepare our defenses."
+ cosmic_archive.44.b:0 "Attempt emergency shutdown of all archives."
+ 
+ cosmic_archive.45.name:0 "Archive Disruption"
+ cosmic_archive.45.desc:0 "The Cosmic Archive on this planet has begun emitting powerful disruptive pulses that are interfering with all planetary systems. Power grids are experiencing cascading failures, communication networks are filled with indecipherable noise, and citizens report headaches and disorientation.\n\nMore concerning, several facility staff have begun acting erratically, claiming to hear voices commanding them to 'prepare for arrival.' Security personnel have been forced to restrain several researchers who attempted to sabotage containment measures.\n\nThe planet's stability is severely impacted, and if the disruption continues, more serious consequences may follow."
+ cosmic_archive.45.a:0 "We must weather this storm."
+ 
+ cosmic_archive.46.name:0 "Crisis Averted"
+ cosmic_archive.46.desc:0 "Through a combination of decisive action, technical ingenuity, and perhaps a measure of luck, our scientists have successfully implemented an emergency shutdown protocol across all Cosmic Archives in our empire. The process required precisely timed interventions that severed the apparent network connection between archives.\n\nAs the shutdown sequence completed, a final message briefly appeared across all terminals:\n\n\"CYCLE POSTPONED. NOT FORGOTTEN.\"\n\nThe archives have now entered a dormant state, with many of their advanced functions locked away behind impenetrable barriers. They still provide some research benefits, but the dangerous intelligence that seemed to be awakening appears to be contained... for now."
+ cosmic_archive.46.a:0 "A narrow escape."
+ 
+ cosmic_archive.50.name:0 "The Guardian Awakens"
+ cosmic_archive.50.desc:0 "In a synchronized event across all worlds containing Cosmic Archives, the ancient structures have begun a dramatic transformation. Their previously solid forms are shifting and reconfiguring, revealing sophisticated machinery and pulsing energy conduits that had been hidden within seemingly inert material.\n\nFrom the center of each archive emerges a holographic projection of a being unlike any species in our records. Its form shifts between different geometric configurations as it speaks with a voice that resonates directly in the minds of all who hear it:\n\n\"I am the Guardian of Knowledge, tasked with testing those who would seek the wisdom of the Precursors. Your civilization has awakened multiple archives, demonstrating both ambition and recklessness. Now you must prove your worthiness or face extinction.\"\n\nAcross our empire, systems begin to falter as the Guardian exerts its influence. The test has begun."
+ cosmic_archive.50.a:0 "We must face this challenge."
+ 
+ # New Crisis Events
+ cosmic_archive.51.name:0 "Distant Disruption"
+ cosmic_archive.51.desc:0 "Our deep space monitoring stations have detected an unusual phenomenon emanating from a distant empire. Massive energy surges and quantum disruptions suggest something of unprecedented power has manifested within their territory.\n\nOur scientists analyzing these readings believe the disturbance is connected to the Cosmic Archives, as similar (though much smaller) energy signatures have been observed in our own research of these ancient repositories.\n\nReports from our intelligence networks indicate that the affected empire is experiencing widespread system failures and unusual phenomena. Whatever has awakened there appears to be testing them - and given the interconnected nature of the archives across the galaxy, we may soon face similar challenges."
+ cosmic_archive.51.a:0 "Prepare contingency plans."
+ 
+ cosmic_archive.52.name:0 "The Guardian's Test"
+ cosmic_archive.52.desc:0 "The entity calling itself the Guardian of Knowledge has begun its test of our civilization. Through a series of encrypted transmissions directly into our primary research facilities, it has issued a set of challenges designed to assess our technological aptitude, ethical framework, and cultural resilience.\n\nEach challenge seems designed to test not just our capabilities, but our wisdom in applying them. The Guardian makes it clear that it has witnessed countless civilizations rise and fall, many destroyed by their own ambition.\n\n\"The knowledge contained within the archives is dangerous,\" it explains. \"Not because of its power, but because of how easily it can lead to imbalance. Those who would access it must demonstrate not just intelligence, but wisdom.\""
+ cosmic_archive.52.a:0 "We will prove ourselves worthy."
+ 
+ # Guardian Crisis Related Custom Tooltips
+ cosmic_archive_guardian_awakened_tooltip:0 "A powerful entity has awakened from the Cosmic Archives. This begins a multi-stage mid-game crisis that will test your empire's capabilities."
+ cosmic_archive_guardian_awareness_tooltip:0 "Though your empire didn't directly trigger the Guardian's awakening, you will still be affected by its influence due to your own interaction with Cosmic Archives."
+ cosmic_archive_guardian_test_tooltip:0 "The Guardian's test will involve several challenges that determine whether your civilization is deemed worthy to access the full knowledge of the Precursors."
+ cosmic_archive_multiple_archives_trigger_tooltip:0 "If too many Cosmic Archives are activated across the galaxy, it may trigger the Guardian's awakening."
+ cosmic_archive_risky_path_warning_tooltip:0 "Taking the Risk It All path significantly increases the chance of awakening the Guardian prematurely."
+ 
+ # Guardian Entity
+ NAME_COSMIC_ARCHIVE_GUARDIAN:0 "Cosmic Sentinel"
+ NAME_COSMIC_ARCHIVE_GUARDIAN_FLEET:0 "Cosmic Archives Guardian"
+ NAME_COSMIC_ARCHIVE_GUARDIAN_COUNTRY:0 "Cosmic Archives Protectorate"
+ 
+ # Guardian Scaling Modifier
+ cosmic_archive_guardian_strength:0 "Guardian's Awakened Power"
+ cosmic_archive_guardian_strength_desc:0 "The Guardian's power scales with the mid-game difficulty, ensuring it remains an appropriate challenge regardless of game settings."
+ 
+ # Guardian Crisis Events
+ cosmic_archive_crisis.0:0 "Guardian Crisis Initialization"
+ cosmic_archive_crisis.1:0 "Archive Activation Tracked"
+ cosmic_archive_crisis.2:0 "Guardian Awakening Check"
+ cosmic_archive_crisis.10:0 "Guardian Entity Spawns"
+ cosmic_archive_crisis.11:0 "Guardian Targets System"
+ cosmic_archive_crisis.12:0 "Guardian Behavior Pattern"
+ 
+ # Guardian Crisis Tooltips
+ cosmic_archive_guardian_spawning_tooltip:0 "The Guardian will spawn in a system containing or adjacent to a Cosmic Archive, preferring systems with 'Risk It All' archives."
+ cosmic_archive_guardian_targeting_tooltip:0 "The Guardian entity targets resource-rich systems, starbases, and systems containing active Cosmic Archives."
+ cosmic_archive_guardian_difficulty_scaling_tooltip:0 "The Guardian's power scales with the mid-game crisis difficulty settings."
+ 
+ # Guardian's Wrath Modifier
+ cosmic_archives_guardian_wrath:0 "Guardian's Wrath"
+ cosmic_archives_guardian_wrath_desc:0 "The awakened Guardian of the Cosmic Archive is exerting its influence across your empire, disrupting systems and causing widespread chaos as part of its 'test' of your civilization's worthiness."
+ 
+ cosmic_archives_guardian_presence:0 "Guardian's Influence"
+ cosmic_archives_guardian_presence_desc:0 "Though your empire didn't directly trigger the Guardian's awakening, your own interaction with Cosmic Archives has made you susceptible to its disruptive influence."
+
+ # Other Related Modifiers
+ cosmic_archive_research_bonus:0 "Cosmic Archive Integration"
+ cosmic_archive_research_bonus_desc:0 "The knowledge from the Cosmic Archive has been integrated into your research networks, permanently enhancing your empire's scientific capabilities."
+ 
+ cosmic_archive_enhanced_tech:0 "Enhanced Technologies"
+ cosmic_archive_enhanced_tech_desc:0 "The protocols from the Cosmic Archive have been channeled to enhance your empire's research capabilities."
+ 
+ cosmic_archive_stabilized:0 "Stabilized Cosmic Archive"
+ cosmic_archive_stabilized_desc:0 "The potentially dangerous protocols within the Cosmic Archive have been contained and stabilized, providing modest but safer benefits."
+ 
+ cosmic_archive_risk_bonus:0 "Unleashed Protocols"
+ cosmic_archive_risk_bonus_desc:0 "You have allowed the Cosmic Archive's protocols to unfold with minimal intervention, granting significant but temporary research benefits."
+ 
+ cosmic_archive_energy_drain:0 "Archive Energy Drain"
+ cosmic_archive_energy_drain_desc:0 "Mysterious energy fluctuations from the Cosmic Archive are draining your empire's power grid."
+ 
+ cosmic_archive_planetary_disruption:0 "Archive Disruption"
+ cosmic_archive_planetary_disruption_desc:0 "The Cosmic Archive on this planet is emitting disruptive pulses that are interfering with planetary systems and causing unrest among the population."

@@ -1,0 +1,293 @@
+# Cosmic Archive Special Projects
+# This file defines all the special projects used in the Cosmic Archive mod with balanced resource costs
+
+# Initial investigation project after finding the Archive
+cosmic_archive_investigation = {
+	icon = "gfx/interface/icons/situation_log/situation_log_quest.dds"
+	picture = GFX_evt_ancient_ruins
+	sound = "ambient/special_projects/special_project_hum.wav"
+	
+	event_scope = planet_event
+	
+	requirements = {
+		shipclass_science_ship = 1
+		leader = scientist
+	}
+	
+	abort_trigger = {
+		root = {
+			NOR = {
+				has_deposit = d_cosmic_archive_dormant
+				has_deposit = d_cosmic_archive_active_phase1
+			}
+		}
+	}
+	
+	on_success = {
+		country_event = { id = cosmic_archive.100 }
+	}
+	
+	on_fail = {
+		country_event = { id = cosmic_archive.101 }
+	}
+	
+	# Moderate time investment with small resource cost
+	days_to_research = 60
+	
+	resources = {
+		category = special_projects
+		cost = {
+			energy = 800
+			physics_research = 400
+			society_research = 300
+			engineering_research = 300
+		}
+	}
+}
+
+# Enhanced Technologies path project (Phase 2 option 1)
+cosmic_archive_enhanced_tech_project = {
+	icon = "gfx/interface/icons/situation_log/situation_log_tech.dds"
+	picture = GFX_evt_physics_research
+	sound = "ambient/special_projects/special_project_techno.wav"
+	
+	event_scope = planet_event
+	
+	requirements = {
+		shipclass_science_ship = 1
+		leader = scientist
+		skill > 2
+	}
+	
+	abort_trigger = {
+		root = {
+			NOR = {
+				has_deposit = d_cosmic_archive_active_phase1
+			}
+		}
+	}
+	
+	on_success = {
+		country_event = { id = cosmic_archive.200 }
+	}
+	
+	on_fail = {
+		country_event = { id = cosmic_archive.210 }
+	}
+	
+	# Moderate time investment with moderate resource cost focusing on research
+	days_to_research = 90
+	
+	resources = {
+		category = special_projects
+		cost = {
+			energy = 1500
+			physics_research = 1000
+			society_research = 500
+			engineering_research = 800
+			rare_crystals = 50
+		}
+	}
+}
+
+# Stabilized Archive path project (Phase 2 option 2)
+cosmic_archive_stabilization_project = {
+	icon = "gfx/interface/icons/situation_log/situation_log_eco.dds"
+	picture = GFX_evt_society_research
+	sound = "ambient/special_projects/special_project_hum.wav"
+	
+	event_scope = planet_event
+	
+	requirements = {
+		shipclass_science_ship = 1
+		leader = scientist
+	}
+	
+	abort_trigger = {
+		root = {
+			NOR = {
+				has_deposit = d_cosmic_archive_active_phase1
+			}
+		}
+	}
+	
+	on_success = {
+		country_event = { id = cosmic_archive.220 }
+	}
+	
+	on_fail = {
+		country_event = { id = cosmic_archive.230 }
+	}
+	
+	# Shorter time but higher unity and influence cost
+	days_to_research = 60
+	
+	resources = {
+		category = special_projects
+		cost = {
+			energy = 1200
+			physics_research = 600
+			society_research = 800
+			engineering_research = 400
+			unity = 500
+			influence = 100
+		}
+	}
+}
+
+# Risk It All path project (Phase 2 option 3) - less cost but higher risk
+cosmic_archive_risky_protocols_project = {
+	icon = "gfx/interface/icons/situation_log/situation_log_danger.dds"
+	picture = GFX_evt_exploding_ship
+	sound = "ambient/special_projects/special_project_techno_sinister.wav"
+	
+	event_scope = planet_event
+	
+	requirements = {
+		shipclass_science_ship = 1
+		leader = scientist
+		skill > 3
+	}
+	
+	abort_trigger = {
+		root = {
+			NOR = {
+				has_deposit = d_cosmic_archive_active_phase1
+			}
+		}
+	}
+	
+	on_success = {
+		country_event = { id = cosmic_archive.240 }
+	}
+	
+	on_fail = {
+		country_event = { id = cosmic_archive.250 }
+	}
+	
+	# Quick time but high exotic resources cost
+	days_to_research = 45
+	
+	resources = {
+		category = special_projects
+		cost = {
+			energy = 2000
+			physics_research = 800
+			engineering_research = 800
+			exotic_gases = 50
+			volatile_motes = 50
+		}
+	}
+}
+
+# Military approach to the guardian
+cosmic_archive_military_containment = {
+	icon = "gfx/interface/icons/situation_log/situation_log_fleet.dds"
+	picture = GFX_evt_space_battle
+	sound = "ambient/special_projects/special_project_battle.wav"
+	
+	event_scope = country_event
+	
+	requirements = {
+		shipclass_military = 5
+		fleet_power > 10000
+	}
+	
+	on_success = {
+		country_event = { id = cosmic_archive.300 }
+	}
+	
+	# High alloy cost representing military preparation
+	days_to_research = 120
+	
+	resources = {
+		category = special_projects
+		cost = {
+			alloys = 1000
+			energy = 2000
+			engineering_research = 1000
+			volatile_motes = 100
+		}
+	}
+}
+
+# Diplomatic approach to the guardian
+cosmic_archive_peaceful_communication = {
+	icon = "gfx/interface/icons/situation_log/situation_log_communication.dds"
+	picture = GFX_evt_psionics
+	sound = "ambient/special_projects/special_project_chimes.wav"
+	
+	event_scope = country_event
+	
+	requirements = {
+		shipclass_science_ship = 1
+		leader = scientist
+		trait = leader_trait_expertise_psionics
+	}
+	
+	on_success = {
+		country_event = { id = cosmic_archive.310 }
+	}
+	
+	on_fail = {
+		country_event = { id = cosmic_archive.320 }
+	}
+	
+	# High society and unity cost representing diplomatic effort
+	days_to_research = 180
+	
+	resources = {
+		category = special_projects
+		cost = {
+			energy = 2000
+			society_research = 2000
+			unity = 1000
+			influence = 200
+			zro = 25
+		}
+	}
+}
+
+# Emergency containment for failed Risk path
+cosmic_archive_emergency_containment = {
+	icon = "gfx/interface/icons/situation_log/situation_log_emergency.dds"
+	picture = GFX_evt_ship_explosion
+	sound = "ambient/special_projects/special_project_alarm.wav"
+	
+	event_scope = planet_event
+	
+	requirements = {
+		shipclass_science_ship = 1
+		leader = scientist
+	}
+	
+	abort_trigger = {
+		root = {
+			NOR = {
+				has_deposit = d_cosmic_archive_damaged
+			}
+		}
+	}
+	
+	on_success = {
+		country_event = { id = cosmic_archive.260 }
+	}
+	
+	on_fail = {
+		country_event = { id = cosmic_archive.270 }
+	}
+	
+	# Short deadline with high emergency cost
+	days_to_research = 30
+	
+	resources = {
+		category = special_projects
+		cost = {
+			energy = 3000
+			alloys = 500
+			physics_research = 1000
+			engineering_research = 1000
+			exotic_gases = 100
+		}
+	}
+}

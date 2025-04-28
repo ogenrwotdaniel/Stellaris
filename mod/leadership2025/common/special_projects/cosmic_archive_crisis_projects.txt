@@ -1,0 +1,87 @@
+# Research projects to address the Guardian crisis
+
+# Diplomatic/Research Solution
+special_project = {
+	key = "COSMIC_GUARDIAN_RESEARCH_PROJECT"
+	event_chain = "cosmic_archive_crisis_chain"
+	cost = {
+		physics = 15000
+		society = 15000
+		engineering = 15000
+	}
+	timelimit = -1
+	researchable = no
+	
+	requirements = {
+		shipclass_science_ship = 1
+		leader = scientist
+		skill > 3
+	}
+	
+	on_success = {
+		owner = { country_event = { id = cosmic_archive_crisis.20 } }
+	}
+	
+	on_fail = {
+		owner = { country_event = { id = cosmic_archive_crisis.21 } }
+	}
+	
+	ai_weight = {
+		weight = 100
+		modifier = {
+			factor = 1.5
+			research_leader = {
+				has_trait = "leader_trait_expertise_psionics"
+			}
+		}
+		modifier = {
+			factor = 1.5
+			research_leader = {
+				has_trait = "leader_trait_expertise_field_manipulation"
+			}
+		}
+		modifier = {
+			factor = 1.2
+			research_leader = {
+				has_trait = "leader_trait_expertise_computing"
+			}
+		}
+		modifier = {
+			factor = 1.25
+			research_leader = {
+				has_trait = "leader_trait_maniacal"
+			}
+		}
+	}
+}
+
+# Alternative project with resource requirements
+special_project = {
+	key = "COSMIC_GUARDIAN_RESOURCE_RESEARCH"
+	event_chain = "cosmic_archive_crisis_chain"
+	cost = {
+		physics = 8000
+		society = 8000
+		engineering = 8000
+	}
+	timelimit = -1
+	researchable = no
+	
+	requirements = {
+		shipclass_science_ship = 1
+		leader = scientist
+		skill > 2
+	}
+	
+	on_success = {
+		owner = { country_event = { id = cosmic_archive_crisis.22 } }
+	}
+	
+	on_fail = {
+		owner = { country_event = { id = cosmic_archive_crisis.21 } }
+	}
+	
+	ai_weight = {
+		weight = 80
+	}
+}

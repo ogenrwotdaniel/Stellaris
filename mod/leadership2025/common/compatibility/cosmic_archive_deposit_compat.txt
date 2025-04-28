@@ -1,0 +1,118 @@
+# Cosmic Archive Deposit Compatibility
+# Ensures Cosmic Archive deposits can appear alongside other planetary features without conflicts
+
+# Deposit spawn settings
+cosmic_archive_deposit_spawn = {
+    # Deposit rareness
+    base_spawn_chance = 0.03  # 3% chance on eligible planets
+    
+    # Planet type eligibility
+    eligible_planet_types = {
+        "pc_desert" = yes
+        "pc_tropical" = yes
+        "pc_arid" = yes
+        "pc_continental" = yes
+        "pc_ocean" = yes
+        "pc_tundra" = yes
+        "pc_arctic" = yes
+        "pc_alpine" = yes
+        "pc_savannah" = yes
+        "pc_gaia" = yes
+        
+        # Mod compatibility - these are for common modded planet types
+        "pc_nuked" = yes
+        "pc_relic" = yes
+        "pc_megastructure" = no  # Explicitly exclude megastructures
+        "pc_ringworld" = no      # Explicitly exclude ringworld segments
+        "pc_habitat" = no        # Explicitly exclude habitats
+    }
+    
+    # Deposit coexistence rules
+    coexistence_rules = {
+        # Deposits that can always coexist with cosmic archive
+        always_compatible = {
+            "d_minerals" = yes
+            "d_energy" = yes
+            "d_farming" = yes
+            "d_physics" = yes
+            "d_society" = yes
+            "d_engineering" = yes
+            "d_exotic_gases" = yes
+            "d_rare_crystals" = yes
+            "d_volatile_motes" = yes
+            "d_betharian" = yes
+            "d_living_metal" = yes
+            "d_zro" = yes
+            "d_dark_matter" = yes
+        }
+        
+        # Deposits that cannot coexist with cosmic archive
+        incompatible = {
+            "d_precursor_data_cache" = yes  # Similar story feature
+            "d_ancient_robot_factory" = yes # Similar story feature
+            "d_dimensional_portal" = yes    # Incompatible lore
+            "d_sentient_coral" = yes        # Narrative conflict
+        }
+        
+        # Special handling for these deposits (reduced spawn chance)
+        special_handling = {
+            "d_alien_pet" = 0.5             # 50% normal spawn chance if archive present
+            "d_archeological_remains" = 0.5  # 50% normal spawn chance if archive present
+            "d_extinct_species" = 0.5        # 50% normal spawn chance if archive present
+        }
+    }
+    
+    # Replacement mechanics - what happens when conflicts occur
+    conflict_resolution = {
+        # Default behavior when incompatible deposit is detected during generation
+        default_behavior = "prefer_archive"  # Options: prefer_archive, prefer_existing, random
+        
+        # Special rule for precursor systems
+        precursor_systems = "prefer_precursor"  # Always let precursor features take precedence
+        
+        # Special rule for leviathan systems
+        leviathan_systems = "prefer_leviathan"  # Always let leviathan features take precedence
+        
+        # Rules for modded systems (commonly used mods)
+        modded_systems = {
+            "gigastructural_engineering" = "prefer_existing"  # Let gigastructures take precedence
+            "planetary_diversity" = "prefer_archive"          # Archive takes precedence
+            "more_events_mod" = "random"                      # 50/50 chance for either
+        }
+    }
+    
+    # Post-generation adjustment for existing saves
+    existing_save_compatibility = {
+        # Allow archives to spawn on surveyed but uncolonized planets
+        can_spawn_on_surveyed = yes
+        
+        # Maximum archives to add to existing save
+        max_archives_to_add = 3
+        
+        # Minimum days into game before adding archives to existing save
+        min_game_days = 3600  # About 10 years
+    }
+}
+
+# Appearance and UI compatibility
+cosmic_archive_appearance = {
+    # Icon layering settings
+    icon_layer = 3  # Higher numbers appear on top
+    
+    # Tooltip integration
+    tooltip_integration = {
+        # Show in planet summary tooltip
+        show_in_planet_summary = yes
+        
+        # Show deposit effects in empire summary
+        show_in_empire_summary = yes
+    }
+    
+    # UI scaling for various resolutions
+    ui_scaling = {
+        "low_res" = 0.9
+        "standard" = 1.0
+        "high_res" = 1.1
+        "4k" = 1.2
+    }
+}

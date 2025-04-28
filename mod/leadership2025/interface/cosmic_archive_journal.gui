@@ -1,0 +1,306 @@
+guiTypes = {
+	containerWindowType = {
+		name = "cosmic_archive_journal_window"
+		position = { x=-315 y=-250 }
+		size = { width=630 height=500 }
+		orientation = center
+		moveable = yes
+		
+		background = {
+			name = "background"
+			quadTextureSprite = "GFX_tile_outliner_bg"
+		}
+		
+		iconType = {
+			name = "hex_bg"
+			spriteType = "GFX_hex_bg"
+			position = { x = -10 y = -12 }
+			alwaysTransparent = yes
+		}
+		
+		iconType = {
+			name = "empire_header_line"
+			quadTextureSprite = "GFX_line_long"
+			position = { x = 6 y = 21 }
+			alwaysTransparent = yes
+		}
+		
+		buttonType = {
+			name = "close"
+			quadTextureSprite = "GFX_close"
+			position = { x= -42 y = 5 }
+			orientation = "UPPER_RIGHT"
+			shortcut = "ESCAPE"
+			clicksound = "back_click"
+		}
+		
+		instantTextBoxType = {
+			name = "header"
+			font = "malgun_goth_24"
+			text = "COSMIC_ARCHIVE_JOURNAL"
+			position = { x = 20 y = 5 }
+			maxWidth = 300
+			maxHeight = 20
+			fixedSize = yes
+			alwaysTransparent = yes
+		}
+		
+		# Tab buttons
+		@tab_button_y = 40
+		
+		buttonType = {
+			name = "tab_discoveries"
+			quadTextureSprite = "GFX_tab_1_active"
+			position = { x = -20 y = @tab_button_y }
+			font = "cg_16b"
+			buttonText = "COSMIC_ARCHIVE_DISCOVERIES"
+			buttonFont = "cg_16b"
+			shortcut = "z"
+			clicksound = "tab_click"
+		}
+		
+		buttonType = {
+			name = "tab_guardian"
+			quadTextureSprite = "GFX_tab_2_inactive"
+			position = { x = 119 y = @tab_button_y }
+			font = "cg_16b"
+			buttonText = "COSMIC_GUARDIAN_ENCOUNTERS"
+			buttonFont = "cg_16b"
+			shortcut = "x"
+			clicksound = "tab_click"
+		}
+		
+		buttonType = {
+			name = "tab_research"
+			quadTextureSprite = "GFX_tab_2_inactive"
+			position = { x = 258 y = @tab_button_y }
+			font = "cg_16b"
+			buttonText = "COSMIC_ARCHIVE_RESEARCH"
+			buttonFont = "cg_16b"
+			shortcut = "c"
+			clicksound = "tab_click"
+		}
+		
+		# Discoveries tab content
+		containerWindowType = {
+			name = "discoveries_tab"
+			position = { x = 10 y = 80 }
+			size = { width = 610 height = 400 }
+			
+			background = {
+				name = "background"
+				quadTextureSprite = "GFX_tiles_dark_area_cut_8"
+			}
+			
+			instantTextBoxType = {
+				name = "num_discoveries"
+				font = "cg_16b"
+				text = "COSMIC_ARCHIVE_DISCOVERIES_COUNT"
+				position = { x = 10 y = 10 }
+				maxWidth = 300
+				maxHeight = 20
+				fixedSize = yes
+			}
+			
+			smoothListboxType = {
+				name = "discoveries_list"
+				position = { x = 10 y = 40 }
+				size = { x = 590 y = 350 }
+				scrollbarType = "standardlistbox_slider"
+				spacing = 1
+			}
+		}
+		
+		# Guardian tab content
+		containerWindowType = {
+			name = "guardian_tab"
+			position = { x = 10 y = 80 }
+			size = { width = 610 height = 400 }
+			
+			background = {
+				name = "background"
+				quadTextureSprite = "GFX_tiles_dark_area_cut_8"
+			}
+			
+			instantTextBoxType = {
+				name = "guardian_status"
+				font = "cg_16b"
+				text = "COSMIC_GUARDIAN_STATUS"
+				position = { x = 10 y = 10 }
+				maxWidth = 300
+				maxHeight = 20
+				fixedSize = yes
+			}
+			
+			containerWindowType = {
+				name = "guardian_info"
+				position = { x = 10 y = 40 }
+				size = { width = 590 height = 350 }
+				
+				background = {
+					name = "background"
+					quadTextureSprite = "GFX_tiles_dark_area_cut_8"
+					alwaysTransparent = yes
+				}
+				
+				iconType = {
+					name = "guardian_image"
+					spriteType = "GFX_cosmic_archive_guardian"
+					position = { x = 10 y = 10 }
+					scale = 0.5
+				}
+				
+				instantTextBoxType = {
+					name = "guardian_description"
+					font = "cg_16b"
+					text = "COSMIC_GUARDIAN_DESCRIPTION"
+					position = { x = 180 y = 10 }
+					maxWidth = 400
+					maxHeight = 200
+					fixedSize = no
+					scrollbarType = "standardtext_slider"
+				}
+				
+				smoothListboxType = {
+					name = "encounters_list"
+					position = { x = 10 y = 150 }
+					size = { x = 570 y = 190 }
+					scrollbarType = "standardlistbox_slider"
+					spacing = 1
+				}
+			}
+		}
+		
+		# Research tab content
+		containerWindowType = {
+			name = "research_tab"
+			position = { x = 10 y = 80 }
+			size = { width = 610 height = 400 }
+			
+			background = {
+				name = "background"
+				quadTextureSprite = "GFX_tiles_dark_area_cut_8"
+			}
+			
+			instantTextBoxType = {
+				name = "research_status"
+				font = "cg_16b"
+				text = "COSMIC_ARCHIVE_RESEARCH_STATUS"
+				position = { x = 10 y = 10 }
+				maxWidth = 300
+				maxHeight = 20
+				fixedSize = yes
+			}
+			
+			gridBoxType = {
+				name = "research_grid"
+				position = { x = 10 y = 40 }
+				size = { width = 570 height = 350 }
+				slotSize = { width = 185 height = 100 }
+				max_slots_horizontal = 3
+				format = "UPPER_LEFT"
+			}
+		}
+	}
+	
+	# Template for discovery item in discoveries list
+	containerWindowType = {
+		name = "cosmic_archive_discovery_entry"
+		size = { width = 590 height = 70 }
+		
+		background = {
+			name = "background"
+			quadTextureSprite = "GFX_tiles_dark_area_cut_8"
+		}
+		
+		iconType = {
+			name = "archive_type_icon"
+			spriteType = "GFX_deposit_cat_cosmic_archive"
+			position = { x = 10 y = 10 }
+			scale = 0.5
+		}
+		
+		instantTextBoxType = {
+			name = "planet_name"
+			font = "cg_16b"
+			text = "COSMIC_ARCHIVE_PLANET_NAME"
+			position = { x = 60 y = 5 }
+			maxWidth = 200
+			maxHeight = 20
+			fixedSize = yes
+		}
+		
+		instantTextBoxType = {
+			name = "discovery_date"
+			font = "cg_16b"
+			text = "COSMIC_ARCHIVE_DISCOVERY_DATE"
+			position = { x = 60 y = 25 }
+			maxWidth = 200
+			maxHeight = 20
+			fixedSize = yes
+		}
+		
+		instantTextBoxType = {
+			name = "archive_status"
+			font = "cg_16b"
+			text = "COSMIC_ARCHIVE_STATUS"
+			position = { x = 270 y = 5 }
+			maxWidth = 300
+			maxHeight = 20
+			fixedSize = yes
+		}
+		
+		instantTextBoxType = {
+			name = "archive_effects"
+			font = "cg_16b"
+			text = "COSMIC_ARCHIVE_EFFECTS"
+			position = { x = 270 y = 25 }
+			maxWidth = 300
+			maxHeight = 40
+			fixedSize = yes
+		}
+	}
+	
+	# Template for research item in research grid
+	containerWindowType = {
+		name = "cosmic_archive_research_entry"
+		size = { width = 185 height = 100 }
+		
+		background = {
+			name = "background"
+			quadTextureSprite = "GFX_tiles_dark_area_cut_8"
+		}
+		
+		iconType = {
+			name = "research_icon"
+			spriteType = "GFX_resource_physics_research"
+			position = { x = 10 y = 10 }
+		}
+		
+		instantTextBoxType = {
+			name = "research_name"
+			font = "cg_16b"
+			text = "RESEARCH_NAME"
+			position = { x = 40 y = 10 }
+			maxWidth = 135
+			maxHeight = 20
+			fixedSize = yes
+		}
+		
+		instantTextBoxType = {
+			name = "research_desc"
+			font = "cg_16b"
+			text = "RESEARCH_DESC"
+			position = { x = 10 y = 35 }
+			maxWidth = 165
+			maxHeight = 60
+			fixedSize = yes
+		}
+		
+		iconType = {
+			name = "progress_bar"
+			spriteType = "GFX_queue_progressbar_100"
+			position = { x = 10 y = 85 }
+		}
+	}
+}

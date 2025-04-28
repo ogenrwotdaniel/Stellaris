@@ -1,0 +1,53 @@
+guardian_cosmic_archive_01 = {
+	is_space_object = yes
+	graphical_culture = no
+	entity = "guardian_01_entity"
+	
+	max_speed = 1.5
+	acceleration = 0.3
+	rotation_speed = 0.1
+	
+	max_hitpoints = 20000
+	modifier = {
+		ship_evasion_add = 10
+		ship_armor_add = 4000
+		ship_shield_add = 4000
+		ship_shield_regen_add = 150
+		ship_armor_regen_add = 25
+		ship_weapon_damage = 2.0
+		ship_fire_rate_mult = 1.5
+	}
+	
+	combat_size_multiplier = 10
+	
+	size_multiplier = 10
+	fleet_slot_size = 10
+	
+	# Mid-game crisis strength scaling
+	upgrades = {
+		"cosmic_guardian_tier_upgrade"
+	}
+	
+	section_slots = { 
+		"guardian_cosmic_archive_section" = { locator = "root" }
+	}
+	
+	is_designable = no
+	is_buildable = no
+	can_have_federation_design = no
+	is_civilian = no
+	
+	required_component_set = "guardian_power_core"
+	required_component_set = "ftl_components"
+	required_component_set = "thruster_components"
+	
+	valid_target_aggressive_stance = yes
+	
+	enable_default_design = yes
+	
+	prerequisites = { tech_guardian_cosmic_archive }
+	
+	combat_disengage_chance = 0
+	
+	weight = { modifier = { weight = 0 } }
+}

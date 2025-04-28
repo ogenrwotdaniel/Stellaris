@@ -1,0 +1,30 @@
+spriteTypes = {
+	# Guardian Main Entity
+	spriteType = {
+		name = "GFX_cosmic_archive_guardian"
+		textureFile = "gfx/models/ships/guardians/cosmic_archive_guardian.dds"
+		noOfFrames = 1
+	}
+	
+	# Guardian Energy Field
+	spriteType = {
+		name = "GFX_cosmic_archive_guardian_field"
+		textureFile = "gfx/models/ships/guardians/cosmic_archive_guardian_field.dds"
+		noOfFrames = 4
+		animation_rate_fps = 12
+		looping = yes
+		play_on_show = yes
+		effectFile = "gfx/FX/buttonstate_onlydisable.shader"
+	}
+	
+	# Guardian Weapon Effects
+	spriteType = {
+		name = "GFX_cosmic_archive_guardian_weapon"
+		textureFile = "gfx/models/ships/guardians/cosmic_archive_guardian_weapon.dds"
+		noOfFrames = 6
+		animation_rate_fps = 8
+		looping = yes
+		play_on_show = yes
+		effectFile = "gfx/FX/buttonstate_onlydisable.shader"
+	}
+}

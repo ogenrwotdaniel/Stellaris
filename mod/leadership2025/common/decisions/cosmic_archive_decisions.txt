@@ -1,0 +1,50 @@
+# Planetary Decisions for Cosmic Archives
+
+# Decision to interact with the Cosmic Archive
+cosmic_archive_interaction = {
+    owned_planets_only = yes
+    
+    resources = {
+        category = decisions
+        cost = {
+            influence = 25
+        }
+    }
+    
+    potential = {
+        has_deposit = d_cosmic_archive
+        has_deposit_flag = {
+            flag = cosmic_archive_discovered
+            deposit = d_cosmic_archive
+        }
+        NOT = {
+            has_deposit_flag = {
+                flag = cosmic_archive_investigated
+                deposit = d_cosmic_archive
+            }
+        }
+        NOT = {
+            has_deposit_flag = {
+                flag = cosmic_archive_abandoned
+                deposit = d_cosmic_archive
+            }
+        }
+        owner = { is_ai = no }
+    }
+    
+    allow = {
+        has_owner = yes
+        is_colony = yes
+    }
+    
+    effect = {
+        custom_tooltip = cosmic_archive_interaction_tooltip
+        owner = {
+            country_event = { id = cosmic_archive.10 }
+        }
+    }
+    
+    ai_weight = {
+        weight = 0
+    }
+}

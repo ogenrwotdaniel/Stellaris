@@ -1,0 +1,99 @@
+# Cosmic Archive Multiplayer Compatibility
+# Ensures multiple empires can interact with Archive content without conflicts
+
+# Multiplayer-specific settings
+cosmic_archive_multiplayer_settings = {
+    # Archive discovery mechanics in multiplayer
+    discovery = {
+        # How many empires can discover the same archive
+        max_empires_per_archive = 3
+        
+        # Days between archive discoveries by different empires
+        discovery_cooldown = 180
+        
+        # Archive visibility settings
+        visibility = {
+            # Federation members can see each other's archives
+            federation_visibility = yes
+            
+            # Allies can see each other's archives (with reduced information)
+            ally_visibility = limited
+            
+            # Non-allied empires require their own discovery
+            other_visibility = none
+        }
+    }
+    
+    # Event coordination for multiplayer
+    event_coordination = {
+        # Prevent the same event firing for multiple players simultaneously
+        prevent_duplicate_crisis_events = yes
+        
+        # Empire uniqueness - certain special outcomes only happen once per galaxy
+        unique_per_galaxy = {
+            "cosmic_archive_full_activation" = yes
+            "cosmic_archive_guardian_awakening" = yes
+        }
+        
+        # Events that can occur multiple times in different empires
+        repeatable_per_empire = {
+            "cosmic_archive_first_signal" = yes
+            "cosmic_archive_enhanced_tech" = yes
+            "cosmic_archive_stabilized" = yes
+            "cosmic_archive_risky_protocols" = yes
+        }
+    }
+    
+    # Competitive and cooperative mechanics
+    multiplayer_mechanics = {
+        # Competitive options
+        competitive = {
+            # Special casus belli to claim archive systems
+            archive_claim_casus_belli = yes
+            
+            # Espionage operations to steal archive research
+            archive_espionage_operations = yes
+            
+            # War goal to control archive systems
+            archive_system_wargoal = yes
+        }
+        
+        # Cooperative options
+        cooperative = {
+            # Research agreements provide additional benefits for archive research
+            enhanced_research_agreements = yes
+            
+            # Federation projects to study archives collectively
+            federation_archive_projects = yes
+            
+            # Commercial pacts can include archive knowledge trading
+            archive_commercial_benefits = yes
+        }
+        
+        # Diplomatic features
+        diplomatic = {
+            # Special diplomatic options for archive-owning empires
+            additional_diplomatic_options = yes
+            
+            # Opinion modifiers based on archive treatment
+            opinion_modifiers = {
+                "archive_protector" = 20
+                "archive_exploiter" = -15
+                "archive_destroyer" = -25
+                "archive_scholar" = 15
+            }
+        }
+    }
+    
+    # Technical performance optimizations for multiplayer
+    performance = {
+        # Reduce event complexity in large multiplayer games
+        scale_complexity_with_player_count = yes
+        
+        # Maximum parallel archive events
+        max_concurrent_archive_events = 3
+        
+        # Throttle archive pulse effects in large galaxies
+        pulse_effect_throttling = yes
+    }
+}

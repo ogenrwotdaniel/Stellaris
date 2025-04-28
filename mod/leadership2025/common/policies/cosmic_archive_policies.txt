@@ -1,0 +1,559 @@
+# Cosmic Archive Policies
+# These policies allow empires to adopt different approaches to the Archive
+
+cosmic_archive_approach = {
+	potential = {
+		has_country_flag = found_cosmic_archive
+	}
+	
+	option = {
+		name = "archive_approach_cautious"
+		
+		policy_flags = {
+			archive_approach_policy
+		}
+		
+		# Reduced risks but also reduced rewards
+		modifier = {
+			country_physics_tech_research_speed_mult = 0.05
+			country_society_tech_research_speed_mult = 0.05
+			country_engineering_tech_research_speed_mult = 0.05
+			planet_stability_add = 5
+			pop_happiness = 0.05
+		}
+		
+		# Less upkeep cost
+		resources = {
+			category = policies
+			produces = {
+				unity = 1
+			}
+			upkeep = {
+				energy = 0.5
+				multiplier = value:scaling_policy_upkeep_base
+			}
+		}
+		
+		# Limits risky projects from triggering
+		on_activation = {
+			custom_tooltip = "archive_approach_cautious_effects"
+			hidden_effect = {
+				set_country_flag = archive_cautious_approach
+				remove_country_flag = archive_balanced_approach
+				remove_country_flag = archive_aggressive_approach
+			}
+		}
+		
+		ai_weight = {
+			weight = 50
+			modifier = {
+				factor = 2
+				has_ethic = ethic_pacifist
+			}
+			modifier = {
+				factor = 1.5
+				has_ethic = ethic_xenophile
+			}
+			modifier = {
+				factor = 1.5
+				has_valid_civic = civic_agrarian_idyll
+			}
+			modifier = {
+				factor = 0.5
+				has_ethic = ethic_militarist
+			}
+		}
+	}
+	
+	option = {
+		name = "archive_approach_balanced"
+		
+		policy_flags = {
+			archive_approach_policy
+		}
+		
+		# Moderate risks and rewards
+		modifier = {
+			country_physics_tech_research_speed_mult = 0.10
+			country_society_tech_research_speed_mult = 0.05
+			country_engineering_tech_research_speed_mult = 0.10
+			research_alternatives_add = 1
+		}
+		
+		# Moderate upkeep cost
+		resources = {
+			category = policies
+			produces = {
+				physics_research = 1
+				engineering_research = 1
+			}
+			upkeep = {
+				energy = 1
+				multiplier = value:scaling_policy_upkeep_base
+			}
+		}
+		
+		# Default approach
+		on_activation = {
+			custom_tooltip = "archive_approach_balanced_effects"
+			hidden_effect = {
+				remove_country_flag = archive_cautious_approach
+				set_country_flag = archive_balanced_approach
+				remove_country_flag = archive_aggressive_approach
+			}
+		}
+		
+		ai_weight = {
+			weight = 100
+			modifier = {
+				factor = 1.5
+				has_ethic = ethic_materialist
+			}
+			modifier = {
+				factor = 1.5
+				has_valid_civic = civic_technocracy
+			}
+		}
+	}
+	
+	option = {
+		name = "archive_approach_aggressive"
+		
+		policy_flags = {
+			archive_approach_policy
+		}
+		
+		# High risks but bigger rewards
+		modifier = {
+			country_physics_tech_research_speed_mult = 0.15
+			country_society_tech_research_speed_mult = 0.05
+			country_engineering_tech_research_speed_mult = 0.15
+			planet_researchers_physics_produces_mult = 0.10
+			planet_researchers_engineering_produces_mult = 0.10
+			planet_stability_add = -5
+		}
+		
+		# Higher upkeep cost
+		resources = {
+			category = policies
+			produces = {
+				physics_research = 3
+				engineering_research = 2
+			}
+			upkeep = {
+				energy = 2
+				rare_crystals = 0.25
+				exotic_gases = 0.25
+				multiplier = value:scaling_policy_upkeep_base
+			}
+		}
+		
+		# Increases chance of risky events but enhances outcomes
+		on_activation = {
+			custom_tooltip = "archive_approach_aggressive_effects"
+			hidden_effect = {
+				remove_country_flag = archive_cautious_approach
+				remove_country_flag = archive_balanced_approach
+				set_country_flag = archive_aggressive_approach
+			}
+		}
+		
+		ai_weight = {
+			weight = 30
+			modifier = {
+				factor = 2
+				has_ethic = ethic_militarist
+			}
+			modifier = {
+				factor = 2
+				has_ethic = ethic_fanatic_materialist
+			}
+			modifier = {
+				factor = 0.25
+				has_ethic = ethic_pacifist
+			}
+			modifier = {
+				factor = 0.5
+				has_ethic = ethic_xenophile
+			}
+		}
+	}
+}
+
+cosmic_archive_crisis_response = {
+	potential = {
+		OR = {
+			has_country_flag = archive_guardian_active
+			has_global_flag = cosmic_archive_guardian_exists
+		}
+	}
+	
+	option = {
+		name = "archive_crisis_military"
+		
+		policy_flags = {
+			archive_crisis_policy
+		}
+		
+		# Military-focused approach
+		modifier = {
+			ship_weapon_damage = 0.15
+			ship_fire_rate_mult = 0.10
+			ship_hull_add = 300
+			ship_shield_mult = 0.10
+			ship_disengage_chance_mult = 0.15
+			country_naval_cap_mult = 0.10
+		}
+		
+		# Higher alloy and volatile cost
+		resources = {
+			category = policies
+			produces = {
+				physics_research = 2
+			}
+			upkeep = {
+				alloys = 1
+				volatile_motes = 0.5
+				multiplier = value:scaling_policy_upkeep_base
+			}
+		}
+		
+		# Increases military effectiveness but reduces diplomatic options
+		on_activation = {
+			custom_tooltip = "archive_crisis_military_effects"
+			hidden_effect = {
+				set_country_flag = archive_crisis_military
+				remove_country_flag = archive_crisis_diplomatic
+				remove_country_flag = archive_crisis_balanced
+			}
+		}
+		
+		ai_weight = {
+			weight = 50
+			modifier = {
+				factor = 2
+				has_ethic = ethic_militarist
+			}
+			modifier = {
+				factor = 2
+				has_ethic = ethic_fanatic_militarist
+			}
+			modifier = {
+				factor = 0.25
+				has_ethic = ethic_pacifist
+			}
+		}
+	}
+	
+	option = {
+		name = "archive_crisis_balanced"
+		
+		policy_flags = {
+			archive_crisis_policy
+		}
+		
+		# Balance of military and diplomatic
+		modifier = {
+			ship_weapon_damage = 0.08
+			ship_hull_add = 150
+			country_naval_cap_mult = 0.05
+			planet_stability_add = 5
+			country_unity_produces_mult = 0.05
+			country_society_tech_research_speed_mult = 0.05
+		}
+		
+		# Moderate resource cost
+		resources = {
+			category = policies
+			produces = {
+				physics_research = 1
+				society_research = 1
+			}
+			upkeep = {
+				alloys = 0.5
+				unity = 0.5
+				multiplier = value:scaling_policy_upkeep_base
+			}
+		}
+		
+		# Default approach
+		on_activation = {
+			custom_tooltip = "archive_crisis_balanced_effects"
+			hidden_effect = {
+				remove_country_flag = archive_crisis_military
+				remove_country_flag = archive_crisis_diplomatic
+				set_country_flag = archive_crisis_balanced
+			}
+		}
+		
+		ai_weight = {
+			weight = 100
+		}
+	}
+	
+	option = {
+		name = "archive_crisis_diplomatic"
+		
+		policy_flags = {
+			archive_crisis_policy
+		}
+		
+		# Diplomatic and defensive approach
+		modifier = {
+			ship_disengage_chance_mult = 0.25
+			ship_hull_regen_add_perc = 0.5
+			country_unity_produces_mult = 0.15
+			pop_happiness = 0.10
+			planet_stability_add = 10
+			country_society_tech_research_speed_mult = 0.15
+		}
+		
+		# Higher society and unity cost
+		resources = {
+			category = policies
+			produces = {
+				society_research = 3
+			}
+			upkeep = {
+				unity = 1
+				influence = 0.25
+				multiplier = value:scaling_policy_upkeep_base
+			}
+		}
+		
+		# Enhances diplomatic options and peaceful resolution
+		on_activation = {
+			custom_tooltip = "archive_crisis_diplomatic_effects"
+			hidden_effect = {
+				remove_country_flag = archive_crisis_military
+				set_country_flag = archive_crisis_diplomatic
+				remove_country_flag = archive_crisis_balanced
+			}
+		}
+		
+		ai_weight = {
+			weight = 50
+			modifier = {
+				factor = 2
+				has_ethic = ethic_pacifist
+			}
+			modifier = {
+				factor = 2
+				has_ethic = ethic_xenophile
+			}
+			modifier = {
+				factor = 0.25
+				has_ethic = ethic_militarist
+			}
+		}
+	}
+}
+
+cosmic_archive_aftermath = {
+	potential = {
+		OR = {
+			has_country_flag = archive_guardian_defeated
+			has_country_flag = archive_guardian_pacified
+		}
+	}
+	
+	option = {
+		name = "archive_aftermath_exploitation"
+		
+		policy_flags = {
+			archive_aftermath_policy
+		}
+		
+		# Maximized research and resource extraction
+		modifier = {
+			country_physics_tech_research_speed_mult = 0.15
+			country_engineering_tech_research_speed_mult = 0.15
+			planet_researchers_produces_mult = 0.10
+			planet_miners_minerals_produces_mult = 0.10
+			planet_technician_energy_produces_mult = 0.10
+			ship_weapon_damage = 0.10
+			pop_happiness = -0.05
+		}
+		
+		# Higher resource production but stability cost
+		resources = {
+			category = policies
+			produces = {
+				physics_research = 3
+				engineering_research = 3
+				rare_crystals = 1
+				exotic_gases = 1
+			}
+			upkeep = {
+				energy = 2
+				influence = 0.25
+				multiplier = value:scaling_policy_upkeep_base
+			}
+		}
+		
+		# Maximizes exploitation of Archive technology
+		on_activation = {
+			custom_tooltip = "archive_aftermath_exploitation_effects"
+			hidden_effect = {
+				set_country_flag = archive_aftermath_exploitation
+				remove_country_flag = archive_aftermath_preservation
+				remove_country_flag = archive_aftermath_balanced
+				
+				add_modifier = {
+					modifier = "cosmic_archive_archaeotech_exploiters"
+					days = -1
+				}
+				
+				remove_modifier = "cosmic_archive_relic_defenders"
+				remove_modifier = "cosmic_archive_knowledge_guardians"
+			}
+		}
+		
+		ai_weight = {
+			weight = 40
+			modifier = {
+				factor = 1.5
+				has_ethic = ethic_materialist
+			}
+			modifier = {
+				factor = 2
+				has_ethic = ethic_fanatic_materialist
+			}
+			modifier = {
+				factor = 0.5
+				has_ethic = ethic_xenophile
+			}
+			modifier = {
+				factor = 0.25
+				has_ethic = ethic_pacifist
+			}
+		}
+	}
+	
+	option = {
+		name = "archive_aftermath_balanced"
+		
+		policy_flags = {
+			archive_aftermath_policy
+		}
+		
+		# Balanced approach
+		modifier = {
+			country_physics_tech_research_speed_mult = 0.10
+			country_society_tech_research_speed_mult = 0.05
+			country_engineering_tech_research_speed_mult = 0.10
+			planet_stability_add = 5
+			planet_researchers_produces_mult = 0.05
+			ship_weapon_damage = 0.05
+		}
+		
+		# Moderate resource cost and benefits
+		resources = {
+			category = policies
+			produces = {
+				physics_research = 2
+				engineering_research = 1
+				society_research = 1
+			}
+			upkeep = {
+				energy = 1
+				multiplier = value:scaling_policy_upkeep_base
+			}
+		}
+		
+		# Default approach
+		on_activation = {
+			custom_tooltip = "archive_aftermath_balanced_effects"
+			hidden_effect = {
+				remove_country_flag = archive_aftermath_exploitation
+				remove_country_flag = archive_aftermath_preservation
+				set_country_flag = archive_aftermath_balanced
+				
+				add_modifier = {
+					modifier = "cosmic_archive_knowledge_guardians"
+					days = -1
+				}
+				
+				remove_modifier = "cosmic_archive_relic_defenders"
+				remove_modifier = "cosmic_archive_archaeotech_exploiters"
+			}
+		}
+		
+		ai_weight = {
+			weight = 100
+		}
+	}
+	
+	option = {
+		name = "archive_aftermath_preservation"
+		
+		policy_flags = {
+			archive_aftermath_policy
+		}
+		
+		# Preservation focused
+		modifier = {
+			country_society_tech_research_speed_mult = 0.15
+			country_unity_produces_mult = 0.15
+			pop_happiness = 0.10
+			planet_stability_add = 10
+			diplo_weight_mult = 0.15
+		}
+		
+		# Higher unity production and society research
+		resources = {
+			category = policies
+			produces = {
+				society_research = 3
+				unity = 3
+			}
+			upkeep = {
+				energy = 1
+				influence = 0.5
+				multiplier = value:scaling_policy_upkeep_base
+			}
+		}
+		
+		# Focuses on preserving and learning without exploiting
+		on_activation = {
+			custom_tooltip = "archive_aftermath_preservation_effects"
+			hidden_effect = {
+				remove_country_flag = archive_aftermath_exploitation
+				set_country_flag = archive_aftermath_preservation
+				remove_country_flag = archive_aftermath_balanced
+				
+				add_modifier = {
+					modifier = "cosmic_archive_relic_defenders"
+					days = -1
+				}
+				
+				remove_modifier = "cosmic_archive_knowledge_guardians"
+				remove_modifier = "cosmic_archive_archaeotech_exploiters"
+			}
+		}
+		
+		ai_weight = {
+			weight = 40
+			modifier = {
+				factor = 1.5
+				has_ethic = ethic_xenophile
+			}
+			modifier = {
+				factor = 2
+				has_ethic = ethic_pacifist
+			}
+			modifier = {
+				factor = 2
+				has_ethic = ethic_spiritualist
+			}
+			modifier = {
+				factor = 0.5
+				has_ethic = ethic_militarist
+			}
+			modifier = {
+				factor = 0.25
+				has_ethic = ethic_materialist
+			}
+		}
+	}
+}

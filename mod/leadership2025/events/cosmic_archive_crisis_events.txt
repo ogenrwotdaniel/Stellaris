@@ -1,0 +1,1172 @@
+namespace = cosmic_archive_crisis
+
+# Hidden event to track number of activated archives in the galaxy
+event = {
+	id = cosmic_archive_crisis.1
+	hide_window = yes
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		# Increment the counter for activated archives
+		if = {
+			limit = { NOT = { has_global_flag = cosmic_archive_counter_initialized } }
+			set_global_flag = cosmic_archive_counter_initialized
+			set_global_variable = {
+				name = cosmic_archive_activated_count
+				value = 1
+			}
+		}
+		else = {
+			change_variable = {
+				which = cosmic_archive_activated_count
+				value = 1
+			}
+		}
+		
+		# Check if counter has reached threshold - default to 4 archives
+		if = {
+			limit = {
+				check_variable = {
+					which = cosmic_archive_activated_count
+					value >= 4
+				}
+			}
+			random_country = {
+				limit = {
+					has_country_flag = cosmic_archive_echoes_begin
+				}
+				country_event = { id = cosmic_archive.50 days = 60 random = 30 }
+			}
+		}
+	}
+}
+
+# Monthly pulse event to check for dormant guardian activation
+event = {
+	id = cosmic_archive_crisis.2
+	hide_window = yes
+	
+	is_triggered_only = yes
+	
+	trigger = {
+		has_global_flag = cosmic_archive_counter_initialized
+		# Only run if there are some activated archives but not enough to auto-trigger
+		check_variable = {
+			which = cosmic_archive_activated_count
+			value > 1
+		}
+		check_variable = {
+			which = cosmic_archive_activated_count
+			value < 4
+		}
+	}
+	
+	immediate = {
+		# Find countries with Risk It All path
+		every_country = {
+			limit = {
+				has_country_flag = cosmic_archive_risky_path
+				NOT = { has_country_flag = cosmic_archive_guardian_awakened }
+			}
+			
+			# Higher chance based on activated archives across galaxy
+			random_list = {
+				# Base 5% chance for Risk It All path
+				5 = {
+					modifier = {
+						add = 5
+						check_variable = {
+							which = cosmic_archive_activated_count
+							value >= 3
+						}
+					}
+					modifier = {
+						add = 5
+						count_owned_planet = {
+							count >= 2
+							limit = {
+								has_planet_flag = cosmic_archive_risky_protocols
+							}
+						}
+					}
+					country_event = { id = cosmic_archive.50 days = 30 random = 15 }
+				}
+				95 = { # No activation
+					modifier = {
+						add = -10
+						check_variable = {
+							which = cosmic_archive_activated_count
+							value >= 3
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+# Game start event to set up monthly pulse
+event = {
+	id = cosmic_archive_crisis.0
+	hide_window = yes
+	
+	fire_only_once = yes
+	
+	trigger = {
+		is_ai = no
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	immediate = {
+		# Set up monthly pulse for guardian activation check
+		set_global_flag = cosmic_archive_crisis_initialized
+		if = {
+			limit = { NOT = { has_global_flag = cosmic_archive_counter_initialized } }
+			set_global_flag = cosmic_archive_counter_initialized
+			set_global_variable = {
+				name = cosmic_archive_activated_count
+				value = 0
+			}
+		}
+	}
+}
+
+# Monthly pulse trigger
+event = {
+	id = cosmic_archive_crisis.100
+	hide_window = yes
+	
+	is_triggered_only = yes
+	
+	trigger = {
+		has_global_flag = cosmic_archive_crisis_initialized
+	}
+	
+	immediate = {
+		country_event = { id = cosmic_archive_crisis.2 }
+	}
+}
+
+# Guardian spawning event - called by cosmic_archive.50
+country_event = {
+	id = cosmic_archive_crisis.10
+	hide_window = yes
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		# Find a suitable system to spawn the Guardian
+		# First check for system with activated archive
+		save_global_event_target_as = guardian_hostile_empire
+		random_owned_planet = {
+			limit = {
+				OR = {
+					has_planet_flag = cosmic_archive_risky_protocols
+					has_planet_flag = cosmic_archive_enhanced_tech
+					has_planet_flag = cosmic_archive_first_signal
+				}
+			}
+			save_event_target_as = archive_planet_target
+			solar_system = {
+				save_event_target_as = guardian_spawn_system
+			}
+		}
+		
+		# If no suitable planet found, look for adjacent systems
+		if = {
+			limit = { NOT = { is_event_target_set = guardian_spawn_system } }
+			capital_scope = {
+				solar_system = {
+					random_neighboring_system = {
+						save_event_target_as = guardian_spawn_system
+					}
+				}
+			}
+		}
+		
+		# Scale guardian strength based on mid-game settings
+		set_variable = {
+			which = guardian_power_level
+			value = 1
+		}
+		
+		if = {
+			limit = { has_global_flag = midgame_difficulty_normal }
+			change_variable = {
+				which = guardian_power_level
+				value = 0.25
+			}
+		}
+		
+		if = {
+			limit = { has_global_flag = midgame_difficulty_hard }
+			change_variable = {
+				which = guardian_power_level
+				value = 0.5
+			}
+		}
+		
+		if = {
+			limit = { has_global_flag = midgame_difficulty_insane }
+			change_variable = {
+				which = guardian_power_level
+				value = 1
+			}
+		}
+		
+		# Spawn the Guardian in the target system
+		event_target:guardian_spawn_system = {
+			# Create a special fleet for the Guardian
+			
+			create_country = {
+				name = "NAME_COSMIC_ARCHIVE_GUARDIAN_COUNTRY"
+				type = guardian_country
+				effect = {
+					establish_communications = root
+					save_event_target_as = guardian_country
+				}
+			}
+
+			create_fleet = {
+				name = "NAME_COSMIC_ARCHIVE_GUARDIAN_FLEET"
+				effect = {
+					create_ship = {
+						name = "NAME_COSMIC_ARCHIVE_GUARDIAN"
+						design = "NAME_COSMIC_ARCHIVE_GUARDIAN"
+						graphical_culture = "guardian_01_entity"
+					}
+					set_owner = event_target:guardian_country
+					set_location = {
+						target = event_target:guardian_spawn_system
+						distance = 25
+						angle = random
+					}
+					save_global_event_target_as = guardian_fleet
+				}
+			}
+			
+			# Set Guardian as hostile to the awakening empire
+			event_target:guardian_country = {
+				set_attitude_towards = {
+					who = root
+					attitude = attitude_hostile
+				}
+				
+				# Apply power scaling based on difficulty
+				add_modifier = {
+					modifier = cosmic_archive_guardian_strength
+					days = -1
+					mult = guardian_power_level
+				}
+				
+				country_event = {
+					id = cosmic_archive_crisis.11
+					days = 30
+				}
+			}
+		}
+	}
+}
+
+# Guardian aggressive behavior event(fired from guardian country)
+country_event = {
+	id = cosmic_archive_crisis.11
+	hide_window = yes
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		# Guardian targets resource-rich systems and starbases
+		event_target:guardian_hostile_empire = {
+			random_owned_system = {
+				limit = {
+					OR = {
+						any_system_planet = {
+							has_deposit_category = deposit_cat_energy_huge
+						}
+						any_system_planet = {
+							has_deposit_category = deposit_cat_minerals_huge
+						}
+						any_system_planet = {
+							has_deposit_category = strategic_resource_deposit
+						}
+						has_starbase_size >= starbase_starport
+					}
+				}
+				save_event_target_as = guardian_target_system
+				
+				# Move the Guardian to attack this system
+				event_target:guardian_fleet = {
+					set_location = {
+						target = event_target:guardian_target_system
+						distance = 15
+						angle = random
+					}
+				}
+			}
+		}
+		
+		# Set up recurring aggression
+		country_event = {
+			id = cosmic_archive_crisis.12
+			days = 60
+		}
+	}
+}
+
+# Guardian targeting event - runs periodically to select new targets
+country_event = {
+	id = cosmic_archive_crisis.12
+	hide_window = yes
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		# Target empire infrastructure - starbases, mining stations, research stations
+		event_target:guardian_hostile_empire = {
+			# 50% chance to target starbases
+			random_list = {
+				50 = {
+					random_owned_starbase = {
+						limit = {
+							has_starbase_size >= starbase_starport
+							NOR = {
+								is_same_value = root.capital_owner.capital_scope.solar_system.starbase
+								solar_system = {
+									has_star_flag = guardian_target_system
+								}
+							}
+						}
+						
+						solar_system = {
+							set_star_flag = guardian_target_system
+							
+							# Move fleet to attack
+							event_target:guardian_fleet = {
+								set_location = {
+									target = prev
+									distance = 15
+									angle = random
+								}
+							}
+						}
+					}
+				}
+				
+				# 25% chance to target resource systems
+				25 = {
+					random_owned_system = {
+						limit = {
+							OR = {
+								any_system_planet = {
+									has_deposit_category = deposit_cat_energy_huge
+								}
+								any_system_planet = {
+									has_deposit_category = deposit_cat_minerals_huge
+								}
+								any_system_planet = {
+									has_deposit_category = strategic_resource_deposit
+								}
+							}
+							NOR = {
+								is_same_value = root.capital_owner.capital_scope.solar_system
+								has_star_flag = guardian_target_system
+							}
+						}
+						
+						set_star_flag = guardian_target_system
+						
+						# Move fleet to attack
+						event_target:guardian_fleet = {
+							set_location = {
+								target = prev
+								distance = 15
+								angle = random
+							}
+						}
+					}
+				}
+				
+				# 25% chance to target a system with Cosmic Archive
+				25 = {
+					random_owned_planet = {
+						limit = {
+							OR = {
+								has_planet_flag = cosmic_archive_risky_protocols
+								has_planet_flag = cosmic_archive_enhanced_tech
+								has_planet_flag = cosmic_archive_first_signal
+							}
+						}
+						
+						solar_system = {
+							set_star_flag = guardian_target_system
+							
+							# Move fleet to attack
+							event_target:guardian_fleet = {
+								set_location = {
+									target = prev
+									distance = 15
+									angle = random
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		# Schedule next targeting event
+		country_event = {
+			id = cosmic_archive_crisis.12
+			days = 90
+			random = 30
+		}
+	}
+}
+
+# Diplomatic/Research Solution - Research Project Success
+country_event = {
+	id = cosmic_archive_crisis.20
+	title = "cosmic_archive_crisis.20.name"
+	desc = "cosmic_archive_crisis.20.desc"
+	picture = GFX_evt_psionics
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		set_country_flag = cosmic_guardian_research_complete
+	}
+	
+	option = {
+		name = "cosmic_archive_crisis.20.a"
+		custom_tooltip = cosmic_guardian_research_success_tooltip
+		
+		# Player must spend rare resources to complete the protocol
+		#custom_gui = "resource_cost_check"
+		trigger = {
+			has_country_resource = {
+				type = rare_crystals
+				amount >= 300
+			}
+			has_country_resource = {
+				type = exotic_gases
+				amount >= 300
+			}
+			has_country_resource = {
+				type = zro
+				amount >= 100
+			}
+			has_country_resource = {
+				type = influence
+				amount >= 200
+			}
+		}
+		
+		# Spend resources
+		add_resource = {
+			rare_crystals = -300
+			exotic_gases = -300
+			zro = -100
+			influence = -200
+		}
+		
+		hidden_effect = {
+			country_event = { id = cosmic_archive_crisis.23 days = 30 }
+		}
+	}
+	
+	option = {
+		name = "cosmic_archive_crisis.20.b"
+		custom_tooltip = cosmic_guardian_research_insufficient_resources_tooltip
+		
+		hidden_effect = {
+			# Allow resource gathering for 180 days before forcing decision
+			country_event = { id = cosmic_archive_crisis.30 days = 180 }
+		}
+	}
+}
+
+# Diplomatic/Research Solution - Research Project Failure
+country_event = {
+	id = cosmic_archive_crisis.21
+	title = "cosmic_archive_crisis.21.name"
+	desc = "cosmic_archive_crisis.21.desc"
+	picture = GFX_evt_unfriendly_aliens
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "cosmic_archive_crisis.21.a"
+		custom_tooltip = cosmic_guardian_research_failure_tooltip
+		
+		# Guardian becomes more aggressive
+		hidden_effect = {
+			# Increase Guardian's power
+			change_variable = {
+				which = guardian_power_level
+				value = 0.5
+			}
+			
+			# Target empire more frequently
+			country_event = { id = cosmic_archive_crisis.45 days = 30 }
+		}
+	}
+}
+
+# Resource Research Project Success
+country_event = {
+	id = cosmic_archive_crisis.22
+	title = "cosmic_archive_crisis.22.name"
+	desc = "cosmic_archive_crisis.22.desc"
+	picture = GFX_evt_psionics
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "cosmic_archive_crisis.22.a"
+		custom_tooltip = cosmic_guardian_resource_research_success_tooltip
+		
+		hidden_effect = {
+			country_event = { id = cosmic_archive_crisis.20 days = 10 }
+		}
+	}
+}
+
+# Diplomatic Resolution - Success
+country_event = {
+	id = cosmic_archive_crisis.23
+	title = "cosmic_archive_crisis.23.name"
+	desc = "cosmic_archive_crisis.23.desc"
+	picture = GFX_evt_psionics
+	diplomatic = yes
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		set_country_flag = cosmic_guardian_pacified
+		
+		# Remove crisis effects
+		remove_modifier = cosmic_archives_guardian_wrath
+		
+		# Remove Guardian's hostile flag
+		event_target:guardian_country = {
+			set_attitude_towards = {
+				who = root
+				attitude = attitude_neutral
+			}
+		}
+	}
+	
+	option = {
+		name = "cosmic_archive_crisis.23.a"
+		custom_tooltip = cosmic_guardian_pacified_tooltip
+		
+		# Guardian provides benefits
+		add_modifier = {
+			modifier = cosmic_guardian_knowledge_share
+			days = -1
+		}
+		
+		# Guardian awards advanced tech
+		add_research_option = tech_cosmic_guardian_insight
+		
+		# Special relic reward
+		add_relic = r_cosmic_guardian_core
+		
+		# Turn hostile fleet into allied station
+		hidden_effect = {
+			event_target:guardian_fleet = {
+				destroy_fleet = this
+			}
+			
+			# Create a friendly guardian entity
+			random_system = {
+				limit = {
+					any_system_planet = {
+						has_planet_flag = cosmic_archive_guardian_present
+					}
+				}
+				
+				save_event_target_as = guardian_home_system
+				
+				spawn_megastructure = {
+					type = cosmic_guardian_station
+					orbit_this = random_planet
+					owner = root
+				}
+			}
+			
+			# Complete the crisis
+			country_event = { id = cosmic_archive_crisis.50 days = 30 }
+		}
+	}
+}
+
+# Military Confrontation - Initial Decision
+country_event = {
+	id = cosmic_archive_crisis.30
+	title = "cosmic_archive_crisis.30.name"
+	desc = "cosmic_archive_crisis.30.desc"
+	picture = GFX_evt_space_battle
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "cosmic_archive_crisis.30.a"
+		custom_tooltip = cosmic_guardian_engage_military_tooltip
+		
+		hidden_effect = {
+			set_country_flag = cosmic_guardian_military_path
+			
+			# Flag the guardian for military confrontation
+			country_event = { id = cosmic_archive_crisis.31 days = 10 }
+		}
+	}
+	
+	option = {
+		name = "cosmic_archive_crisis.30.b"
+		custom_tooltip = cosmic_guardian_resume_research_tooltip
+		
+		trigger = {
+			has_country_flag = cosmic_guardian_research_complete
+		}
+		
+		hidden_effect = {
+			# Allow another attempt at the resource provision
+			country_event = { id = cosmic_archive_crisis.20 days = 5 }
+		}
+	}
+	
+	# Continue with alliance path if relevant
+	option = {
+		name = "cosmic_archive_crisis.30.c"
+		custom_tooltip = cosmic_guardian_seek_allies_tooltip
+		
+		trigger = {
+			OR = {
+				is_in_federation = yes
+				any_relation = {
+					is_country_type = default
+					has_communications = root
+					has_opinion = {
+						who = root
+						value > 50
+					}
+				}
+			}
+		}
+		
+		hidden_effect = {
+			country_event = { id = cosmic_archive_crisis.40 days = 10 }
+		}
+	}
+}
+
+# Military Confrontation - Battle Trigger
+country_event = {
+	id = cosmic_archive_crisis.31
+	title = "cosmic_archive_crisis.31.name"
+	desc = "cosmic_archive_crisis.31.desc"
+	picture = GFX_evt_space_battle
+	location = event_target:guardian_fleet
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		# Track Guardian's health
+		set_variable = {
+			which = guardian_health
+			value = 100
+		}
+	}
+	
+	option = {
+		name = "cosmic_archive_crisis.31.a"
+		custom_tooltip = cosmic_guardian_battle_begins_tooltip
+		
+		# Make Guardian target player's fleets
+		hidden_effect = {
+			event_target:guardian_country = {
+				set_attitude_towards = {
+					who = root
+					attitude = attitude_nemesis
+				}
+			}
+			
+			# Set up battle tracking
+			country_event = { id = cosmic_archive_crisis.32 days = 30 }
+		}
+	}
+}
+
+# Military Confrontation - Battle Progress Tracker
+country_event = {
+	id = cosmic_archive_crisis.32
+	hide_window = yes
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		# Check if Guardian's fleet is still alive
+		if = {
+			limit = {
+				NOT = { exists = event_target:guardian_fleet }
+			}
+			
+			# Guardian defeated
+			country_event = { id = cosmic_archive_crisis.33 }
+		}
+		else = {
+			# Guardian still alive, check for recent battle losses
+			random_owned_fleet = {
+				limit = {
+					exists = this
+					count_fleet_ships > 0
+					fleet_power > 10000 # Significant fleet
+				}
+				save_event_target_as = player_combat_fleet
+			}
+			
+			if = {
+				limit = {
+					is_event_target_set = player_combat_fleet
+				}
+				random_list = {
+					33 = {
+						# Guardian takes damage
+						change_variable = {
+							which = guardian_health
+							value = -25
+						}
+						
+						# Guardian weakened
+						if = {
+							limit = {
+								check_variable = {
+									which = guardian_health
+									value <= 0
+								}
+							}
+							# Guardian is defeated
+							country_event = { id = cosmic_archive_crisis.33 }
+						}
+						else = {
+							# Guardian weakened but continues fighting
+							country_event = { id = cosmic_archive_crisis.34 }
+						}
+					}
+					33 = {
+						# Stalemate - no significant damage to either side
+						country_event = { id = cosmic_archive_crisis.35 }
+					}
+					34 = {
+						# Guardian counterattacks and damages player fleet
+						country_event = { id = cosmic_archive_crisis.36 }
+					}
+				}
+			}
+			else = {
+				# No significant engagement yet
+				country_event = { id = cosmic_archive_crisis.32 days = 30 }
+			}
+		}
+	}
+}
+
+# Military Confrontation - Guardian Defeated
+country_event = {
+	id = cosmic_archive_crisis.33
+	title = "cosmic_archive_crisis.33.name"
+	desc = "cosmic_archive_crisis.33.desc"
+	picture = GFX_evt_ship_explosion
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		set_country_flag = cosmic_guardian_defeated
+		
+		# Remove crisis effects
+		remove_modifier = cosmic_archives_guardian_wrath
+	}
+	
+	option = {
+		name = "cosmic_archive_crisis.33.a"
+		custom_tooltip = cosmic_guardian_victory_tooltip
+		
+		# Guardian technology reward
+		add_research_option = tech_cosmic_guardian_weapons
+		add_research_option = tech_cosmic_guardian_shields
+		
+		# Strategic resource reward
+		add_resource = {
+			sr_guardian_essence = 5
+		}
+		
+		# Fleet bonus
+		add_modifier = {
+			modifier = cosmic_guardian_defeated_buff
+			days = -1
+		}
+		
+		# Complete the crisis
+		hidden_effect = {
+			country_event = { id = cosmic_archive_crisis.50 days = 30 }
+		}
+	}
+}
+
+# Military Confrontation - Guardian Damaged
+country_event= {
+	id = cosmic_archive_crisis.34
+	title = "cosmic_archive_crisis.34.name"
+	desc = "cosmic_archive_crisis.34.desc"
+	picture = GFX_evt_space_battle
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "cosmic_archive_crisis.34.a"
+		custom_tooltip = cosmic_guardian_damaged_tooltip
+		
+		hidden_effect = {
+			country_event = { id = cosmic_archive_crisis.32 days = 30 }
+		}
+	}
+}
+
+# Military Confrontation - Stalemate
+country_event = {
+	id = cosmic_archive_crisis.35
+	title = "cosmic_archive_crisis.35.name"
+	desc = "cosmic_archive_crisis.35.desc"
+	picture = GFX_evt_space_battle
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "cosmic_archive_crisis.35.a"
+		custom_tooltip = cosmic_guardian_stalemate_tooltip
+		
+		hidden_effect = {
+			country_event = { id = cosmic_archive_crisis.32 days = 30 }
+		}
+	}
+}
+
+# Military Confrontation - Guardian Counterattack
+country_event = {
+	id = cosmic_archive_crisis.36
+	title = "cosmic_archive_crisis.36.name"
+	desc = "cosmic_archive_crisis.36.desc"
+	picture = GFX_evt_space_battle
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		# Damage player's ships
+		random_owned_fleet = {
+			limit = {
+				exists = this
+				num_ships > 3
+				is_in_combat = yes
+			}
+			kill_random_ship = { count = 3 }
+		}
+	}
+	
+	option = {
+		name = "cosmic_archive_crisis.36.a"
+		custom_tooltip = cosmic_guardian_counterattack_tooltip
+		
+		hidden_effect = {
+			country_event = { id = cosmic_archive_crisis.32 days = 30 }
+		}
+	}
+}
+
+# Allied Response - Initial Diplomacy
+country_event = {
+	id = cosmic_archive_crisis.40
+	title = "cosmic_archive_crisis.40.name"
+	desc = "cosmic_archive_crisis.40.desc"
+	picture = GFX_evt_federation_meeting
+	diplomatic = yes
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		set_country_flag = cosmic_guardian_allied_approach
+	}
+	
+	option = {
+		name = "cosmic_archive_crisis.40.a"
+		custom_tooltip = cosmic_guardian_allied_request_tooltip
+		
+		hidden_effect = {
+			# Check for federation members
+			if = {
+				limit = { is_in_federation = yes }
+				every_federation_member = {
+					limit = { NOT = { is_same_value = root } }
+					country_event = { id = cosmic_archive_crisis.41 }
+				}
+			}
+			
+			# Check for other allies
+			every_relation = {
+				limit = {
+					is_country_type = default
+					has_communications = root
+					has_opinion = {
+						who = root
+						value > 50
+					}
+				}
+				country_event = { id = cosmic_archive_crisis.41 }
+			}
+			
+			# Schedule result event
+			country_event = { id = cosmic_archive_crisis.42 days = 60 }
+		}
+	}
+}
+
+# Allied Response - Partner Decision
+country_event = {
+	id = cosmic_archive_crisis.41
+	title = "cosmic_archive_crisis.41.name"
+	desc = "cosmic_archive_crisis.41.desc"
+	picture = GFX_evt_federation_meeting
+	diplomatic = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "cosmic_archive_crisis.41.a"
+		custom_tooltip = cosmic_guardian_allied_accept_tooltip
+		
+		hidden_effect = {
+			set_country_flag = cosmic_guardian_allied_accepted
+			from = { set_country_flag = cosmic_guardian_allies_acquired }
+		}
+		
+		ai_chance = {
+			base = 65
+			modifier = {
+				add = 20
+				is_in_federation_with = from
+			}
+			modifier = {
+				add = 15
+				has_country_flag = cosmic_archive_guardian_aware
+			}
+			modifier = {
+				add = -30
+				has_ethic = ethic_xenophobe
+			}
+			modifier = {
+				add = 10
+				has_ethic = ethic_xenophile
+			}
+			modifier = {
+				add = 15
+				has_ethic = ethic_fanatic_xenophile
+			}
+		}
+	}
+	
+	option = {
+		name = "cosmic_archive_crisis.41.b"
+		custom_tooltip = cosmic_guardian_allied_refuse_tooltip
+		
+		hidden_effect = {
+			set_country_flag = cosmic_guardian_allied_refused
+		}
+		
+		ai_chance = {
+			base = 35
+			modifier = {
+				add = 30
+				has_ethic = ethic_xenophobe
+			}
+			modifier = {
+				add = 40
+				has_ethic = ethic_fanatic_xenophobe
+			}
+			modifier = {
+				add = -20
+				is_in_federation_with = from
+			}
+		}
+	}
+}
+
+# Allied Response - Result
+country_event = {
+	id = cosmic_archive_crisis.42
+	title = "cosmic_archive_crisis.42.name"
+	desc = "cosmic_archive_crisis.42.desc"
+	picture = GFX_evt_federation_fleet
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		if = {
+			limit = { has_country_flag = cosmic_guardian_allies_acquired }
+			set_country_flag = cosmic_guardian_alliance_formed
+		}
+	}
+	
+	option = {
+		name = "cosmic_archive_crisis.42.a"
+		custom_tooltip = cosmic_guardian_alliance_successful_tooltip
+		
+		trigger = {
+			has_country_flag = cosmic_guardian_allies_acquired
+		}
+		
+		hidden_effect = {
+			# Alliance successful, proceed to joint attack
+			country_event = { id = cosmic_archive_crisis.43 days = 30 }
+		}
+	}
+	
+	option = {
+		name = "cosmic_archive_crisis.42.b"
+		custom_tooltip = cosmic_guardian_alliance_failed_tooltip
+		
+		trigger = {
+			NOT = { has_country_flag = cosmic_guardian_allies_acquired }
+		}
+		
+		hidden_effect = {
+			# No allies joined, must choose another approach
+			country_event = { id = cosmic_archive_crisis.30 days = 15 }
+		}
+	}
+}
+
+# Allied Response - Joint Attack
+country_event = {
+	id = cosmic_archive_crisis.43
+	title = "cosmic_archive_crisis.43.name"
+	desc = "cosmic_archive_crisis.43.desc"
+	picture = GFX_evt_space_battle
+	location = event_target:guardian_fleet
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "cosmic_archive_crisis.43.a"
+		custom_tooltip = cosmic_guardian_joint_attack_tooltip
+		
+		hidden_effect = {
+			# Allied forces attack, more effective than solo
+			random_list = {
+				70 = {
+					# Joint forces defeat the Guardian
+					country_event = { id = cosmic_archive_crisis.44 days = 15 }
+				}
+				30 = {
+					# Guardian repels even the allied forces
+					country_event = { id = cosmic_archive_crisis.35 days = 15 }
+				}
+			}
+		}
+	}
+}
+
+# Allied Response - Victory
+country_event = {
+	id = cosmic_archive_crisis.44
+	title = "cosmic_archive_crisis.44.name"
+	desc = "cosmic_archive_crisis.44.desc"
+	picture = GFX_evt_federation_victory
+	diplomatic = yes
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		set_country_flag = cosmic_guardian_defeated
+		
+		# Remove crisis effects
+		remove_modifier = cosmic_archives_guardian_wrath
+	}
+	
+	option = {
+		name = "cosmic_archive_crisis.44.a"
+		custom_tooltip = cosmic_guardian_alliance_victory_tooltip
+		
+		# Reward for allied victory - shared but less than solo
+		add_research_option = tech_cosmic_guardian_shields
+		
+		# Opinion boost with allies
+		every_country = {
+			limit = {
+				has_country_flag = cosmic_guardian_allied_accepted
+			}
+			add_opinion_modifier = {
+				who = root
+				modifier = "guardian_crisis_cooperation"
+			}
+		}
+		
+		# Diplomatic weight bonus
+		add_modifier = {
+			modifier = cosmic_guardian_alliance_victory
+			days = -1
+		}
+		
+		# Complete the crisis
+		hidden_effect = {
+			country_event = { id = cosmic_archive_crisis.50 days = 30 }
+		}
+	}
+}
+
+# Guardian Aggression - More Frequent Attack
+country_event = {
+	id = cosmic_archive_crisis.45
+	hide_window = yes
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		# Make Guardian more aggressive
+		event_target:guardian_country = {
+			country_event = { id = cosmic_archive_crisis.12 days = 30 }
+		}
+	}
+}
+
+# Crisis Resolution - Conclusion
+country_event = {
+	id = cosmic_archive_crisis.50
+	title = "cosmic_archive_crisis.50.name"
+	desc = "cosmic_archive_crisis.50.desc"
+	picture = GFX_evt_psionics
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		set_global_flag = cosmic_guardian_crisis_resolved
+	}
+	
+	option = {
+		name = "cosmic_archive_crisis.50.a"
+		custom_tooltip = cosmic_guardian_crisis_resolved_tooltip
+		
+		# Clear remaining penalities from planets
+		every_owned_planet = {
+			limit = {
+				has_planet_flag = cosmic_archive_guardian_present
+			}
+			remove_planet_flag = cosmic_archive_guardian_present
+			remove_modifier = cosmic_archive_planetary_disruption
+		}
+	}
+}

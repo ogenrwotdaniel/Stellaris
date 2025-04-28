@@ -1,0 +1,68 @@
+# Cosmic Archive Scripted Variables
+# Central configuration file for all technical variables used in the Cosmic Archive mod
+
+# ### Deposit Spawn Rate Controls ###
+@cosmic_archive_base_spawn_chance = 3          # Base percentage (out of 100)
+@cosmic_archive_gaia_bonus = 2                 # Additional percentage for Gaia worlds
+@cosmic_archive_midgame_penalty = 0.75         # Multiplier after midgame
+@cosmic_archive_repeat_penalty = 0.5          # Multiplier if empire already found an archive
+@cosmic_archive_max_per_empire = 3            # Soft cap of archives per empire
+@cosmic_archive_max_per_galaxy = 5            # Maximum archives in entire galaxy
+
+# ### Event Chain Progression Timers ###
+@cosmic_archive_phase1_min_days = 180         # Minimum days before Phase 1 can trigger
+@cosmic_archive_phase1_max_days = 360         # Maximum days before Phase 1 must trigger
+@cosmic_archive_phase2_min_days = 360         # Minimum days before Phase 2 can trigger
+@cosmic_archive_phase2_max_days = 720         # Maximum days before Phase 2 must trigger
+@cosmic_archive_phase3_min_days = 540         # Minimum days before Phase 3 can trigger
+@cosmic_archive_phase3_max_days = 1080        # Maximum days before Phase 3 must trigger
+
+# ### Resource Pulse Settings ###
+@cosmic_archive_pulse_base_chance = 5         # Percentage chance per month for resource pulse
+@cosmic_archive_pulse_energy_min = 50         # Minimum energy from pulse
+@cosmic_archive_pulse_energy_max = 150        # Maximum energy from pulse
+@cosmic_archive_pulse_minerals_min = 50       # Minimum minerals from pulse
+@cosmic_archive_pulse_minerals_max = 150      # Maximum minerals from pulse
+@cosmic_archive_pulse_alloys_min = 15         # Minimum alloys from pulse
+@cosmic_archive_pulse_alloys_max = 50         # Maximum alloys from pulse
+
+# ### Event Chain Branch Weights ###
+@cosmic_archive_enhance_weight = 40           # Base weight for Enhanced Technologies path
+@cosmic_archive_stabilize_weight = 30         # Base weight for Stabilized path
+@cosmic_archive_risk_weight = 30              # Base weight for Risk It All path
+
+# ### Risk Path Success/Failure ###
+@cosmic_archive_risk_base_success = 40        # Base percentage chance of success for Risk path
+@cosmic_archive_risk_tech_bonus = 15          # Bonus from advanced tech level
+@cosmic_archive_risk_psionic_bonus = 25       # Bonus from psionic leaders
+@cosmic_archive_risk_gestalt_bonus = 15       # Bonus for gestalt empires
+@cosmic_archive_risk_materialist_bonus = 10   # Bonus for materialist ethics
+@cosmic_archive_risk_spiritualist_penalty = 5  # Penalty for spiritualist ethics
+
+# ### Guardian Crisis Scaling ###
+@cosmic_archive_guardian_base_health = 20000  # Base health points
+@cosmic_archive_guardian_health_scaling = 0.5 # Health scaling with game year
+@cosmic_archive_guardian_grand_admiral_mult = 1.5 # Multiplier for Grand Admiral difficulty
+@cosmic_archive_guardian_commodore_mult = 1.25 # Multiplier for Commodore difficulty
+@cosmic_archive_guardian_captain_mult = 1.0   # Multiplier for Captain difficulty
+@cosmic_archive_guardian_ensign_mult = 0.75   # Multiplier for Ensign difficulty
+@cosmic_archive_guardian_cadet_mult = 0.5     # Multiplier for Cadet difficulty
+@cosmic_archive_guardian_mp_scaling = 0.2     # Additional scaling per player in multiplayer
+
+# ### Guardian Damage Output ###
+@cosmic_archive_guardian_base_damage = 150    # Base weapon damage
+@cosmic_archive_guardian_damage_scaling = 0.4 # Damage scaling with game year
+@cosmic_archive_guardian_crisis_mult = 0.75   # Damage reduction during active crisis
+
+# ### Guardian Rewards Scaling ###
+@cosmic_archive_guardian_base_alloys = 2000   # Base alloys reward
+@cosmic_archive_guardian_base_physics = 1000  # Base physics research reward
+@cosmic_archive_guardian_base_society = 1000  # Base society research reward
+@cosmic_archive_guardian_base_engineering = 1000 # Base engineering research reward
+@cosmic_archive_guardian_tech_chance = 25     # Percentage chance for special tech options
+@cosmic_archive_guardian_relic_mult = 1.5     # Multiplier for rewards if guardian killed vs pacified
+
+# ### Miscellaneous ###
+@cosmic_archive_max_archives_per_system = 1   # Maximum archives per star system
+@cosmic_archive_buffer_distance = 3           # Minimum distance between archives in hyperlanes
+@cosmic_archive_crisis_year_threshold = 2350  # Year after which guardian difficulty increases dramatically

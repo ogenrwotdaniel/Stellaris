@@ -1,0 +1,36 @@
+# On Actions for Cosmic Archive
+
+on_game_start = {
+    events = {
+        cosmic_archive.1 # Spawn cosmic archives on random planets
+        cosmic_archive_crisis.0 # Initialize the guardian crisis system
+    }
+}
+
+# When the new game is created via the "setup_scenario" entry point
+on_game_start_country = {
+    events = {
+        cosmic_archive.1 # Alternative trigger for cosmic archive placement
+    }
+}
+
+# Trigger when a planet survey is completed
+on_planet_surveyed = {
+    events = {
+        cosmic_archive.2 # Check if the surveyed planet has a hidden cosmic archive
+    }
+}
+
+# Monthly pulse to check for archive resource generation
+on_monthly_pulse_country = {
+    events = {
+        cosmic_archive.5 # Check for potential archive energy pulses
+    }
+}
+
+# Global monthly pulse to check for guardian activation conditions
+on_monthly_pulse = {
+    events = {
+        cosmic_archive_crisis.100 # Check for potential guardian activation
+    }
+}

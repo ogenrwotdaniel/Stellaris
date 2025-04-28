@@ -1,0 +1,295 @@
+#define PIXEL_SHADER
+#define SHADERQUALITY_HIGH
+#define PDX_DIRECTX_11
+
+#define PDX_POSITION SV_POSITION
+#define PDX_COLOR SV_TARGET
+
+#define mod( X, Y ) ( X % Y )
+
+#define FIX_FLIPPED_UV( X ) ( X )
+
+float3x3 CastTo3x3( in float4x4 M )
+{
+	return (float3x3)M;
+}
+#define Create3x3 float3x3
+#define GetMatrixData( Matrix, row, col ) ( Matrix [ row ] [ col ] )
+
+float2 vec2(float vValue) { return float2(vValue, vValue); }
+float3 vec3(float vValue) { return float3(vValue, vValue, vValue); }
+float4 vec4(float vValue) { return float4(vValue, vValue, vValue, vValue); }
+
+
+struct STextureSampler2D
+{
+    Texture2D 		_Texture;
+    SamplerState 	_Sampler;
+};
+STextureSampler2D CreateSampler2D( Texture2D Texture, SamplerState Sampler )
+{
+    STextureSampler2D ret = { Texture, Sampler };
+    return ret;
+}
+
+struct STextureSamplerCube
+{
+    TextureCube 	_Texture;
+    SamplerState 	_Sampler;
+};
+STextureSamplerCube CreateSamplerCube( TextureCube Texture, SamplerState Sampler )
+{
+    STextureSamplerCube ret = { Texture, Sampler };
+    return ret;
+}
+
+#define TextureSampler2D STextureSampler2D
+
+#define sampler2DShadow STextureSampler2D
+#define sampler2D STextureSampler2D
+
+#define tex2D(samp,uv) samp._Texture.Sample(samp._Sampler, uv)
+#define tex2Dlod(samp,uv_lod) samp._Texture.SampleLevel(samp._Sampler, (uv_lod).xy, (uv_lod).w)
+#define tex2Dlod0(samp,uv_lod) samp._Texture.SampleLevel(samp._Sampler, (uv_lod).xy, 0)
+#define tex2Dbias(samp,uv_bias) samp._Texture.SampleBias(samp._Sampler, (uv_bias).xy, (uv_bias).w)
+#define tex2Dproj(samp,uv_proj) samp._Texture.SampleLevel(samp._Sampler, (uv_proj).xy / (uv_proj).w, 0)
+#define tex2Dgrad(samp,uv,ddx,ddy) samp._Texture.SampleGrad(samp._Sampler, uv, ddx, ddy)
+
+#define texCUBE(samp,uv) samp._Texture.Sample(samp._Sampler, uv)
+#define texCUBElod(samp,uv_lod) samp._Texture.SampleLevel(samp._Sampler, (uv_lod).xyz, (uv_lod).w)
+#define texCUBEbias(samp,uv_bias) samp._Texture.SampleBias(samp._Sampler, (uv_bias).xyz, (uv_bias).w)
+
+#define uintIfSupported uint
+
+Texture2D Diffuse_Texture : register(t0);
+SamplerState Diffuse_Sampler : register(s0);
+#define Diffuse CreateSampler2D(Diffuse_Texture, Diffuse_Sampler)
+Texture2D BorderID_Texture : register(t1);
+SamplerState BorderID_Sampler : register(s1);
+#define BorderID CreateSampler2D(BorderID_Texture, BorderID_Sampler)
+Texture2D BorderSDF_Texture : register(t2);
+SamplerState BorderSDF_Sampler : register(s2);
+#define BorderSDF CreateSampler2D(BorderSDF_Texture, BorderSDF_Sampler)
+Texture2D TerraIncognitaTexture_Texture : register(t3);
+SamplerState TerraIncognitaTexture_Sampler : register(s3);
+#define TerraIncognitaTexture CreateSampler2D(TerraIncognitaTexture_Texture, TerraIncognitaTexture_Sampler)
+cbuffer dx11_cb0 : register(b0)
+{
+	float4x4 ViewProjectionMatrix;
+	float3 vCamPos;
+	float4 PrimaryColor;
+	float4 SecondaryColor;
+	float vSdfTime;
+	float vBorderHighLight;
+}
+struct VS_INPUT
+{
+	float2 vPosition : POSITION;
+	float2 vUV : TEXCOORD0;
+};
+struct VS_INPUT_STAR_PIN
+{
+	float2 vOffset : POSITION;
+	float vGroundStarBlend : TEXCOORD0;
+};
+struct VS_OUTPUT_STAR_PIN
+{
+	float4 vPosition : PDX_POSITION;
+	float3 vPos : TEXCOORD0;
+};
+struct VS_OUTPUT
+{
+	float4 vPosition : PDX_POSITION;
+	float2 vUV : TEXCOORD0;
+	float2 vPos : TEXCOORD2;
+};
+struct VS_INPUT_SECTOR
+{
+	float2 vPosition : POSITION;
+	float vDistance : TEXCOORD0;
+};
+struct VS_OUTPUT_SECTOR
+{
+	float4 vPosition : PDX_POSITION;
+	float2 vUV : TEXCOORD0;
+	float vDistance : TEXCOORD1;
+};
+// --------------------------------------------------------------
+// ------------------    Light          -------------------------
+// --------------------------------------------------------------
+static const float3 SUN_DIFFUSE					= float3( 0.226f, 0.182f, 0.36f );
+
+
+// --------------------------------------------------------------
+// ------------------    HDR          	-------------------------
+// --------------------------------------------------------------
+static const float3 LUMINANCE_VECTOR  			= float3(0.2125f, 0.7154f, 0.0721f);
+
+
+// --------------------------------------------------------------
+// ------------------    Specular       -------------------------
+// --------------------------------------------------------------
+static const float SPECULAR_WIDTH 				= 15.0f;
+static const float SPECULAR_MULTIPLIER			= 1.0f;
+static const float MAP_SPECULAR_WIDTH 			= 15.0f;
+static const float MAP_SPECULAR_MULTIPLIER		= 0.05f;
+
+
+// --------------------------------------------------------------
+// ------------------       ROADS       -------------------------
+// --------------------------------------------------------------
+static const float ROAD_TILE_FREQ				= 16.0f;
+static const float ROAD_FADE_START				= 1.0f;
+static const float ROAD_FADE_END				= 4.0f;
+
+static const float ROAD_MAXIMAP_TILE_FREQ		= 30.f;
+static const float ROAD_MAXIMAP_EXTRA_WIDTH		= 0.3f;
+
+static const float ROAD_MINIMAP_TILE_FREQ		= 15.f;
+static const float ROAD_MINIMAP_EXTRA_WIDTH		= 0.0f;
+
+
+// --------------------------------------------------------------
+// ------------------       COMBAT       ------------------------
+// --------------------------------------------------------------
+static const float COMBAT_OUTSIDE_BOUNDS_BRIGHTNESS	= 0.45f;
+static const float COMBAT_INSIDE_BOUNDS_BRIGHTNESS	= 0.99f;
+static const float COMBAT_BOUNDS_SHARPNESS 			= 0.1f;
+static const float COMBAT_BOUNDS_BORDER_SHARPNESS	= 3.0f;
+
+
+// --------------------------------------------------------------
+// ------------------    WATER          -------------------------
+// --------------------------------------------------------------
+static const float 	WATER_TILE					= 1.8f;
+static const float 	WATER_TIME_SCALE			= 0.03f;
+static const float	WATER_FOG_START				= 16.5f;
+static const float	WATER_FOG_END				= 19.7f;
+
+static const float WATER_HEIGHT 				= 20.0f;
+static const float WATER_HEIGHT_RECP 			= 1.0f / WATER_HEIGHT;
+static const float WATER_HEIGHT_RECP_SQUARED 	= WATER_HEIGHT_RECP * WATER_HEIGHT_RECP;
+
+static const float HEL_WATER_SCALE				= 1.2f;
+static const float HEL_WATER_SPEED 				= 0.03f;
+static const float HEL_WATER_GLOW_NOISE_SPEED	= 0.08f;
+static const float HEL_WATER_GLOW_NOISE_SCALE   = 0.006f;
+
+
+// --------------------------------------------------------------
+// ------------------    SHADOW         -------------------------
+// --------------------------------------------------------------
+static const float  SHADOW_WEIGHT_TERRAIN    	= 1.0f;
+static const float  SHADOW_WEIGHT_WATER   		= 1.0f;
+static const float  SHADOW_WEIGHT_RIVER   		= 1.0f;
+static const float  SHADOW_WEIGHT_TREE   		= 1.0f;
+static const float  SHADOW_WEIGHT_ROAD   		= 1.0f;
+static const float  SHADOW_WEIGHT_MESH   		= 1.0f;
+
+// --------------------------------------------------------------
+// -------------    RIM LIGHT (PDXMESH)   -----------------------
+// --------------------------------------------------------------
+static const float 	RIM_START 		= 0.6f;
+static const float 	RIM_END 		= 1.0f;
+static const float4 RIM_COLOR 		= float4( 0.3f, 0.6f, 0.8f, 0.0f );
+
+// --------------------------------------------------------------
+// -------------    GREYING OUT   -------------------------------
+// --------------------------------------------------------------
+static const float3 GREY_OUT_VECTOR     = float3( 0.212671f, 0.715160f, 0.072169f );
+static const float GREY_OUT_GREYNESS    = 0.85f;    // [0.0f, 1.0f] 0.0f - the tint is not changed, 1.0f - the tint is completely removed
+static const float GREY_OUT_BRIGHTNESS  = 0.75;     // [0.0f, 1.0f] 0.0f - completely black, 1.0f - the same brighnes as before graying out
+
+static const float GALAXY_SIZE = 2000.f;
+static const float TI_BLEND_START = 0.65f;
+static const float TI_BLEND_STOP = 0.75f;
+static const float TI_GRAY_BRIGHTNESS = 0.15f;
+
+float Desaturate( float3 vColor )
+{
+	return dot( vColor, GREY_OUT_VECTOR );
+}
+
+float CalcTerraIncognitaValue( float2 vWorldPos2D, in sampler2D TITexture )
+{
+	float2 vTIUV = ( vWorldPos2D + GALAXY_SIZE * 0.5f ) / GALAXY_SIZE;
+	float vTI = tex2D( TerraIncognitaTexture, vTIUV ).a;
+	
+	return smoothstep( TI_BLEND_START, TI_BLEND_STOP, vTI );
+}
+
+float4 ApplyTerraIncognitaValue( float4 vColor, float vBrightness, float vTI)
+{
+	float Grey = Desaturate( vColor.rgb ) * TI_GRAY_BRIGHTNESS * vBrightness; 
+	//Grey = TI_DARK + ( ( TI_BRIGHT - TI_DARK ) * ( Grey ) ) / 1.f;
+	
+	vColor.rgb = lerp( vec3( Grey ), vColor.rgb, vTI );
+	
+	return vColor;
+}
+
+float4 ApplyTerraIncognitaValueIgnoreSaturation( float4 vColor, float vBrightness, float vTI)
+{
+	float Grey = TI_GRAY_BRIGHTNESS * vBrightness; 
+	vColor.rgb = lerp( vec3( Grey ), vColor.rgb, vTI );
+	
+	return vColor;
+}
+
+float4 ApplyTerraIncognita( float4 vColor, float2 vWorldPos2D, float vBrightness, in sampler2D TITexture )
+{
+	float vTI = CalcTerraIncognitaValue( vWorldPos2D, TITexture );
+	return ApplyTerraIncognitaValue( vColor, vBrightness, vTI);
+}
+
+float4 ApplyTerraIncognitaIgnoreSaturation( float4 vColor, float2 vWorldPos2D, float vBrightness, in sampler2D TITexture )
+{
+	float vTI = CalcTerraIncognitaValue( vWorldPos2D, TITexture );
+	return ApplyTerraIncognitaValueIgnoreSaturation( vColor, vBrightness, vTI);
+}
+
+float4 main( VS_OUTPUT v ) : PDX_COLOR
+		{
+			float vDist = tex2D( BorderSDF, v.vUV ).a;
+			
+			const float vMaxMidDistance = 0.53f;	
+			const float vMinMidDistance = 0.47f;
+			clip( vMaxMidDistance - vDist );
+			
+			float vCameraDistance = length( vCamPos - float3(v.vPos.x, 0.f, v.vPos.y ) );
+			float vCamDistFactor = saturate( vCameraDistance / 1600.0f );
+			
+			float vMid = lerp( vMinMidDistance, vMaxMidDistance, vCamDistFactor );
+			
+			float vEpsilon = 0.005f + vCamDistFactor * 0.05f;
+			float vOffset = -0.000f;
+			float vAlpha = smoothstep( vMid + vEpsilon, vMid - vEpsilon, vDist + vOffset );
+					
+			float vAlphaMin = 0.5f + 0.5f * vCamDistFactor;
+			
+			float vEdgeWidth = 0.025f + 0.35f * vCamDistFactor;
+			const float vEdgeSharpness = 100.0f;			
+			float vBlackBorderWidth = vEdgeWidth * 0.25f;
+			const float vBlackBorderSharpness = 25.0f;
+
+			//vAlphaOuterEdge makes the outermost edge smoother
+			float vAlphaOuterEdge = smoothstep( vMid + vEpsilon, vMid - vEpsilon, vDist + vOffset );
+			//vAlphaEdge is the saturated part at the outer edge
+			float vAlphaEdge = saturate( (vDist-vMid + vEdgeWidth)*vEdgeSharpness );
+			//vAlphaFill is the soft gradient inside the blobs
+			float vAlphaFill = max( vAlphaMin, saturate( vMid + (vDist-0.25f + vEdgeWidth*1.0f)*2.0f ) * 0.75f );
+
+			float4 vColor = vAlphaEdge *  PrimaryColor + ( 1 - vAlphaEdge ) * SecondaryColor;
+
+			//Add a black edge that becomes more visible the further away from the camera it is
+			vColor *= 1.0f - ( 0.25f * saturate( (vDist-vMid + vBlackBorderWidth)*vBlackBorderSharpness ) );
+			vColor[3] = saturate(vAlphaEdge + vAlphaFill) * vAlphaOuterEdge;
+
+			// Fade out based on Terra Incognita
+			float2 vTIUV = ( v.vPos.xy + GALAXY_SIZE * 0.5f ) / GALAXY_SIZE;
+			vColor.a *= tex2D( TerraIncognitaTexture, vTIUV ).a;
+			
+			return vColor;
+		}
+		
+	

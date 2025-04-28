@@ -1,0 +1,437 @@
+# Cosmic Archive Deposits
+# These deposits represent the various states of the Cosmic Archive that can be found on planets
+
+# Initial undiscovered state - appears after planet survey
+d_cosmic_archive_dormant = {
+	time = 0
+	icon = d_alien_data_cache
+	is_visible = yes
+	on_researched = {}
+	
+	use_for_min_max_adjustments = no
+	potential = {
+		always = yes
+	}
+	
+	requirement_parameters = {
+		is_deposit_type = yes
+	}
+	
+	planet_modifier = {
+		planet_jobs_physics_research_produces_mult = 0.05
+		planet_jobs_society_research_produces_mult = 0.05
+		planet_jobs_engineering_research_produces_mult = 0.05
+	}
+	
+	triggered_planet_modifier = {
+		potential = {
+			exists = owner
+			owner = { is_gestalt = no }
+		}
+		modifier = {
+			job_researcher_add = 2
+		}
+	}
+	
+	triggered_planet_modifier = {
+		potential = {
+			exists = owner
+			owner = { is_gestalt = yes }
+		}
+		modifier = {
+			job_brain_drone_add = 2
+		}
+	}
+	
+	resources = {
+		category = planet_deposits
+		produces = {
+			physics_research = 2
+			society_research = 2
+			engineering_research = 2
+		}
+	}
+	
+	# Spawn weight - very rare (3% on eligible planets)
+	spawn_chance = {
+		modifier = {
+			add = 3
+			is_planet_class = pc_desert
+		}
+		modifier = {
+			add = 3
+			is_planet_class = pc_tropical
+		}
+		modifier = {
+			add = 3
+			is_planet_class = pc_arid
+		}
+		modifier = {
+			add = 3
+			is_planet_class = pc_continental
+		}
+		modifier = {
+			add = 3
+			is_planet_class = pc_ocean
+		}
+		modifier = {
+			add = 3
+			is_planet_class = pc_tundra
+		}
+		modifier = {
+			add = 3
+			is_planet_class = pc_arctic
+		}
+		modifier = {
+			add = 3
+			is_planet_class = pc_alpine
+		}
+		modifier = {
+			add = 3
+			is_planet_class = pc_savannah
+		}
+		modifier = {
+			add = 5
+			is_planet_class = pc_gaia
+		}
+		
+		# Reduce chance in mid-game to keep rare
+		modifier = {
+			mult = 0.75
+			owner = { 
+				OR = {
+					has_technology = tech_habitable_worlds
+					years_passed > 50
+				}
+			}
+		}
+		
+		# Reduce chance if empire already has archives
+		modifier = {
+			mult = 0.5
+			owner = { has_country_flag = found_cosmic_archive }
+		}
+		
+		# Reduced chance with multiple archives
+		modifier = {
+			mult = 0.25
+			owner = { has_country_flag = multiple_cosmic_archives }
+		}
+		
+		# Guaranteed on one planet per galaxy - flagged by event
+		modifier = {
+			add = 9997
+			has_planet_flag = guaranteed_cosmic_archive
+		}
+	}
+}
+
+# Phase 1 - Archive after discovery (First Signal)
+d_cosmic_archive_active_phase1 = {
+	time = 0
+	icon = d_alien_data_network
+	is_visible = yes
+	on_researched = {}
+	
+	use_for_min_max_adjustments = no
+	
+	planet_modifier = {
+		planet_researchers_physics_produces_mult = 0.10
+		planet_researchers_society_produces_mult = 0.10
+		planet_researchers_engineering_produces_mult = 0.10
+	}
+	
+	triggered_planet_modifier = {
+		potential = {
+			exists = owner
+			owner = { is_gestalt = no }
+		}
+		modifier = {
+			job_researcher_add = 3
+		}
+	}
+	
+	triggered_planet_modifier = {
+		potential = {
+			exists = owner
+			owner = { is_gestalt = yes }
+		}
+		modifier = {
+			job_brain_drone_add = 3
+		}
+	}
+	
+	resources = {
+		category = planet_deposits
+		produces = {
+			physics_research = 4
+			society_research = 4
+			engineering_research = 4
+		}
+		
+		# Periodic resource pulse
+		triggered_produces = {
+			trigger = {
+				has_planet_flag = archive_energy_pulse
+			}
+			energy = 50
+		}
+		
+		triggered_produces = {
+			trigger = {
+				has_planet_flag = archive_mineral_pulse
+			}
+			minerals = 50
+		}
+		
+		triggered_produces = {
+			trigger = {
+				has_planet_flag = archive_alloy_pulse
+			}
+			alloys = 25
+		}
+	}
+}
+
+# Enhanced Technologies path result
+d_cosmic_archive_enhanced = {
+	time = 0
+	icon = d_alien_food_processor
+	is_visible = yes
+	on_researched = {}
+	
+	use_for_min_max_adjustments = no
+	
+	planet_modifier = {
+		planet_researchers_physics_produces_mult = 0.15
+		planet_researchers_society_produces_mult = 0.05
+		planet_researchers_engineering_produces_mult = 0.15
+		planet_stability_add = 5
+	}
+	
+	triggered_planet_modifier = {
+		potential = {
+			exists = owner
+			owner = { is_gestalt = no }
+		}
+		modifier = {
+			job_researcher_add = 4
+		}
+	}
+	
+	triggered_planet_modifier = {
+		potential = {
+			exists = owner
+			owner = { is_gestalt = yes }
+		}
+		modifier = {
+			job_brain_drone_add = 4
+		}
+	}
+	
+	resources = {
+		category = planet_deposits
+		produces = {
+			physics_research = 8
+			society_research = 4
+			engineering_research = 8
+		}
+	}
+}
+
+# Stabilized path result
+d_cosmic_archive_stabilized = {
+	time = 0
+	icon = d_crystal_formation
+	is_visible = yes
+	on_researched = {}
+	
+	use_for_min_max_adjustments = no
+	
+	planet_modifier = {
+		planet_researchers_produces_mult = 0.10
+		planet_stability_add = 10
+		pop_happiness = 0.05
+	}
+	
+	triggered_planet_modifier = {
+		potential = {
+			exists = owner
+			owner = { is_gestalt = no }
+		}
+		modifier = {
+			job_researcher_add = 3
+			job_administrator_add = 1
+		}
+	}
+	
+	triggered_planet_modifier = {
+		potential = {
+			exists = owner
+			owner = { is_gestalt = yes }
+		}
+		modifier = {
+			job_brain_drone_add = 3
+			job_synapse_drone_add = 1
+		}
+	}
+	
+	resources = {
+		category = planet_deposits
+		produces = {
+			physics_research = 5
+			society_research = 5
+			engineering_research = 5
+			unity = 2
+		}
+	}
+}
+
+# Risky protocols path - successful outcome
+d_cosmic_archive_fully_activated = {
+	time = 0
+	icon = d_dimensional_fabricator
+	is_visible = yes
+	on_researched = {}
+	
+	use_for_min_max_adjustments = no
+	
+	planet_modifier = {
+		planet_researchers_produces_mult = 0.20
+		planet_jobs_physics_research_produces_mult = 0.10
+		planet_jobs_society_research_produces_mult = 0.10
+		planet_jobs_engineering_research_produces_mult = 0.10
+	}
+	
+	triggered_planet_modifier = {
+		potential = {
+			exists = owner
+			owner = { is_gestalt = no }
+		}
+		modifier = {
+			job_researcher_add = 6
+		}
+	}
+	
+	triggered_planet_modifier = {
+		potential = {
+			exists = owner
+			owner = { is_gestalt = yes }
+		}
+		modifier = {
+			job_brain_drone_add = 6
+		}
+	}
+	
+	resources = {
+		category = planet_deposits
+		produces = {
+			physics_research = 10
+			society_research = 10
+			engineering_research = 10
+			rare_crystals = 1
+			exotic_gases = 1
+			volatile_motes = 1
+		}
+	}
+}
+
+# Risky protocols path - failed outcome
+d_cosmic_archive_damaged = {
+	time = 0
+	icon = d_failing_infrastructure
+	is_visible = yes
+	on_researched = {}
+	
+	use_for_min_max_adjustments = no
+	
+	planet_modifier = {
+		planet_stability_add = -10
+		pop_happiness = -0.10
+		planet_jobs_produces_mult = -0.10
+	}
+	
+	triggered_planet_modifier = {
+		potential = {
+			exists = owner
+			owner = { is_gestalt = no }
+		}
+		modifier = {
+			job_researcher_add = 2
+			job_enforcer_add = 2
+		}
+	}
+	
+	triggered_planet_modifier = {
+		potential = {
+			exists = owner
+			owner = { is_gestalt = yes }
+		}
+		modifier = {
+			job_brain_drone_add = 2
+			job_hunter_seeker_drone_add = 2
+		}
+	}
+	
+	resources = {
+		category = planet_deposits
+		produces = {
+			physics_research = 6
+			society_research = 3
+			engineering_research = 3
+		}
+		upkeep = {
+			energy = 10
+		}
+	}
+}
+
+# Guardian defeated/pacified outcome - galactic scar
+d_cosmic_archive_remnant = {
+	time = 0
+	icon = d_dark_matter_deposit
+	is_visible = yes
+	on_researched = {}
+	
+	use_for_min_max_adjustments = no
+	
+	planet_modifier = {
+		planet_researchers_physics_produces_mult = 0.15
+		planet_researchers_society_produces_mult = 0.15
+		planet_researchers_engineering_produces_mult = 0.15
+		planet_stability_add = 5
+	}
+	
+	triggered_planet_modifier = {
+		potential = {
+			exists = owner
+			owner = { is_gestalt = no }
+		}
+		modifier = {
+			job_researcher_add = 4
+			job_administrator_add = 1
+		}
+	}
+	
+	triggered_planet_modifier = {
+		potential = {
+			exists = owner
+			owner = { is_gestalt = yes }
+		}
+		modifier = {
+			job_brain_drone_add = 4
+			job_synapse_drone_add = 1
+		}
+	}
+	
+	resources = {
+		category = planet_deposits
+		produces = {
+			physics_research = 8
+			society_research = 8
+			engineering_research = 8
+			unity = 2
+			rare_crystals = 2
+		}
+	}
+}

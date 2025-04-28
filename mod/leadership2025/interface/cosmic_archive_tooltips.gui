@@ -1,0 +1,86 @@
+guiTypes = {
+	# Main container for Archive tooltips
+	containerWindowType = {
+		name = "cosmic_archive_tooltip_container"
+		position = { x=0 y=0 }
+		size = { width = 400 height = 600 }
+		moveable = yes
+		
+		background = {
+			name = "background"
+			quadTextureSprite = "GFX_tile_center_bg"
+		}
+		
+		iconType = {
+			name = "hex_bg"
+			spriteType = "GFX_hex_center_bg"
+			position = { x = -10 y = -14 }
+			alwaysTransparent = yes
+		}
+		
+		iconType = {
+			name = "header_line"
+			spriteType = "GFX_line_center"
+			position = { x = 80 y = 38 }
+		}
+		
+		instantTextBoxType = {
+			name = "tooltip_title"
+			font = "malgun_goth_24"
+			position = { x = 20 y = 15 }
+			maxWidth = 360
+			maxHeight = 60
+			fixedSize = yes
+			orientation = "UPPER_LEFT"
+			format = center
+			text = "COSMIC_ARCHIVE_TOOLTIP_TITLE"
+			alwaysTransparent = no
+		}
+		
+		containerWindowType = {
+			name = "tooltip_content"
+			position = { x = 20 y = 60 }
+			size = { width = 360 height = 520 }
+			
+			background = {
+				name = "tooltip_content_bg"
+				quadTextureSprite = "GFX_tiles_dark_area_cut_8"
+			}
+			
+			instantTextBoxType = {
+				name = "tooltip_text"
+				font = "cg_16b"
+				position = { x = 10 y = 10 }
+				maxWidth = 340
+				maxHeight = 500
+				format = left
+				scrollbartype = "standardtext_slider"
+				text = "COSMIC_ARCHIVE_TOOLTIP_TEXT"
+			}
+		}
+		
+		buttonType = {
+			name = "close_button"
+			quadTextureSprite = "GFX_close"
+			position = { x = -42 y = 12 }
+			orientation = "UPPER_RIGHT"
+			shortcut = "ESCAPE"
+			clicksound = "back_click"
+		}
+	}
+	
+	# Hotspot areas for in-game elements that can trigger tooltips
+	containerWindowType = {
+		name = "cosmic_archive_tooltip_trigger"
+		position = { x=0 y=0 }
+		size = { width = 28 height = 28 }
+		
+		buttonType = {
+			name = "tooltip_button"
+			spriteType = "GFX_info_button"
+			position = { x = 0 y = 0 }
+			clicksound = interface
+			pdx_tooltip = "COSMIC_ARCHIVE_TOOLTIP"
+		}
+	}
+}

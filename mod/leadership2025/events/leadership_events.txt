@@ -1,0 +1,23 @@
+namespace = cosmic_archive
+country_event = {
+	id = cosmic_archive.1
+	hide_window = yes
+	is_triggered_only = yes
+	trigger = {
+
+	}
+	immediate = {
+		#spawn relics
+	}
+}
+country_event = {
+	id = cosmic_archive.2
+	hide_window = yes
+	is_triggered_only = yes
+	trigger = {
+		#relic exists and has been surveyed
+	}
+	immediate = {
+		#reveal relic
+	}
+}

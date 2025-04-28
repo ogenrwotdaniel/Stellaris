@@ -1,0 +1,56 @@
+# Cosmic Archive Guardian Section
+cosmic_archive_guardian_section = {
+	entity = "guardian_01_section_entity"
+	ship_size = guardian_cosmic_archive_01
+	
+	# Guardian weapons
+	weapon_slot = {
+		name = "cosmic_guardian_weapon_01"
+		slot_size = cosmic_guardian_weapon_01
+		slot_type = weapon
+		locatorname = "medium_gun_01"
+	}
+	
+	weapon_slot = {
+		name = "cosmic_guardian_weapon_02"
+		slot_size = cosmic_guardian_weapon_02
+		slot_type = weapon
+		locatorname = "medium_gun_02"
+	}
+	
+	weapon_slot = {
+		name = "cosmic_guardian_weapon_03"
+		slot_size = cosmic_guardian_weapon_03
+		slot_type = weapon
+		locatorname = "medium_gun_03"
+	}
+	
+	# Guardian utilities
+	utility_slot = {
+		name = "cosmic_guardian_computer"
+		slot_size = cosmic_guardian_computer
+		slot_type = utility
+		locatorname = "ship_computer"
+	}
+	
+	utility_slot = {
+		name = "cosmic_guardian_sensor"
+		slot_size = cosmic_guardian_sensor
+		slot_type = utility
+		locatorname = "ship_sensor"
+	}
+	
+	utility_slot = {
+		name = "cosmic_guardian_shield"
+		slot_size = cosmic_guardian_shield
+		slot_type = utility
+		locatorname = "ship_shield"
+	}
+	
+	utility_slot = {
+		name = "cosmic_guardian_armor"
+		slot_size = cosmic_guardian_armor
+		slot_type = utility
+		locatorname = "ship_armor"
+	}
+}

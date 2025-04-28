@@ -1,0 +1,138 @@
+# Cosmic Archive Modifier Compatibility Patch
+# Ensures modifiers from the Cosmic Archive mod stack appropriately with other mods
+
+# Modifier stacking rules
+cosmic_archive_modifier_compatibility = {
+    # Defines how archive modifiers stack with similar modifiers from other sources
+    stacking_rules = {
+        # Research speed modifiers - additive with other sources
+        "research_speed" = {
+            stacking_method = "additive"
+            max_cumulative_bonus = 2.0  # Cap at 200% bonus from all sources
+            applies_to = {
+                "country_physics_tech_research_speed_mult"
+                "country_society_tech_research_speed_mult"
+                "country_engineering_tech_research_speed_mult"
+                "country_all_tech_research_speed_mult"
+                "country_rare_tech_research_speed_mult"
+            }
+        }
+        
+        # Production modifiers - additive with other sources
+        "production" = {
+            stacking_method = "additive"
+            max_cumulative_bonus = 5.0  # Cap at 500% bonus from all sources
+            applies_to = {
+                "planet_researchers_produces_mult"
+                "planet_researchers_physics_produces_mult"
+                "planet_researchers_society_produces_mult"
+                "planet_researchers_engineering_produces_mult"
+                "planet_miners_minerals_produces_mult"
+                "planet_technician_energy_produces_mult"
+                "planet_metallurgists_produces_mult"
+            }
+        }
+        
+        # Ship modifiers - additive with other sources
+        "ship" = {
+            stacking_method = "additive"
+            max_cumulative_bonus = 3.0  # Cap at 300% bonus from all sources
+            applies_to = {
+                "ship_weapon_damage"
+                "ship_shield_mult"
+                "ship_armor_add"
+                "ship_hull_add"
+                "ship_hull_regen_add_perc"
+                "ship_ftl_jumpdrive_range_mult"
+                "ship_speed_mult"
+                "ship_disengage_chance_mult"
+            }
+        }
+        
+        # Pop modifiers - additive with other sources
+        "pop" = {
+            stacking_method = "additive"
+            max_cumulative_bonus = 1.0  # Cap at 100% bonus from all sources
+            applies_to = {
+                "pop_happiness"
+                "pop_growth_speed"
+                "pop_ethic_spiritualist_attraction_mult"
+                "pop_ethic_materialist_attraction_mult"
+                "pop_ethic_xenophobe_attraction_mult"
+                "pop_ethic_xenophile_attraction_mult"
+            }
+        }
+        
+        # Leader modifiers - additive with other sources
+        "leader" = {
+            stacking_method = "additive"
+            max_cumulative_bonus = 0.5  # Cap at 50% bonus from all sources
+            applies_to = {
+                "leaders_upkeep_mult"
+                "leader_skill_levels"
+            }
+        }
+        
+        # Diplomacy modifiers - additive with other sources
+        "diplomacy" = {
+            stacking_method = "additive"
+            max_cumulative_bonus = 1.0  # Cap at 100% bonus from all sources
+            applies_to = {
+                "diplo_weight_mult"
+                "country_diplomatic_weight_technology_mult"
+                "country_diplomatic_influence_produces_add"
+            }
+        }
+    }
+    
+    # Exclusivity rules - modifiers that cannot stack with certain other modifiers
+    exclusivity_rules = {
+        # Guardian wrath is exclusive with enlightenment
+        "cosmic_archive_guardian_wrath" = {
+            excludes = { "cosmic_archive_enlightenment" }
+        }
+        
+        # Relic defender reputation is exclusive with archaeotech exploiter
+        "cosmic_archive_relic_defenders" = {
+            excludes = { "cosmic_archive_archaeotech_exploiters" }
+        }
+    }
+    
+    # Compatibility adjustments for known mods
+    mod_compatibility = {
+        # Ancient Cache of Technologies
+        "acot" = {
+            # Adjust research speed bonuses to prevent excessive stacking
+            modifier_adjustments = {
+                "cosmic_archive_relic_mastery" = {
+                    "country_physics_tech_research_speed_mult" = 0.10  # Reduced from 0.15
+                    "country_society_tech_research_speed_mult" = 0.10  # Reduced from 0.15
+                    "country_engineering_tech_research_speed_mult" = 0.10  # Reduced from 0.15
+                }
+            }
+        }
+        
+        # Gigastructural Engineering
+        "gigastructural_engineering" = {
+            # Adjust megastructure bonuses
+            modifier_adjustments = {
+                "cosmic_archive_material_engineering" = {
+                    "megastructure_build_speed_mult" = 0.10  # Reduced from 0.15
+                }
+            }
+        }
+        
+        # Planetary Diversity
+        "planetary_diversity" = {
+            # No adjustments needed, fully compatible
+        }
+        
+        # More Events Mod
+        "more_events_mod" = {
+            # Ensure event weights are balanced
+            event_weights = {
+                "cosmic_archive_spawn_weight" = 0.85  # Slightly reduced spawn chance
+            }
+        }
+    }
+}

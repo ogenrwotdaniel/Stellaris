@@ -1,0 +1,400 @@
+# ### Cosmic Archive Modifiers ###
+
+# Temporary research boost when investigating the archive - Phase 1
+cosmic_archive_first_signal = {
+	country_physics_tech_research_speed_mult = 0.10
+	country_society_tech_research_speed_mult = 0.10
+	country_engineering_tech_research_speed_mult = 0.10
+	icon = "gfx/interface/icons/modifiers/mod_country_all_tech_research_speed.dds"
+}
+
+# Temporary research boost for investigating the archive (old version - keeping for backward compatibility)
+cosmic_archive_research_boost = {
+	country_physics_tech_research_speed_mult = 0.15
+	country_society_tech_research_speed_mult = 0.10
+	country_engineering_tech_research_speed_mult = 0.10
+	icon = "gfx/interface/icons/modifiers/mod_country_all_tech_research_speed.dds"
+}
+
+# Phase 2: Enhanced Technologies path - permanent modest boost
+cosmic_archive_enhanced_tech = {
+	country_physics_tech_research_speed_mult = 0.05
+	country_society_tech_research_speed_mult = 0.05
+	country_engineering_tech_research_speed_mult = 0.05
+	icon = "gfx/interface/icons/modifiers/mod_country_all_tech_research_speed.dds"
+}
+
+# Phase 2: Stabilized Relic path - smaller permanent boost, but safer
+cosmic_archive_stabilized = {
+	country_physics_tech_research_speed_mult = 0.03
+	country_society_tech_research_speed_mult = 0.03
+	country_engineering_tech_research_speed_mult = 0.03
+	pop_happiness = 0.03
+	icon = "gfx/interface/icons/modifiers/mod_country_all_tech_research_speed.dds"
+}
+
+# Phase 2: Risk It All path - larger but temporary boost
+cosmic_archive_risky_protocols = {
+	country_physics_tech_research_speed_mult = 0.10
+	country_society_tech_research_speed_mult = 0.10
+	country_engineering_tech_research_speed_mult = 0.10
+	research_alternatives_add = 1
+	icon = "gfx/interface/icons/modifiers/mod_country_all_tech_research_speed.dds"
+}
+
+# Negative effect when hidden protocols activate
+cosmic_archive_disruption = {
+	planet_jobs_produces_mult = -0.20
+	planet_stability_add = -10
+	icon = "gfx/interface/icons/modifiers/mod_planet_stability_negative.dds"
+}
+
+# Permanent empire bonus for successfully unlocking the archive's full potential
+cosmic_archive_enlightenment = {
+	country_physics_tech_research_speed_mult = 0.05
+	country_society_tech_research_speed_mult = 0.05
+	country_engineering_tech_research_speed_mult = 0.05
+	leaders_upkeep_mult = -0.10
+	leader_skill_levels = 1
+	icon = "gfx/interface/icons/modifiers/mod_country_all_tech_research_speed.dds"
+}
+
+# Phase 3: Guardian's Wrath - severe penalty when the guardian awakens
+cosmic_archive_guardian_wrath = {
+	country_physics_tech_research_speed_mult = -0.25
+	country_society_tech_research_speed_mult = -0.25
+	country_engineering_tech_research_speed_mult = -0.25
+	planet_stability_add = -15
+	pop_happiness = -0.10
+	ships_upkeep_mult = 0.20
+	country_naval_cap_mult = -0.15
+	icon = "gfx/interface/icons/modifiers/mod_country_all_tech_research_speed_negative.dds"
+}
+
+# ### Aftermath Modifiers - Post Guardian ###
+
+# Permanent Galaxy Shift - System feature after guardian is pacified/destroyed
+cosmic_archive_galactic_scar = {
+	planet_researchers_physics_produces_mult = 0.10
+	planet_researchers_society_produces_mult = 0.10
+	planet_researchers_engineering_produces_mult = 0.10
+	planet_stability_add = 5
+	icon = "gfx/interface/icons/modifiers/mod_planet_researchers_produces_mult.dds"
+}
+
+# Diplomatic bonus for empires that contributed to the crisis resolution
+cosmic_archive_crisis_contributor = {
+	diplo_weight_mult = 0.10
+	country_diplomatic_influence_produces_add = 1
+	pop_happiness = 0.05
+	icon = "gfx/interface/icons/modifiers/mod_country_diplomacy_influence.dds"
+}
+
+# Guardian Tech access - powerful but niche benefits
+cosmic_archive_guardian_tech = {
+	country_rare_tech_research_speed_mult = 0.15
+	all_technology_research_speed = 0.05
+	ship_weapon_damage = 0.10
+	ship_hull_add = 500
+	icon = "gfx/interface/icons/modifiers/mod_country_all_tech_research_speed.dds"
+}
+
+# Long-term research efficiency bonus - setting stage for narrative expansions
+cosmic_archive_research_legacy = {
+	country_physics_tech_research_speed_mult = 0.08
+	country_society_tech_research_speed_mult = 0.08
+	country_engineering_tech_research_speed_mult = 0.08
+	num_tech_alternatives_add = 1
+	leader_skill_levels = 1
+	icon = "gfx/interface/icons/modifiers/mod_country_all_tech_research_speed.dds"
+}
+
+# ### Long-Term Effects and Endgame Integration ###
+
+# High-level relic integration - global research speed boost
+cosmic_archive_relic_mastery = {
+	country_physics_tech_research_speed_mult = 0.15
+	country_society_tech_research_speed_mult = 0.15
+	country_engineering_tech_research_speed_mult = 0.15
+	country_rare_tech_research_speed_mult = 0.20
+	planet_researchers_produces_mult = 0.10
+	icon = "gfx/interface/icons/modifiers/mod_country_all_tech_research_speed.dds"
+}
+
+# Relic-Derived Tech Specializations
+
+# Advanced Energy Manipulation tech path
+cosmic_archive_energy_manipulation = {
+	country_energy_produces_mult = 0.15
+	ship_weapon_damage = 0.15
+	ship_shield_mult = 0.20
+	country_physics_tech_research_speed_mult = 0.10
+	icon = "gfx/interface/icons/modifiers/mod_country_energy_produces_mult.dds"
+}
+
+# Ancient Data Networks tech path
+cosmic_archive_data_networks = {
+	planet_jobs_unity_produces_mult = 0.15
+	country_admin_cap_add = 20
+	country_edict_length_mult = 0.25
+	country_society_tech_research_speed_mult = 0.10
+	icon = "gfx/interface/icons/modifiers/mod_country_unity_produces_mult.dds"
+}
+
+# Physics Breakthrough tech path
+cosmic_archive_physics_breakthrough = {
+	science_ship_survey_speed = 0.30
+	ship_speed_mult = 0.15
+	ship_sensors_add = 2
+	ship_ftl_jumpdrive_range_mult = 0.20
+	country_physics_tech_research_speed_mult = 0.15
+	icon = "gfx/interface/icons/modifiers/mod_ship_science_survey_speed.dds"
+}
+
+# Societal Understanding tech path
+cosmic_archive_societal_understanding = {
+	pop_growth_speed = 0.10
+	planet_stability_add = 5
+	pop_happiness = 0.05
+	leaders_upkeep_mult = -0.15
+	leader_skill_levels = 1
+	country_society_tech_research_speed_mult = 0.15
+	icon = "gfx/interface/icons/modifiers/mod_pop_growth_speed.dds"
+}
+
+# Material Engineering tech path
+cosmic_archive_material_engineering = {
+	planet_miners_minerals_produces_mult = 0.15
+	planet_metallurgists_produces_mult = 0.15
+	ship_armor_add = 10
+	ship_hull_regen_add_perc = 0.5
+	megastructure_build_speed_mult = 0.15
+	country_engineering_tech_research_speed_mult = 0.15
+	icon = "gfx/interface/icons/modifiers/mod_country_minerals_produces_mult.dds"
+}
+
+# ### Narrative Continuation ###
+
+# Foreshadowing Additional Crises
+cosmic_archive_ancient_warning = {
+	ship_anomaly_research_speed_mult = 0.25
+	ship_archaeological_site_excavation_speed_mult = 0.25
+	ship_exotic_gases_survey_speed_mult = 0.5
+	science_ship_survey_speed = 0.15
+	country_sensor_range_mult = 0.15
+	ship_disengage_chance_mult = 0.10
+	icon = "gfx/interface/icons/modifiers/mod_ship_anomaly_research_speed.dds"
+}
+
+# Factional Ties - Spiritualist Reaction
+cosmic_archive_spiritualist_interpretation = {
+	pop_ethic_spiritualist_attraction_mult = 0.25
+	planet_jobs_unity_produces_mult = 0.15
+	country_unity_produces_mult = 0.10
+	pop_happiness = 0.05
+	planet_stability_add = 5
+	icon = "gfx/interface/icons/modifiers/mod_pop_ethic_spiritualist_attraction_mult.dds"
+}
+
+# Factional Ties - Materialist Reaction
+cosmic_archive_scientific_exploitation = {
+	pop_ethic_materialist_attraction_mult = 0.25
+	planet_researchers_produces_mult = 0.15
+	planet_technician_energy_produces_mult = 0.10
+	country_physics_tech_research_speed_mult = 0.05
+	country_engineering_tech_research_speed_mult = 0.05
+	icon = "gfx/interface/icons/modifiers/mod_pop_ethic_materialist_attraction_mult.dds"
+}
+
+# Factional Ties - Xenophobe Reaction
+cosmic_archive_isolationist_stance = {
+	pop_ethic_xenophobe_attraction_mult = 0.25
+	country_naval_cap_mult = 0.10
+	starbase_defensive_war_ship_build_speed_mult = 0.15
+	planet_orbital_bombardment_damage = -0.15
+	ship_weapon_damage = 0.05
+	icon = "gfx/interface/icons/modifiers/mod_pop_ethic_xenophobe_attraction_mult.dds"
+}
+
+# Factional Ties - Xenophile Reaction
+cosmic_archive_cosmic_sharing = {
+	pop_ethic_xenophile_attraction_mult = 0.25
+	trade_value_mult = 0.15
+	planet_immigration_pull_mult = 0.25
+	diplo_weight_mult = 0.10
+	icon = "gfx/interface/icons/modifiers/mod_pop_ethic_xenophile_attraction_mult.dds"
+}
+
+# Galactic Reputation - Relic Defenders
+cosmic_archive_relic_defenders = {
+	diplo_weight_mult = 0.15
+	country_federation_influence_produces_add = 2
+	ships_upkeep_mult = -0.10
+	country_admin_cap_add = 15
+	pop_happiness = 0.05
+	icon = "gfx/interface/icons/modifiers/mod_country_federation_influence_produces_add.dds"
+}
+
+# Galactic Reputation - Archaeotech Exploiters
+cosmic_archive_archaeotech_exploiters = {
+	country_trade_value_mult = 0.15
+	ship_weapon_damage = 0.10
+	country_physics_tech_research_speed_mult = 0.10
+	starbase_ship_build_speed_mult = 0.15
+	pop_happiness = -0.05
+	icon = "gfx/interface/icons/modifiers/mod_country_trade_value_mult.dds"
+}
+
+# Galactic Reputation - Guardians of Knowledge
+cosmic_archive_knowledge_guardians = {
+	country_society_tech_research_speed_mult = 0.10
+	country_unity_produces_mult = 0.15
+	planet_stability_add = 5
+	country_diplomatic_weight_technology_mult = 0.15
+	planet_jobs_unity_produces_mult = 0.10
+	icon = "gfx/interface/icons/modifiers/mod_country_diplomatic_weight_technology_mult.dds"
+}
+
+# Risk/Reward Balance Modifiers
+# These modifiers support the risk/reward mechanics and different approaches
+
+cosmic_archive_protocol_cooldown = {
+	icon = "gfx/interface/icons/modifiers/mod_ship_anomaly_research_speed.dds"
+	icon_frame = 2
+}
+
+cosmic_archive_stable_protocols = {
+	icon = "gfx/interface/icons/modifiers/mod_country_base_physics_research_produces_add.dds"
+	icon_frame = 1
+	
+	country_physics_tech_research_speed_mult = 0.05
+	country_engineering_tech_research_speed_mult = 0.05
+	planet_stability_add = 5
+}
+
+cosmic_archive_disruption = {
+	icon = "gfx/interface/icons/modifiers/mod_ship_anomaly_research_speed.dds"
+	icon_frame = 3
+	
+	country_physics_tech_research_speed_mult = -0.15
+	country_engineering_tech_research_speed_mult = -0.15
+	planet_stability_add = -5
+	science_ship_survey_speed = -0.10
+}
+
+cosmic_archive_partial_activation = {
+	icon = "gfx/interface/icons/modifiers/mod_country_base_physics_research_produces_add.dds"
+	icon_frame = 1
+	
+	country_physics_tech_research_speed_mult = 0.08
+	country_engineering_tech_research_speed_mult = 0.08
+	science_ship_survey_speed = 0.10
+}
+
+cosmic_archive_tactical_advantage = {
+	icon = "gfx/interface/icons/modifiers/mod_ship_fire_rate_mult.dds"
+	icon_frame = 1
+	
+	ship_weapon_damage = 0.10
+	ship_fire_rate_mult = 0.05
+	ship_disengage_chance_mult = 0.10
+}
+
+cosmic_archive_guardian_weakness = {
+	icon = "gfx/interface/icons/modifiers/mod_ship_weapon_damage.dds"
+	icon_frame = 1
+	
+	ship_weapon_damage = 0.20
+	ship_fire_rate_mult = 0.10
+	ship_hull_add = 400
+	ship_shield_mult = 0.15
+}
+
+cosmic_archive_diplomatic_insight = {
+	icon = "gfx/interface/icons/modifiers/mod_country_base_society_research_produces_add.dds"
+	icon_frame = 1
+	
+	country_society_tech_research_speed_mult = 0.10
+	country_unity_produces_mult = 0.08
+	pop_happiness = 0.05
+}
+
+cosmic_archive_guardian_rapport = {
+	icon = "gfx/interface/icons/modifiers/mod_country_base_society_research_produces_add.dds"
+	icon_frame = 1
+	
+	country_society_tech_research_speed_mult = 0.15
+	planet_stability_add = 10
+	country_unity_produces_mult = 0.12
+	pop_happiness = 0.10
+	ship_disengage_chance_mult = 0.25
+}
+
+cosmic_archive_communication_failure = {
+	icon = "gfx/interface/icons/modifiers/mod_country_base_society_research_produces_add.dds"
+	icon_frame = 3
+	
+	country_society_tech_research_speed_mult = -0.10
+	country_unity_produces_mult = -0.10
+	pop_happiness = -0.05
+}
+
+cosmic_archive_galactic_harmony = {
+	icon = "gfx/interface/icons/modifiers/mod_planet_stability_add.dds"
+	icon_frame = 1
+	
+	station_researchers_society_research_produces_mult = 0.25
+	station_researchers_physics_research_produces_mult = 0.25
+	station_researchers_engineering_research_produces_mult = 0.25
+	trade_value_mult = 0.15
+	starbase_diplomatic_weight_mult = 0.15
+}
+
+# Military/Diplomatic Approach Balance Modifiers
+
+# For military approach when policy is active
+cosmic_archive_military_preparation = {
+	icon = "gfx/interface/icons/modifiers/mod_ship_weapon_damage.dds"
+	icon_frame = 1
+	
+	ship_weapon_damage = 0.10
+	ship_fire_rate_mult = 0.05
+	ship_armor_add = 200
+	ship_shield_add = 200
+	army_damage_mult = 0.15
+}
+
+# For diplomatic approach when policy is active
+cosmic_archive_diplomatic_preparation = {
+	icon = "gfx/interface/icons/modifiers/mod_pop_happiness.dds"
+	icon_frame = 1
+	
+	pop_happiness = 0.05
+	country_unity_produces_mult = 0.10
+	diplo_weight_mult = 0.10
+	ship_disengage_chance_mult = 0.15
+	planet_stability_add = 5
+}
+
+# Risk-based resource production modifiers
+cosmic_archive_risky_production = {
+	icon = "gfx/interface/icons/modifiers/mod_country_all_tech_research_speed.dds"
+	icon_frame = 1
+	
+	planet_researchers_physics_produces_mult = 0.15
+	planet_researchers_engineering_produces_mult = 0.15
+	planet_miners_produces_mult = 0.15
+	planet_technician_produces_mult = 0.15
+	planet_stability_add = -5
+}
+
+cosmic_archive_safe_production = {
+	icon = "gfx/interface/icons/modifiers/mod_country_all_tech_research_speed.dds"
+	icon_frame = 1
+	
+	planet_researchers_physics_produces_mult = 0.05
+	planet_researchers_engineering_produces_mult = 0.05
+	planet_researchers_society_produces_mult = 0.05
+	planet_stability_add = 5
+	pop_happiness = 0.05
+}

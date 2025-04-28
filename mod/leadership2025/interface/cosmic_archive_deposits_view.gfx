@@ -1,0 +1,29 @@
+spriteTypes = {
+	# Cosmic Archive - Active State
+	spriteType = {
+		name = "GFX_deposit_cat_cosmic_archive"
+		textureFile = "gfx/interface/icons/deposits/d_cosmic_archive.dds"
+		noOfFrames = 1
+	}
+	
+	# Cosmic Archive - Remnants (Dismantled)
+	spriteType = {
+		name = "GFX_deposit_cat_cosmic_archive_remnants"
+		textureFile = "gfx/interface/icons/deposits/d_cosmic_archive_remnants.dds"
+		noOfFrames = 1
+	}
+	
+	# Cosmic Archive - Dormant (Safely Deactivated)
+	spriteType = {
+		name = "GFX_deposit_cat_cosmic_archive_dormant"
+		textureFile = "gfx/interface/icons/deposits/d_cosmic_archive_dormant.dds"
+		noOfFrames = 1
+	}
+	
+	# Cosmic Archive - Damaged (Failed Containment)
+	spriteType = {
+		name = "GFX_deposit_cat_cosmic_archive_damaged"
+		textureFile = "gfx/interface/icons/deposits/d_cosmic_archive_damaged.dds"
+		noOfFrames = 1
+	}
+}

@@ -1,0 +1,215 @@
+namespace = cosmic_archive
+
+# On game start, this event triggers to place Cosmic Archives on random planets
+event = {
+    is_triggered_only = yes
+    hide_window = yes
+    
+    immediate = {
+        # Initialize counter for how many archives to spawn
+        set_global_flag = cosmic_archive_initialization_started
+        
+        # Calculate the number of archives to spawn based on habitable worlds
+        # Roughly 2-3% of habitable worlds will get an archive
+        every_planet = {
+            limit = {
+                is_colonizable = yes
+                NOT = { has_deposit = d_cosmic_archive }
+            }
+            random_list = {
+                97 = { } # Do nothing
+                3 = { # Spawn a Cosmic Archive
+                    add_deposit = d_cosmic_archive
+                    set_deposit_flag = {
+                        flag = cosmic_archive_hidden
+                        deposit = d_cosmic_archive
+                    }
+                }
+            }
+        }
+        
+        set_global_flag = cosmic_archive_initialization_complete
+    }
+}
+
+# This event triggers when a planet with a Cosmic Archive is surveyed
+fleet_event = {
+    id = cosmic_archive.2
+    is_triggered_only = yes
+    hide_window = yes
+    
+    trigger = {
+        FROM = {
+            has_deposit = d_cosmic_archive
+            has_deposit_flag = {
+                flag = cosmic_archive_hidden
+                deposit = d_cosmic_archive
+            }
+        }
+    }
+    
+    immediate = {
+        FROM = {
+            remove_deposit_flag = {
+                flag = cosmic_archive_hidden
+                deposit = d_cosmic_archive
+            }
+            set_deposit_flag = {
+                flag = cosmic_archive_discovered
+                deposit = d_cosmic_archive
+            }
+            # Create a special project to investigate the archive (optional)
+            # create_archaeology_site = site_cosmic_archive
+        }
+        
+        # Optional: Notify the player
+        owner = {
+            country_event = {
+                id = cosmic_archive.3
+                days = 1
+            }
+        }
+    }
+}
+
+# Notification event when a Cosmic Archive is discovered
+country_event = {
+    id = cosmic_archive.3
+    title = "cosmic_archive.3.name"
+    desc = "cosmic_archive.3.desc"
+    picture = GFX_evt_ancient_databank
+    location = FROM
+    
+    is_triggered_only = yes
+    
+    option = {
+        name = "cosmic_archive.3.a"
+        # Optional: Add small research bonus
+        add_resource = {
+            physics_research = 50
+            society_research = 25
+            engineering_research = 25
+        }
+    }
+}
+
+# Periodic pulse event that grants resources
+country_event = {
+    id = cosmic_archive.4
+    title = "cosmic_archive.4.name"
+    desc = "cosmic_archive.4.desc"
+    picture = GFX_evt_psionics
+    
+    is_triggered_only = yes
+    
+    trigger = {
+        any_owned_planet = {
+            has_deposit = d_cosmic_archive
+            has_deposit_flag = {
+                flag = cosmic_archive_discovered
+                deposit = d_cosmic_archive
+            }
+        }
+    }
+    
+    immediate = {
+        # Select a random owned planet with a Cosmic Archive
+        random_owned_planet = {
+            limit = {
+                has_deposit = d_cosmic_archive
+                has_deposit_flag = {
+                    flag = cosmic_archive_discovered
+                    deposit = d_cosmic_archive
+                }
+            }
+            save_event_target_as = archive_pulse_planet
+        }
+    }
+    
+    # Energy Credits bonus option
+    option = {
+        name = "cosmic_archive.4.a"
+        custom_tooltip = cosmic_archive_energy_pulse_tooltip
+        
+        add_resource = {
+            energy = 75
+        }
+        
+        event_target:archive_pulse_planet = {
+            add_deposit_flag = {
+                flag = cosmic_archive_pulsed_recently
+                deposit = d_cosmic_archive
+                days = 180 # cooldown period of 6 months
+            }
+        }
+    }
+    
+    # Minerals bonus option
+    option = {
+        name = "cosmic_archive.4.b"
+        custom_tooltip = cosmic_archive_minerals_pulse_tooltip
+        
+        add_resource = {
+            minerals = 100
+        }
+        
+        event_target:archive_pulse_planet = {
+            add_deposit_flag = {
+                flag = cosmic_archive_pulsed_recently
+                deposit = d_cosmic_archive
+                days = 180 # cooldown period of 6 months
+            }
+        }
+    }
+    
+    # Alloys bonus option
+    option = {
+        name = "cosmic_archive.4.c"
+        custom_tooltip = cosmic_archive_alloys_pulse_tooltip
+        
+        add_resource = {
+            alloys = 25
+        }
+        
+        event_target:archive_pulse_planet = {
+            add_deposit_flag = {
+                flag = cosmic_archive_pulsed_recently
+                deposit = d_cosmic_archive
+                days = 180 # cooldown period of 6 months
+            }
+        }
+    }
+}
+
+# This event serves as a pulse trigger that checks for potential archive pulses
+country_event = {
+    id = cosmic_archive.5
+    hide_window = yes
+    
+    mean_time_to_happen = {
+        months = 12 # On average, each archive pulses once per year
+    }
+    
+    trigger = {
+        has_global_flag = cosmic_archive_initialization_complete
+        any_owned_planet = {
+            has_deposit = d_cosmic_archive
+            has_deposit_flag = {
+                flag = cosmic_archive_discovered
+                deposit = d_cosmic_archive
+            }
+            NOT = {
+                has_deposit_flag = {
+                    flag = cosmic_archive_pulsed_recently
+                    deposit = d_cosmic_archive
+                }
+            }
+        }
+    }
+    
+    immediate = {
+        country_event = {
+            id = cosmic_archive.4
+        }
+    }
+}

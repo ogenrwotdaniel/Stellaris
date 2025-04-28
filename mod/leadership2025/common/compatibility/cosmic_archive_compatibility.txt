@@ -1,0 +1,103 @@
+# Cosmic Archive Compatibility Configuration
+# This file ensures the Cosmic Archive mod seamlessly integrates with other game content
+
+# Set compatibility version
+@cosmic_archive_version = "1.0"
+
+# Deposit compatibility settings
+cosmic_archive_deposit_compatibility = {
+    # Allow deposit spawning alongside these vanilla feature types
+    compatible_vanilla_features = {
+        # Basic resource features
+        "feature_engineering_research" = yes
+        "feature_physics_research" = yes
+        "feature_society_research" = yes
+        "feature_minerals" = yes
+        "feature_energy" = yes
+        "feature_food" = yes
+        "feature_rare_crystals" = yes
+        "feature_exotic_gases" = yes
+        "feature_volatile_motes" = yes
+        
+        # Special vanilla features
+        "feature_alien_pets" = yes
+        "feature_betharian" = yes
+        "feature_living_metal" = yes
+        "feature_zro" = yes
+        "feature_dark_matter" = yes
+        
+        # Story-related features
+        "ruined_gateway" = yes
+        "archaeological_site" = yes
+        "abandoned_terraforming" = yes
+    }
+    
+    # Deposit spawn priority
+    spawn_priority = 50  # Medium priority, can be overridden by critical story features
+    
+    # Multiplayer settings
+    max_archives_per_galaxy = 5  # Maximum number of archives to spawn in a galaxy
+    min_distance_between_archives = 60  # Minimum distance in hyperlanes between archives
+    empire_discovery_cooldown = 1800  # Days before another empire can discover an archive after the first
+}
+
+# Event trigger compatibility
+cosmic_archive_event_compatibility = {
+    # Crisis compatibility - pause archive events during these crises
+    pause_during_crisis = {
+        "ghost_signal" = yes       # Contingency
+        "prethoryn_invasion" = yes # Prethoryn Scourge
+        "extradimensional" = yes   # Unbidden
+    }
+    
+    # Resume delay after crisis ends (in days)
+    crisis_resume_delay = 360
+    
+    # Compatible with these story packs
+    compatible_story_packs = {
+        "ancient_relics" = yes
+        "leviathans" = yes
+        "synthetic_dawn" = yes
+        "apocalypse" = yes
+        "megacorp" = yes
+        "federations" = yes
+        "necroids" = yes
+        "nemesis" = yes
+    }
+    
+    # Event weight adjustments based on active story packs
+    event_weight_adjustments = {
+        "ancient_relics" = 0.8  # Slightly reduce spawn chance if Ancient Relics is active
+        "leviathans" = 0.9     # Slightly reduce spawn chance if Leviathans is active
+    }
+}
+
+# Multiplayer synergy settings
+cosmic_archive_multiplayer = {
+    # Enable shared research for allied empires
+    shared_research_bonus = {
+        enabled = yes
+        research_sharing_percentage = 0.25  # Allied empires get 25% of the research bonus
+        federation_bonus_modifier = 0.15    # Additional bonus for federation members
+    }
+    
+    # Diplomatic options
+    diplomatic_actions = {
+        # Allow trading of archive insights
+        trade_archive_insights = yes
+        
+        # Special diplomatic stance for archive-investigating empires
+        archive_scholar_stance = yes
+        
+        # Special casus belli for archive control
+        archive_control_casus_belli = yes
+    }
+    
+    # Multiple empire research coordination
+    research_coordination = {
+        enabled = yes
+        max_participating_empires = 3  # Maximum number of empires that can coordinate research
+        coordination_efficiency = 0.85  # Diminishing returns for multiple empire involvement
+        research_speed_bonus = 0.1     # Bonus for coordinated research
+    }
+}

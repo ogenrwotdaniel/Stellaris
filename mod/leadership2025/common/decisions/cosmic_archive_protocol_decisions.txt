@@ -1,0 +1,134 @@
+# Phase 2 Protocol Decisions for Cosmic Archives
+
+# Enhance Technologies path
+cosmic_archive_enhance_technologies = {
+    owned_planets_only = yes
+    
+    resources = {
+        category = decisions
+        cost = {
+            influence = 50
+        }
+    }
+    
+    potential = {
+        has_deposit = d_cosmic_archive
+        has_deposit_flag = {
+            flag = cosmic_archive_protocols_surfaced
+            deposit = d_cosmic_archive
+        }
+        owner = { is_ai = no }
+    }
+    
+    allow = {
+        has_owner = yes
+        is_colony = yes
+    }
+    
+    effect = {
+        custom_tooltip = cosmic_archive_enhance_technologies_tooltip
+        owner = {
+            country_event = { 
+                id = cosmic_archive.31
+                days = 10
+            }
+        }
+        
+        set_planet_flag = cosmic_archive_decision_made
+    }
+    
+    ai_weight = {
+        weight = 0
+    }
+}
+
+# Stabilize the Relic path
+cosmic_archive_stabilize_relic = {
+    owned_planets_only = yes
+    
+    resources = {
+        category = decisions
+        cost = {
+            influence = 100
+            sr_zro = 50
+        }
+    }
+    
+    potential = {
+        has_deposit = d_cosmic_archive
+        has_deposit_flag = {
+            flag = cosmic_archive_protocols_surfaced
+            deposit = d_cosmic_archive
+        }
+        owner = { is_ai = no }
+    }
+    
+    allow = {
+        has_owner = yes
+        is_colony = yes
+        owner = {
+            has_resource = {
+                type = sr_zro
+                amount > 49
+            }
+        }
+    }
+    
+    effect = {
+        custom_tooltip = cosmic_archive_stabilize_relic_tooltip
+        owner = {
+            country_event = { 
+                id = cosmic_archive.32
+                days = 10
+            }
+        }
+        
+        set_planet_flag = cosmic_archive_decision_made
+    }
+    
+    ai_weight = {
+        weight = 0
+    }
+}
+
+# Risk It All path
+cosmic_archive_risk_it_all = {
+    owned_planets_only = yes
+    
+    resources = {
+        category = decisions
+        cost = {
+            influence = 25
+        }
+    }
+    
+    potential = {
+        has_deposit = d_cosmic_archive
+        has_deposit_flag = {
+            flag = cosmic_archive_protocols_surfaced
+            deposit = d_cosmic_archive
+        }
+        owner = { is_ai = no }
+    }
+    
+    allow = {
+        has_owner = yes
+        is_colony = yes
+    }
+    
+    effect = {
+        custom_tooltip = cosmic_archive_risk_it_all_tooltip
+        owner = {
+            country_event = { 
+                id = cosmic_archive.33
+                days = 10
+            }
+        }
+        
+        set_planet_flag = cosmic_archive_decision_made
+    }
+    
+    ai_weight = {
+        weight = 0
+    }
+}

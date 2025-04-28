@@ -1,0 +1,75 @@
+# Cosmic Archive Music Tracks
+
+# Discovery Theme - Plays when a Cosmic Archive is first discovered
+music = {
+	name = "cosmic_archive_discovery_theme"
+	file = "music/cosmic_archive_discovery.ogg"
+	volume = 0.65
+}
+
+# Research Theme - Ambient track that plays during Archive research events
+music = {
+	name = "cosmic_archive_research_theme"
+	file = "music/cosmic_archive_research.ogg"
+	volume = 0.60
+}
+
+# Protocol Activation - Dramatic piece for when hidden protocols are activated
+music = {
+	name = "cosmic_archive_protocol_theme"
+	file = "music/cosmic_archive_protocol.ogg"
+	volume = 0.70
+}
+
+# Dreams and Echoes - Mysterious, ethereal track for dream/vision sequences
+music = {
+	name = "cosmic_archive_dreams_theme"
+	file = "music/cosmic_archive_dreams.ogg"
+	volume = 0.55
+}
+
+# Guardian Awakening - Epic, foreboding track for the Guardian's emergence
+music = {
+	name = "cosmic_guardian_awakening_theme"
+	file = "music/cosmic_guardian_awakening.ogg"
+	volume = 0.75
+}
+
+# Guardian Battle - Intense combat music for military confrontations
+music = {
+	name = "cosmic_guardian_battle_theme"
+	file = "music/cosmic_guardian_battle.ogg"
+	volume = 0.80
+}
+
+# Diplomatic Resolution - Softer but still tense track for diplomatic approaches
+music = {
+	name = "cosmic_guardian_diplomatic_theme"
+	file = "music/cosmic_guardian_diplomatic.ogg"
+	volume = 0.65
+}
+
+# Victory Theme - Triumphant piece for defeating or pacifying the Guardian
+music = {
+	name = "cosmic_archive_victory_theme"
+	file = "music/cosmic_archive_victory.ogg"
+	volume = 0.70
+}
+
+# Aftermath - Reflective piece for the post-Guardian resolution phase
+music = {
+	name = "cosmic_archive_aftermath_theme"
+	file = "music/cosmic_archive_aftermath.ogg"
+	volume = 0.60
+}
+
+# MUSIC COMPOSITION GUIDELINES
+# cosmic_archive_discovery.ogg - Mysterious, with elements of wonder and curiosity. Sparse instrumentation with crystalline sounds.
+# cosmic_archive_research.ogg - Ambient, focused, with subtle pulsing elements suggesting data processing. Light electronic elements.
+# cosmic_archive_protocol.ogg - Builds tension with mathematical patterns. Shifting time signatures.
+# cosmic_archive_dreams.ogg - Ethereal, slightly unsettling. Drifting tonality and voice-like synthesizers.
+# cosmic_guardian_awakening.ogg - Grand, imposing theme with deep brass and percussion. Suggests ancient power awakening.
+# cosmic_guardian_battle.ogg - Intense, driving rhythm. Electronic elements mixed with orchestral intensity.
+# cosmic_guardian_diplomatic.ogg - Tense but contemplative. Suggests communication with an alien intelligence.
+# cosmic_archive_victory.ogg - Triumphant but mysterious. Suggests victory but also transformation.
+# cosmic_archive_aftermath.ogg - Reflective, with elements of both the discovery theme and new motifs suggesting future possibilities.

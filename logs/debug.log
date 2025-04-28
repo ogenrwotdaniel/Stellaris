@@ -1,0 +1,81 @@
+[19:13:09][economic_unit_template.cpp:29]: Category already set to `ship_components`, overriding  file: common/component_templates/00_weapons_critters_voidworms.txt line: 64
+[19:13:10][economic_unit_template.cpp:29]: Category already set to `planet_culture_workers`, overriding  file: common/pop_jobs/02_specialist_jobs.txt:1029(inline_script) common/inline_scripts/jobs/galactic_curator_council_output.txt line: 3
+[19:13:10][economic_unit_template.cpp:29]: Category already set to `planet_culture_workers`, overriding  file: common/pop_jobs/02_specialist_jobs.txt:2538(inline_script) common/inline_scripts/jobs/galactic_curator_council_output.txt line: 3
+[19:13:11][economic_unit_template.cpp:29]: Category already set to `planet_culture_workers`, overriding  file: common/pop_jobs/14_grand_archive_jobs.txt:59(inline_script) common/inline_scripts/jobs/galactic_curator_council_output.txt line: 3
+[19:13:11][economic_unit_template.cpp:29]: Category already set to `planet_culture_workers`, overriding  file: common/pop_jobs/14_grand_archive_jobs.txt:179(inline_script) common/inline_scripts/jobs/galactic_curator_council_output.txt line: 3
+[19:13:11][economic_unit_template.cpp:29]: Category already set to `planet_culture_workers`, overriding  file: common/pop_jobs/14_grand_archive_jobs.txt:244(inline_script) common/inline_scripts/jobs/galactic_curator_council_output.txt line: 3
+[19:13:11][economic_unit_template.cpp:29]: Category already set to `planet_primal_jobs`, overriding  file: common/pop_jobs/14_grand_archive_jobs.txt:384(inline_script) common/inline_scripts/jobs/wrangler_job.txt:19(inline_script) common/inline_scripts/grand_archive/wrangler_jobs_produces.txt:67(inline_script) common/inline_scripts/jobs/galactic_curator_council_output.txt line: 3
+[19:13:11][economic_unit_template.cpp:29]: Category already set to `planet_primal_jobs`, overriding  file: common/pop_jobs/14_grand_archive_jobs.txt:389(inline_script) common/inline_scripts/jobs/wrangler_job.txt:19(inline_script) common/inline_scripts/grand_archive/wrangler_jobs_produces.txt:67(inline_script) common/inline_scripts/jobs/galactic_curator_council_output.txt line: 3
+[19:13:11][economic_unit_template.cpp:29]: Category already set to `planet_primal_jobs`, overriding  file: common/pop_jobs/14_grand_archive_jobs.txt:409(inline_script) common/inline_scripts/grand_archive/wrangler_jobs_produces.txt:67(inline_script) common/inline_scripts/jobs/galactic_curator_council_output.txt line: 3
+[19:13:11][economic_unit_template.cpp:29]: Category already set to `planet_primal_jobs`, overriding  file: common/pop_jobs/14_grand_archive_jobs.txt line: 413
+[19:13:11][economic_unit_template.cpp:29]: Category already set to `planet_primal_jobs`, overriding  file: common/pop_jobs/14_grand_archive_jobs.txt:491(inline_script) common/inline_scripts/grand_archive/wrangler_jobs_produces.txt:67(inline_script) common/inline_scripts/jobs/galactic_curator_council_output.txt line: 3
+[19:13:11][economic_unit_template.cpp:29]: Category already set to `planet_primal_jobs`, overriding  file: common/pop_jobs/14_grand_archive_jobs.txt line: 495
+[19:13:11][economic_unit_template.cpp:29]: Category already set to `planet_primal_jobs`, overriding  file: common/pop_jobs/14_grand_archive_jobs.txt:574(inline_script) common/inline_scripts/grand_archive/wrangler_jobs_produces.txt:67(inline_script) common/inline_scripts/jobs/galactic_curator_council_output.txt line: 3
+[19:13:11][economic_unit_template.cpp:29]: Category already set to `planet_primal_jobs`, overriding  file: common/pop_jobs/14_grand_archive_jobs.txt line: 578
+[19:13:11][economic_unit_template.cpp:29]: Category already set to `planet_primal_jobs`, overriding  file: common/pop_jobs/14_grand_archive_jobs.txt:658(inline_script) common/inline_scripts/grand_archive/wrangler_jobs_produces.txt:67(inline_script) common/inline_scripts/jobs/galactic_curator_council_output.txt line: 3
+[19:13:11][economic_unit_template.cpp:29]: Category already set to `planet_primal_jobs`, overriding  file: common/pop_jobs/14_grand_archive_jobs.txt:690(inline_script) common/inline_scripts/grand_archive/wrangler_jobs_produces.txt:67(inline_script) common/inline_scripts/jobs/galactic_curator_council_output.txt line: 3
+[19:13:11][economic_unit_template.cpp:29]: Category already set to `planet_primal_jobs`, overriding  file: common/pop_jobs/14_grand_archive_jobs.txt line: 694
+[19:13:11][economic_unit_template.cpp:29]: Category already set to `planet_primal_jobs`, overriding  file: common/pop_jobs/14_grand_archive_jobs.txt:731(inline_script) common/inline_scripts/grand_archive/wrangler_jobs_produces.txt:67(inline_script) common/inline_scripts/jobs/galactic_curator_council_output.txt line: 3
+[19:13:11][economic_unit_template.cpp:29]: Category already set to `planet_primal_jobs`, overriding  file: common/pop_jobs/14_grand_archive_jobs.txt line: 735
+[19:13:13][economic_unit_template.cpp:29]: Category already set to `specimens`, overriding  file: common/specimens/specimens.txt line: 147
+[19:13:13][economic_unit_template.cpp:29]: Category already set to `specimens`, overriding  file: common/specimens/specimens.txt line: 221
+[19:13:13][economic_unit_template.cpp:29]: Category already set to `specimens`, overriding  file: common/specimens/specimens.txt line: 334
+[19:13:13][economic_unit_template.cpp:29]: Category already set to `specimens`, overriding  file: common/specimens/specimens.txt line: 447
+[19:13:13][economic_unit_template.cpp:29]: Category already set to `specimens`, overriding  file: common/specimens/specimens.txt line: 479
+[19:13:13][economic_unit_template.cpp:29]: Category already set to `specimens`, overriding  file: common/specimens/specimens.txt line: 547
+[19:13:13][economic_unit_template.cpp:29]: Category already set to `specimens`, overriding  file: common/specimens/specimens.txt line: 564
+[19:13:13][economic_unit_template.cpp:29]: Category already set to `specimens`, overriding  file: common/specimens/specimens.txt line: 581
+[19:13:13][economic_unit_template.cpp:29]: Category already set to `specimens`, overriding  file: common/specimens/specimens.txt line: 724
+[19:13:13][economic_unit_template.cpp:29]: Category already set to `specimens`, overriding  file: common/specimens/specimens.txt line: 756
+[19:13:13][economic_unit_template.cpp:29]: Category already set to `specimens`, overriding  file: common/specimens/specimens.txt line: 773
+[19:13:13][economic_unit_template.cpp:29]: Category already set to `specimens`, overriding  file: common/specimens/specimens.txt line: 835
+[19:13:13][economic_unit_template.cpp:29]: Category already set to `specimens`, overriding  file: common/specimens/specimens.txt line: 867
+[19:13:13][economic_unit_template.cpp:29]: Category already set to `specimens`, overriding  file: common/specimens/specimens.txt line: 899
+[19:13:13][economic_unit_template.cpp:29]: Category already set to `specimens`, overriding  file: common/specimens/specimens.txt line: 931
+[19:13:13][economic_unit_template.cpp:29]: Category already set to `specimens`, overriding  file: common/specimens/specimens.txt line: 963
+[19:13:13][economic_unit_template.cpp:29]: Category already set to `specimens`, overriding  file: common/specimens/specimens.txt line: 995
+[19:13:13][economic_unit_template.cpp:29]: Category already set to `specimens`, overriding  file: common/specimens/specimens.txt line: 1057
+[19:13:13][economic_unit_template.cpp:29]: Category already set to `specimens`, overriding  file: common/specimens/specimens.txt line: 1125
+[19:13:13][economic_unit_template.cpp:29]: Category already set to `specimens`, overriding  file: common/specimens/specimens.txt line: 1157
+[19:13:13][economic_unit_template.cpp:29]: Category already set to `specimens`, overriding  file: common/specimens/specimens.txt line: 1309
+[19:13:13][economic_unit_template.cpp:29]: Category already set to `specimens`, overriding  file: common/specimens/specimens.txt line: 1383
+[19:13:13][economic_unit_template.cpp:29]: Category already set to `specimens`, overriding  file: common/specimens/specimens.txt line: 1400
+[19:13:13][economic_unit_template.cpp:29]: Category already set to `specimens`, overriding  file: common/specimens/specimens.txt line: 1507
+[19:13:13][economic_unit_template.cpp:29]: Category already set to `specimens`, overriding  file: common/specimens/specimens.txt line: 1590
+[19:13:13][economic_unit_template.cpp:29]: Category already set to `specimens`, overriding  file: common/specimens/specimens.txt line: 1679
+[19:13:13][economic_unit_template.cpp:29]: Category already set to `specimens`, overriding  file: common/specimens/specimens.txt line: 1696
+[19:13:13][economic_unit_template.cpp:29]: Category already set to `specimens`, overriding  file: common/specimens/specimens.txt line: 1713
+[19:13:13][economic_unit_template.cpp:29]: Category already set to `specimens`, overriding  file: common/specimens/specimens.txt line: 1781
+[19:13:13][economic_unit_template.cpp:29]: Category already set to `specimens`, overriding  file: common/specimens/specimens.txt line: 1813
+[19:13:13][economic_unit_template.cpp:29]: Category already set to `specimens`, overriding  file: common/specimens/specimens.txt line: 1830
+[19:13:13][economic_unit_template.cpp:29]: Category already set to `specimens`, overriding  file: common/specimens/specimens.txt line: 1937
+[19:13:13][economic_unit_template.cpp:29]: Category already set to `specimens`, overriding  file: common/specimens/specimens.txt line: 2044
+[19:13:13][economic_unit_template.cpp:29]: Category already set to `specimens`, overriding  file: common/specimens/specimens.txt line: 2076
+[19:13:13][economic_unit_template.cpp:29]: Category already set to `specimens`, overriding  file: common/specimens/specimens.txt line: 2108
+[19:13:13][economic_unit_template.cpp:29]: Category already set to `specimens`, overriding  file: common/specimens/specimens.txt line: 2146
+[19:13:13][economic_unit_template.cpp:29]: Category already set to `specimens`, overriding  file: common/specimens/specimens.txt line: 2193
+[19:13:13][economic_unit_template.cpp:29]: Category already set to `specimens`, overriding  file: common/specimens/specimens.txt line: 2210
+[19:13:13][economic_unit_template.cpp:29]: Category already set to `specimens`, overriding  file: common/specimens/specimens.txt line: 2272
+[19:13:13][economic_unit_template.cpp:29]: Category already set to `specimens`, overriding  file: common/specimens/specimens.txt line: 2319
+[19:13:13][economic_unit_template.cpp:29]: Category already set to `specimens`, overriding  file: common/specimens/specimens.txt line: 2402
+[19:13:13][economic_unit_template.cpp:29]: Category already set to `specimens`, overriding  file: common/specimens/specimens.txt line: 2590
+[19:13:13][economic_unit_template.cpp:29]: Category already set to `specimens`, overriding  file: common/specimens/specimens.txt line: 2607
+[19:13:13][economic_unit_template.cpp:29]: Category already set to `specimens`, overriding  file: common/specimens/specimens.txt line: 2645
+[19:13:13][economic_unit_template.cpp:29]: Category already set to `specimens`, overriding  file: common/specimens/specimens.txt line: 2677
+[19:13:13][economic_unit_template.cpp:29]: Category already set to `specimens`, overriding  file: common/specimens/specimens.txt line: 2724
+[19:13:13][economic_unit_template.cpp:29]: Category already set to `specimens`, overriding  file: common/specimens/specimens.txt line: 2858
+[19:13:13][economic_unit_template.cpp:29]: Category already set to `specimens`, overriding  file: common/specimens/specimens.txt line: 3091
+[19:13:13][economic_unit_template.cpp:29]: Category already set to `specimens`, overriding  file: common/specimens/specimens.txt line: 3129
+[19:13:13][economic_unit_template.cpp:29]: Category already set to `specimens`, overriding  file: common/specimens/specimens.txt line: 3191
+[19:13:13][economic_unit_template.cpp:29]: Category already set to `specimens`, overriding  file: common/specimens/specimens.txt line: 3304
+[19:13:13][economic_unit_template.cpp:29]: Category already set to `specimens`, overriding  file: common/specimens/specimens.txt line: 3336
+[19:13:13][economic_unit_template.cpp:29]: Category already set to `specimens`, overriding  file: common/specimens/specimens.txt line: 3438
+[19:13:13][economic_unit_template.cpp:29]: Category already set to `specimens`, overriding  file: common/specimens/specimens.txt line: 3512
+[19:13:13][economic_unit_template.cpp:29]: Category already set to `specimens`, overriding  file: common/specimens/specimens.txt line: 3544
+[19:13:13][economic_unit_template.cpp:29]: Category already set to `specimens`, overriding  file: common/specimens/specimens.txt line: 3576
+[19:13:13][economic_unit_template.cpp:29]: Category already set to `specimens`, overriding  file: common/specimens/specimens.txt line: 3608
+[19:13:13][economic_unit_template.cpp:29]: Category already set to `specimens`, overriding  file: common/specimens/specimens.txt line: 3682
+[19:13:13][economic_unit_template.cpp:29]: Category already set to `specimens`, overriding  file: common/specimens/specimens.txt line: 3876
+[19:13:13][economic_unit_template.cpp:29]: Category already set to `specimens`, overriding  file: common/specimens/specimens.txt line: 3908
+[19:13:13][economic_unit_template.cpp:29]: Category already set to `specimens`, overriding  file: common/specimens/specimens.txt line: 3955
+[19:13:13][economic_unit_template.cpp:29]: Category already set to `specimens`, overriding  file: common/specimens/specimens.txt line: 4008

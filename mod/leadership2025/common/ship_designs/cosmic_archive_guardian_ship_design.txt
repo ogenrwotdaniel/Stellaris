@@ -1,0 +1,42 @@
+ship_design = {
+	name = "NAME_COSMIC_ARCHIVE_GUARDIAN"
+	ship_size = "guardian_cosmic_archive_01"
+	
+	section = {
+		template = "cosmic_archive_guardian_section"
+		slot_type = "guardian_cosmic_archive_section"
+		
+		component = {
+			slot = "cosmic_guardian_weapon_01"
+			template = "cosmic_guardian_weapon_01"
+		}
+		component = {
+			slot = "cosmic_guardian_weapon_02"
+			template = "cosmic_guardian_weapon_02"
+		}
+		component = {
+			slot = "cosmic_guardian_weapon_03"
+			template = "cosmic_guardian_weapon_03"
+		}
+		
+		component = {
+			slot = "cosmic_guardian_computer"
+			template = "cosmic_guardian_computer"
+		}
+		
+		component = {
+			slot = "cosmic_guardian_sensor"
+			template = "cosmic_guardian_sensor"
+		}
+		
+		component = {
+			slot = "cosmic_guardian_shield"
+			template = "cosmic_guardian_shield"
+		}
+		
+		component = {
+			slot = "cosmic_guardian_armor"
+			template = "cosmic_guardian_armor"
+		}
+	}
+}

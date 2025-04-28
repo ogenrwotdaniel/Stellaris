@@ -1,0 +1,390 @@
+# Cosmic Archive Edicts
+# Balanced edicts that provide strategic options for interacting with the Archive
+
+# Strategic edict for enhanced research after finding the archive
+edict_archive_research_focus = {
+	length = 3600 # 10 years
+	icon = "GFX_edict_type_time"
+	
+	potential = {
+		has_country_flag = found_cosmic_archive
+	}
+	
+	allow = {
+		custom_tooltip = {
+			fail_text = "requires_archive_research_focus_tech"
+			has_technology = tech_cosmic_archive_insights
+		}
+	}
+	
+	# Moderate cost that scales with empire size
+	resources = {
+		category = edicts
+		cost = {
+			influence = 100
+			unity = 500
+			multiplier = value:edict_size_effect
+		}
+		upkeep = {
+			energy = 0.5
+			physics_research = 0.5
+			society_research = 0.5
+			engineering_research = 0.5
+			multiplier = value:edict_upkeep_scaling
+		}
+	}
+	
+	# Significant but focused research bonus
+	modifier = {
+		country_physics_tech_research_speed_mult = 0.15
+		country_society_tech_research_speed_mult = 0.10
+		country_engineering_tech_research_speed_mult = 0.10
+		science_ship_survey_speed = 0.15
+	}
+	
+	ai_weight = {
+		weight = 50
+		modifier = {
+			factor = 2
+			has_ethic = ethic_materialist
+		}
+		modifier = {
+			factor = 3
+			has_ethic = ethic_fanatic_materialist
+		}
+	}
+}
+
+# Risk-taker edict for massive but potentially dangerous boost
+edict_archive_overcharge = {
+	length = 1800 # 5 years
+	icon = "GFX_edict_type_time"
+	
+	potential = {
+		has_country_flag = archive_risk_path_success
+	}
+	
+	allow = {
+		custom_tooltip = {
+			fail_text = "requires_archive_full_activation_tech"
+			has_technology = tech_cosmic_archive_full_activation
+		}
+		NOR = {
+			has_modifier = cosmic_archive_disruption
+			has_modifier = cosmic_archive_guardian_wrath
+		}
+	}
+	
+	# High cost with exotic resources
+	resources = {
+		category = edicts
+		cost = {
+			influence = 150
+			physics_research = 1000
+			rare_crystals = 50
+			exotic_gases = 50
+			volatile_motes = 50
+			multiplier = value:edict_size_effect
+		}
+		upkeep = {
+			energy = 1
+			physics_research = 2
+			multiplier = value:edict_upkeep_scaling
+		}
+	}
+	
+	# Very powerful but with random chance of problems
+	modifier = {
+		country_physics_tech_research_speed_mult = 0.25
+		country_society_tech_research_speed_mult = 0.20
+		country_engineering_tech_research_speed_mult = 0.25
+		country_rare_tech_research_speed_mult = 0.15
+		planet_researchers_produces_mult = 0.15
+		planet_stability_add = -5
+	}
+	
+	on_activated = {
+		custom_tooltip = "edict_archive_overcharge_risk_warning"
+		hidden_effect = {
+			# 20% chance of problems during the edict period
+			set_country_flag = archive_overcharge_active
+		}
+	}
+	
+	ai_weight = {
+		weight = 30
+		modifier = {
+			factor = 2
+			has_ethic = ethic_materialist
+		}
+		modifier = {
+			factor = 0.5
+			has_ethic = ethic_pacifist
+		}
+		modifier = {
+			factor = 0.2
+			has_ethic = ethic_spiritualist
+		}
+	}
+}
+
+# Military approach edict - boosts fleet power against the Guardian
+edict_guardian_combat_protocols = {
+	length = 3600 # 10 years
+	icon = "GFX_edict_type_time"
+	
+	potential = {
+		OR = {
+			has_country_flag = archive_guardian_active
+			has_global_flag = cosmic_archive_guardian_exists
+		}
+	}
+	
+	allow = {
+		# Requires significant military investment
+		OR = {
+			count_owned_ship = {
+				count > 40
+				limit = {
+					is_ship_class = shipclass_military
+				}
+			}
+			count_fleet_power > 25000
+		}
+	}
+	
+	# Expensive but worthwhile for military approach
+	resources = {
+		category = edicts
+		cost = {
+			influence = 100
+			alloys = 500
+			energy = 1000
+			volatile_motes = 25
+			multiplier = value:edict_size_effect
+		}
+		upkeep = {
+			energy = 1
+			alloys = 0.5
+			multiplier = value:edict_upkeep_scaling
+		}
+	}
+	
+	# Combat-specific bonuses against the Guardian
+	modifier = {
+		ship_weapon_damage = 0.15
+		ship_hull_add = 250
+		ship_shield_mult = 0.10
+		ship_disengage_chance_mult = 0.20
+		ship_fire_rate_mult = 0.10
+	}
+	
+	on_activated = {
+		custom_tooltip = "edict_guardian_combat_protocols_activated"
+		set_country_flag = archive_military_approach
+	}
+	
+	ai_weight = {
+		weight = 75
+		modifier = {
+			factor = 2
+			has_ethic = ethic_militarist
+		}
+		modifier = {
+			factor = 0.5
+			has_ethic = ethic_pacifist
+		}
+	}
+}
+
+# Diplomatic approach edict - helps pacify the Guardian
+edict_guardian_communication = {
+	length = 5400 # 15 years
+	icon = "GFX_edict_type_time"
+	
+	potential = {
+		OR = {
+			has_country_flag = archive_guardian_active
+			has_global_flag = cosmic_archive_guardian_exists
+		}
+	}
+	
+	allow = {
+		# Requires significant society and unity investment
+		stored_physics_research > 5000
+		stored_society_research > 5000
+		
+		# Leader requirements
+		any_owned_leader = {
+			OR = {
+				has_trait = leader_trait_expertise_psionics
+				has_trait = leader_trait_expertise_statecraft
+				has_trait = leader_trait_expertise_industry
+				leader_class = scientist
+			}
+		}
+	}
+	
+	# Expensive but worthwhile for diplomatic approach
+	resources = {
+		category = edicts
+		cost = {
+			influence = 200
+			unity = 1000
+			society_research = 1000
+			multiplier = value:edict_size_effect
+		}
+		upkeep = {
+			energy = 1
+			unity = 1
+			multiplier = value:edict_upkeep_scaling
+		}
+	}
+	
+	# Diplomatic bonuses and preparation
+	modifier = {
+		country_society_tech_research_speed_mult = 0.15
+		planet_stability_add = 5
+		country_unity_produces_mult = 0.10
+		pop_happiness = 0.05
+		ship_disengage_chance_mult = 0.25
+	}
+	
+	on_activated = {
+		custom_tooltip = "edict_guardian_communication_activated"
+		set_country_flag = archive_diplomatic_approach
+	}
+	
+	ai_weight = {
+		weight = 50
+		modifier = {
+			factor = 2
+			has_ethic = ethic_pacifist
+		}
+		modifier = {
+			factor = 2
+			has_ethic = ethic_xenophile
+		}
+		modifier = {
+			factor = 0.5
+			has_ethic = ethic_militarist
+		}
+	}
+}
+
+# Post-Guardian Harmony edict - available after pacifying Guardian
+edict_archive_harmony = {
+	length = 7200 # 20 years
+	icon = "GFX_edict_type_time"
+	
+	potential = {
+		has_country_flag = archive_guardian_pacified
+	}
+	
+	allow = {
+		custom_tooltip = {
+			fail_text = "requires_archive_harmonization_tech"
+			has_technology = tech_cosmic_archive_harmonization
+		}
+	}
+	
+	# Moderate cost for long-term benefits
+	resources = {
+		category = edicts
+		cost = {
+			influence = 150
+			unity = 1000
+			society_research = 500
+			multiplier = value:edict_size_effect
+		}
+		upkeep = {
+			unity = 0.5
+			society_research = 0.5
+			multiplier = value:edict_upkeep_scaling
+		}
+	}
+	
+	# Unity, stability, and diplomatic focused
+	modifier = {
+		pop_happiness = 0.10
+		planet_stability_add = 10
+		country_unity_produces_mult = 0.15
+		diplo_weight_mult = 0.15
+		country_trust_growth = 0.25
+		planet_jobs_unity_produces_mult = 0.10
+	}
+	
+	ai_weight = {
+		weight = 70
+		modifier = {
+			factor = 2
+			has_ethic = ethic_pacifist
+		}
+		modifier = {
+			factor = 2
+			has_ethic = ethic_xenophile
+		}
+	}
+}
+
+# Post-Guardian Weaponization edict - available after defeating Guardian
+edict_archive_weaponization = {
+	length = 5400 # 15 years
+	icon = "GFX_edict_type_time"
+	
+	potential = {
+		has_country_flag = archive_guardian_defeated
+	}
+	
+	allow = {
+		custom_tooltip = {
+			fail_text = "requires_archive_manipulation_tech"
+			has_technology = tech_cosmic_archive_manipulation
+		}
+	}
+	
+	# Significant military and energy cost
+	resources = {
+		category = edicts
+		cost = {
+			influence = 150
+			alloys = 1000
+			physics_research = 500
+			exotic_gases = 25
+			volatile_motes = 25
+			multiplier = value:edict_size_effect
+		}
+		upkeep = {
+			energy = 1
+			exotic_gases = 0.25
+			volatile_motes = 0.25
+			multiplier = value:edict_upkeep_scaling
+		}
+	}
+	
+	# Combat and physics research focused
+	modifier = {
+		ship_weapon_damage = 0.20
+		ship_hull_add = 500
+		ship_shield_mult = 0.15
+		ship_fire_rate_mult = 0.10
+		country_physics_tech_research_speed_mult = 0.15
+		planet_orbital_bombardment_damage = 0.25
+	}
+	
+	ai_weight = {
+		weight = 70
+		modifier = {
+			factor = 2
+			has_ethic = ethic_militarist
+		}
+		modifier = {
+			factor = 2
+			has_ethic = ethic_materialist
+		}
+		modifier = {
+			factor = 0.2
+			has_ethic = ethic_pacifist
+		}
+	}
+}

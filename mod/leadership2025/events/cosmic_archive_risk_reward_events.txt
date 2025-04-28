@@ -1,0 +1,894 @@
+namespace = cosmic_archive_risk
+
+# Risk/Reward Main Event Tree
+# These events handle the balance between risk and reward for different approaches
+
+# Risk-Based Protocol Activation Event
+country_event = {
+	id = cosmic_archive_risk.1
+	title = "cosmic_archive_risk.1.name"
+	desc = "cosmic_archive_risk.1.desc"
+	picture = GFX_evt_ancient_databank
+	location = event_target:archive_planet
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		# Check which approach policy is active
+		if = {
+			limit = { has_country_flag = archive_aggressive_approach }
+			set_variable = { which = archive_risk_factor value = @[-protocol_aggressive_risk] }
+		}
+		else_if = {
+			limit = { has_country_flag = archive_balanced_approach }
+			set_variable = { which = archive_risk_factor value = @[-protocol_balanced_risk] }
+		}
+		else_if = {
+			limit = { has_country_flag = archive_cautious_approach }
+			set_variable = { which = archive_risk_factor value = @[-protocol_cautious_risk] }
+		}
+		else = {
+			# Default to balanced if no approach set
+			set_variable = { which = archive_risk_factor value = @[-protocol_balanced_risk] }
+		}
+	}
+	
+	# Engage risky protocol
+	option = {
+		name = "cosmic_archive_risk.1.a"
+		custom_tooltip = "cosmic_archive_risk_engage_protocol_tooltip"
+		trigger = {
+			NOR = {
+				has_modifier = cosmic_archive_protocol_cooldown
+				has_modifier = cosmic_archive_disruption
+				has_modifier = cosmic_archive_guardian_wrath
+			}
+		}
+		
+		hidden_effect = {
+			# Risk factor is influenced by policy choice
+			random_list = {
+				30 = {
+					modifier = {
+						add = variable:archive_risk_factor
+					}
+					country_event = { id = cosmic_archive_risk.2 }
+				}
+				40 = {
+					country_event = { id = cosmic_archive_risk.3 }
+				}
+				30 = {
+					modifier = {
+						add = variable:archive_risk_factor
+						factor = -1
+					}
+					country_event = { id = cosmic_archive_risk.4 }
+				}
+			}
+		}
+		
+		# Add cooldown to prevent spam
+		add_modifier = {
+			modifier = cosmic_archive_protocol_cooldown
+			days = 180
+		}
+	}
+	
+	# Cautious approach
+	option = {
+		name = "cosmic_archive_risk.1.b"
+		custom_tooltip = "cosmic_archive_risk_cautious_approach_tooltip"
+		
+		# Small guaranteed bonus
+		add_resource = {
+			physics_research = 100
+			society_research = 100
+			engineering_research = 100
+		}
+		
+		# Short duration modifier
+		add_modifier = {
+			modifier = cosmic_archive_stable_protocols
+			days = 360
+		}
+	}
+}
+
+# Risky Protocol - Negative Outcome
+country_event = {
+	id = cosmic_archive_risk.2
+	title = "cosmic_archive_risk.2.name"
+	desc = "cosmic_archive_risk.2.desc"
+	picture = GFX_evt_malfunction
+	location = capital_scope
+	
+	is_triggered_only = yes
+	
+	# Failed protocol activation
+	option = {
+		name = "cosmic_archive_risk.2.a"
+		custom_tooltip = "cosmic_archive_protocol_failure_tooltip"
+		
+		# Apply disruption modifier
+		add_modifier = {
+			modifier = cosmic_archive_disruption
+			days = 360
+		}
+		
+		# Resource loss based on empire size and approach
+		if = {
+			limit = { has_country_flag = archive_aggressive_approach }
+			add_resource = {
+				physics_research = -250
+				society_research = -250
+				engineering_research = -250
+				energy = -200
+				multiplier = value:mid_game_mult
+			}
+		}
+		else_if = {
+			limit = { has_country_flag = archive_balanced_approach }
+			add_resource = {
+				physics_research = -150
+				society_research = -150
+				engineering_research = -150
+				energy = -150
+				multiplier = value:mid_game_mult
+			}
+		}
+		else = {
+			add_resource = {
+				physics_research = -75
+				society_research = -75
+				engineering_research = -75
+				energy = -100
+				multiplier = value:mid_game_mult
+			}
+		}
+		
+		# Small chance to trigger guardian awakening if activated too many times
+		if = {
+			limit = {
+				check_variable = {
+					which = archive_protocol_failures
+					value > 3
+				}
+				NOT = { has_global_flag = cosmic_archive_guardian_exists }
+			}
+			
+			random = {
+				chance = 20
+				country_event = { id = cosmic_archive_crisis.5 }
+			}
+		}
+		
+		# Track failures for escalating risk
+		change_variable = {
+			which = archive_protocol_failures
+			value = 1
+		}
+	}
+}
+
+# Risky Protocol - Neutral Outcome
+country_event = {
+	id = cosmic_archive_risk.3
+	title = "cosmic_archive_risk.3.name"
+	desc = "cosmic_archive_risk.3.desc"
+	picture = GFX_evt_psionic_activity
+	location = capital_scope
+	
+	is_triggered_only = yes
+	
+	# Neutral outcome - small benefit
+	option = {
+		name = "cosmic_archive_risk.3.a"
+		custom_tooltip = "cosmic_archive_protocol_partial_tooltip"
+		
+		# Moderate resource gain
+		add_resource = {
+			physics_research = 150
+			society_research = 150
+			engineering_research = 150
+			multiplier = value:mid_game_mult
+		}
+		
+		# Short duration modifier
+		add_modifier = {
+			modifier = cosmic_archive_partial_activation
+			days = 180
+		}
+	}
+}
+
+# Risky Protocol - Positive Outcome
+country_event = {
+	id = cosmic_archive_risk.4
+	title = "cosmic_archive_risk.4.name"
+	desc = "cosmic_archive_risk.4.desc"
+	picture = GFX_evt_psionics
+	location = capital_scope
+	
+	is_triggered_only = yes
+	
+	# Successful protocol activation
+	option = {
+		name = "cosmic_archive_risk.4.a"
+		custom_tooltip = "cosmic_archive_protocol_success_tooltip"
+		
+		# Significant resource gain
+		add_resource = {
+			physics_research = 300
+			society_research = 300
+			engineering_research = 300
+			multiplier = value:mid_game_mult
+		}
+		
+		# Apply powerful modifier
+		add_modifier = {
+			modifier = cosmic_archive_risky_protocols
+			days = 720
+		}
+		
+		# Unlock tech options based on approach
+		if = {
+			limit = { has_country_flag = archive_aggressive_approach }
+			add_research_option = tech_cosmic_archive_full_activation
+		}
+		else_if = {
+			limit = { has_country_flag = archive_balanced_approach }
+			add_research_option = tech_cosmic_archive_advanced_analysis
+		}
+		else = {
+			add_research_option = tech_cosmic_archive_controlled_activation
+		}
+		
+		# Mark success for later events
+		set_country_flag = archive_risk_path_success
+	}
+}
+
+# Guardian Approach Events - Military vs Diplomatic Routes
+
+# Military Approach Progress Event
+country_event = {
+	id = cosmic_archive_risk.10
+	title = "cosmic_archive_risk.10.name"
+	desc = "cosmic_archive_risk.10.desc"
+	picture = GFX_evt_space_battle
+	location = from
+	
+	is_triggered_only = yes
+	
+	# Only trigger if guardian exists and military approach chosen
+	trigger = {
+		has_global_flag = cosmic_archive_guardian_exists
+		has_country_flag = archive_crisis_military
+	}
+	
+	immediate = {
+		# Track military progress
+		if = {
+			limit = {
+				has_country_flag = guardian_military_progress
+			}
+			change_variable = {
+				which = guardian_military_progress
+				value = 1
+			}
+		}
+		else = {
+			set_variable = {
+				which = guardian_military_progress
+				value = 1
+			}
+		}
+	}
+	
+	# Continue military campaign
+	option = {
+		name = "cosmic_archive_risk.10.a"
+		custom_tooltip = "cosmic_archive_military_progress_tooltip"
+		
+		# Check progress level for rewards and next steps
+		if = {
+			limit = {
+				check_variable = {
+					which = guardian_military_progress
+					value >= 3
+				}
+			}
+			
+			# Progress to final military confrontation
+			country_event = { id = cosmic_archive_risk.12 days = 60 random = 20 }
+			
+			# Strategic military bonus
+			add_modifier = {
+				modifier = cosmic_archive_guardian_weakness
+				days = 360
+			}
+		}
+		else = {
+			# Incremental rewards
+			add_resource = {
+				physics_research = 200
+				alloys = 100
+				multiplier = value:mid_game_mult
+			}
+			
+			# Temporary combat bonus
+			add_modifier = {
+				modifier = cosmic_archive_tactical_advantage
+				days = 180
+			}
+		}
+	}
+}
+
+# Diplomatic Approach Progress Event
+country_event = {
+	id = cosmic_archive_risk.11
+	title = "cosmic_archive_risk.11.name"
+	desc = "cosmic_archive_risk.11.desc"
+	picture = GFX_evt_telepathy
+	location = from
+	
+	is_triggered_only = yes
+	
+	# Only trigger if guardian exists and diplomatic approach chosen
+	trigger = {
+		has_global_flag = cosmic_archive_guardian_exists
+		has_country_flag = archive_crisis_diplomatic
+	}
+	
+	immediate = {
+		# Track diplomatic progress
+		if = {
+			limit = {
+				has_country_flag = guardian_diplomatic_progress
+			}
+			change_variable = {
+				which = guardian_diplomatic_progress
+				value = 1
+			}
+		}
+		else = {
+			set_variable = {
+				which = guardian_diplomatic_progress
+				value = 1
+			}
+		}
+	}
+	
+	# Continue diplomatic efforts
+	option = {
+		name = "cosmic_archive_risk.11.a"
+		custom_tooltip = "cosmic_archive_diplomatic_progress_tooltip"
+		
+		# Check progress level for rewards and next steps
+		if = {
+			limit = {
+				check_variable = {
+					which = guardian_diplomatic_progress
+					value >= 4
+				}
+			}
+			
+			# Progress to final diplomatic resolution
+			country_event = { id = cosmic_archive_risk.13 days = 60 random = 20 }
+			
+			# Strategic diplomatic bonus
+			add_modifier = {
+				modifier = cosmic_archive_guardian_rapport
+				days = 360
+			}
+		}
+		else = {
+			# Incremental rewards
+			add_resource = {
+				society_research = 200
+				unity = 150
+				multiplier = value:mid_game_mult
+			}
+			
+			# Temporary stability bonus
+			add_modifier = {
+				modifier = cosmic_archive_diplomatic_insight
+				days = 180
+			}
+		}
+	}
+}
+
+# Final Military Confrontation
+country_event = {
+	id = cosmic_archive_risk.12
+	title = "cosmic_archive_risk.12.name"
+	desc = "cosmic_archive_risk.12.desc"
+	picture = GFX_evt_fleet_neutral
+	location = event_target:guardian_system
+	
+	is_triggered_only = yes
+	
+	# Final battle decision
+	option = {
+		name = "cosmic_archive_risk.12.a"
+		custom_tooltip = "cosmic_archive_final_battle_tooltip"
+		
+		# Significant resource investment
+		add_resource = {
+			alloys = -1000
+			energy = -1000
+			volatile_motes = -100
+			multiplier = value:mid_game_mult
+		}
+		
+		# Success chance based on fleet power and military progress
+		hidden_effect = {
+			random_list = {
+				70 = {
+					modifier = {
+						add = 20
+						count_fleet_power > 40000
+					}
+					modifier = {
+						add = 10
+						has_technology = tech_battleships
+					}
+					country_event = { id = cosmic_archive_risk.14 }
+				}
+				30 = {
+					modifier = {
+						add = -20
+						count_fleet_power < 25000
+					}
+					country_event = { id = cosmic_archive_risk.15 }
+				}
+			}
+		}
+	}
+	
+	# Alternative: Wait and build up strength
+	option = {
+		name = "cosmic_archive_risk.12.b"
+		custom_tooltip = "cosmic_archive_wait_for_strength_tooltip"
+		
+		# Reset the event with a delay
+		hidden_effect = {
+			country_event = { id = cosmic_archive_risk.12 days = 360 }
+		}
+		
+		# Minor resource penalty
+		add_resource = {
+			influence = -50
+			alloys = -200
+		}
+	}
+}
+
+# Final Diplomatic Resolution
+country_event = {
+	id = cosmic_archive_risk.13
+	title = "cosmic_archive_risk.13.name"
+	desc = "cosmic_archive_risk.13.desc"
+	picture = GFX_evt_psionics
+	location = event_target:guardian_system
+	
+	is_triggered_only = yes
+	
+	# Final diplomatic exchange
+	option = {
+		name = "cosmic_archive_risk.13.a"
+		custom_tooltip = "cosmic_archive_final_communication_tooltip"
+		
+		# Significant resource investment
+		add_resource = {
+			influence = -200
+			unity = -1000
+			society_research = -1000
+			multiplier = value:mid_game_mult
+		}
+		
+		# Success chance based on research and diplomatic progress
+		hidden_effect = {
+			random_list = {
+				75 = {
+					modifier = {
+						add = 15
+						has_technology = tech_telepathy
+					}
+					modifier = {
+						add = 10
+						check_variable = {
+							which = guardian_diplomatic_progress
+							value >= 5
+						}
+					}
+					country_event = { id = cosmic_archive_risk.16 }
+				}
+				25 = {
+					modifier = {
+						add = -15
+						stored_society_research < 5000
+					}
+					country_event = { id = cosmic_archive_risk.17 }
+				}
+			}
+		}
+	}
+	
+	# Alternative: Prepare further
+	option = {
+		name = "cosmic_archive_risk.13.b"
+		custom_tooltip = "cosmic_archive_strengthen_communication_tooltip"
+		
+		# Reset the event with a delay
+		hidden_effect = {
+			country_event = { id = cosmic_archive_risk.13 days = 360 }
+			change_variable = {
+				which = guardian_diplomatic_progress
+				value = 1
+			}
+		}
+		
+		# Minor resource penalty
+		add_resource = {
+			influence = -100
+			unity = -500
+		}
+	}
+}
+
+# Military Approach Success
+country_event = {
+	id = cosmic_archive_risk.14
+	title = "cosmic_archive_risk.14.name"
+	desc = "cosmic_archive_risk.14.desc"
+	picture = GFX_evt_space_battle
+	location = event_target:guardian_system
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		set_country_flag = archive_guardian_defeated
+		set_global_flag = cosmic_archive_guardian_defeated
+		remove_global_flag = cosmic_archive_guardian_exists
+		event_target:guardian_system = {
+			set_star_flag = cosmic_archive_guardian_defeated
+		}
+	}
+	
+	# Claim victory
+	option = {
+		name = "cosmic_archive_risk.14.a"
+		custom_tooltip = "cosmic_archive_military_victory_tooltip"
+		
+		# Major resource rewards
+		add_resource = {
+			physics_research = 2000
+			engineering_research = 2000
+			alloys = 1000
+			rare_crystals = 200
+			exotic_gases = 200
+			volatile_motes = 200
+			multiplier = value:mid_game_mult
+		}
+		
+		# Tech unlocks
+		add_research_option = tech_cosmic_archive_manipulation
+		add_research_option = tech_cosmic_archive_guardian_weapons
+		
+		# Victory modifier
+		add_modifier = {
+			modifier = cosmic_archive_guardian_tech
+			days = -1
+		}
+		
+		# System effects
+		event_target:guardian_system = {
+			solar_system_effect = {
+				add_modifier = {
+					modifier = cosmic_archive_galactic_scar
+					days = -1
+				}
+			}
+		}
+		
+		# Global effects
+		country_event = { id = cosmic_archive_risk.18 days = 30 }
+	}
+}
+
+# Military Approach Failure
+country_event = {
+	id = cosmic_archive_risk.15
+	title = "cosmic_archive_risk.15.name"
+	desc = "cosmic_archive_risk.15.desc"
+	picture = GFX_evt_space_battle
+	location = event_target:guardian_system
+	
+	is_triggered_only = yes
+	
+	# Defeat aftermath
+	option = {
+		name = "cosmic_archive_risk.15.a"
+		custom_tooltip = "cosmic_archive_military_defeat_tooltip"
+		
+		# Fleet damage
+		destroy_fleet_percentage = {
+			fleet = root.fleet
+			percentage = 0.4
+		}
+		
+		# Resource penalties
+		add_resource = {
+			alloys = -500
+			energy = -1000
+			multiplier = value:mid_game_mult
+		}
+		
+		# Recovery period
+		add_modifier = {
+			modifier = cosmic_archive_guardian_wrath
+			days = 1800
+		}
+		
+		# Can try again later with better odds
+		hidden_effect = {
+			change_variable = {
+				which = guardian_military_progress
+				value = 1
+			}
+			country_event = { id = cosmic_archive_risk.12 days = 720 }
+		}
+	}
+}
+
+# Diplomatic Approach Success
+country_event = {
+	id = cosmic_archive_risk.16
+	title = "cosmic_archive_risk.16.name"
+	desc = "cosmic_archive_risk.16.desc"
+	picture = GFX_evt_psionics
+	location = event_target:guardian_system
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		set_country_flag = archive_guardian_pacified
+		set_global_flag = cosmic_archive_guardian_pacified
+		remove_global_flag = cosmic_archive_guardian_exists
+		event_target:guardian_system = {
+			set_star_flag = cosmic_archive_guardian_pacified
+		}
+	}
+	
+	# Peaceful resolution
+	option = {
+		name = "cosmic_archive_risk.16.a"
+		custom_tooltip = "cosmic_archive_diplomatic_success_tooltip"
+		
+		# Major resource rewards
+		add_resource = {
+			society_research = 2000
+			physics_research = 1000
+			unity = 1500
+			influence = 500
+			multiplier = value:mid_game_mult
+		}
+		
+		# Tech unlocks
+		add_research_option = tech_cosmic_archive_harmonization
+		add_research_option = tech_cosmic_archive_guardian_interface
+		
+		# Victory modifier
+		add_modifier = {
+			modifier = cosmic_archive_research_legacy
+			days = -1
+		}
+		
+		# System effects
+		event_target:guardian_system = {
+			solar_system_effect = {
+				add_modifier = {
+					modifier = cosmic_archive_galactic_harmony
+					days = -1
+				}
+			}
+		}
+		
+		# Global effects
+		country_event = { id = cosmic_archive_risk.19 days = 30 }
+	}
+}
+
+# Diplomatic Approach Failure
+country_event = {
+	id = cosmic_archive_risk.17
+	title = "cosmic_archive_risk.17.name"
+	desc = "cosmic_archive_risk.17.desc"
+	picture = GFX_evt_malfunction
+	location = event_target:guardian_system
+	
+	is_triggered_only = yes
+	
+	# Failed communication
+	option = {
+		name = "cosmic_archive_risk.17.a"
+		custom_tooltip = "cosmic_archive_diplomatic_failure_tooltip"
+		
+		# Resource penalties
+		add_resource = {
+			influence = -150
+			unity = -750
+			multiplier = value:mid_game_mult
+		}
+		
+		# Recovery period
+		add_modifier = {
+			modifier = cosmic_archive_communication_failure
+			days = 1800
+		}
+		
+		# Can try again later with better odds
+		hidden_effect = {
+			change_variable = {
+				which = guardian_diplomatic_progress
+				value = 1
+			}
+			country_event = { id = cosmic_archive_risk.13 days = 720 }
+		}
+	}
+}
+
+# Global Military Victory Recognition
+country_event = {
+	id = cosmic_archive_risk.18
+	title = "cosmic_archive_risk.18.name"
+	desc = "cosmic_archive_risk.18.desc"
+	picture = GFX_evt_federation_fleet
+	
+	is_triggered_only = yes
+	
+	# Galactic recognition
+	option = {
+		name = "cosmic_archive_risk.18.a"
+		custom_tooltip = "cosmic_archive_global_military_victory_tooltip"
+		
+		# Diplomatic bonus for military victory
+		add_modifier = {
+			modifier = cosmic_archive_crisis_contributor
+			days = -1
+		}
+		
+		# Empire reputation effect
+		hidden_effect = {
+			random_list = {
+				50 = {
+					add_modifier = {
+						modifier = cosmic_archive_archaeotech_exploiters
+						days = -1
+					}
+				}
+				50 = {
+					add_modifier = {
+						modifier = cosmic_archive_knowledge_guardians
+						days = -1
+					}
+				}
+			}
+		}
+		
+		# End-game relic potential
+		if = {
+			limit = {
+				has_global_flag = cosmic_archive_guardian_defeated
+				has_completed_event = cosmic_archive_risk.14
+			}
+			add_relic = r_cosmic_archive_core
+		}
+	}
+}
+
+# Global Diplomatic Victory Recognition
+country_event = {
+	id = cosmic_archive_risk.19
+	title = "cosmic_archive_risk.19.name"
+	desc = "cosmic_archive_risk.19.desc"
+	picture = GFX_evt_galactic_community
+	
+	is_triggered_only = yes
+	
+	# Galactic recognition
+	option = {
+		name = "cosmic_archive_risk.19.a"
+		custom_tooltip = "cosmic_archive_global_diplomatic_victory_tooltip"
+		
+		# Diplomatic bonus for peaceful resolution
+		add_modifier = {
+			modifier = cosmic_archive_crisis_contributor
+			days = -1
+		}
+		
+		# Empire reputation effect
+		hidden_effect = {
+			random_list = {
+				70 = {
+					add_modifier = {
+						modifier = cosmic_archive_relic_defenders
+						days = -1
+					}
+				}
+				30 = {
+					add_modifier = {
+						modifier = cosmic_archive_knowledge_guardians
+						days = -1
+					}
+				}
+			}
+		}
+		
+		# End-game relic potential
+		if = {
+			limit = {
+				has_global_flag = cosmic_archive_guardian_pacified
+				has_completed_event = cosmic_archive_risk.16
+			}
+			add_relic = r_cosmic_archive_interface
+		}
+	}
+}
+
+# Edict Risk Event - Overcharge Consequences
+country_event = {
+	id = cosmic_archive_risk.20
+	title = "cosmic_archive_risk.20.name"
+	desc = "cosmic_archive_risk.20.desc"
+	picture = GFX_evt_malfunction
+	
+	trigger = {
+		has_country_flag = archive_overcharge_active
+	}
+	
+	mean_time_to_happen = {
+		months = 12
+		
+		modifier = {
+			factor = 0.5
+			has_technology = tech_cosmic_archive_full_activation
+		}
+	}
+	
+	immediate = {
+		remove_country_flag = archive_overcharge_active
+	}
+	
+	# Overcharge backfire
+	option = {
+		name = "cosmic_archive_risk.20.a"
+		custom_tooltip = "cosmic_archive_overcharge_failure_tooltip"
+		
+		add_modifier = {
+			modifier = cosmic_archive_disruption
+			days = 360
+		}
+		
+		# Chance of Guardian awakening
+		if = {
+			limit = {
+				NOR = {
+					has_global_flag = cosmic_archive_guardian_exists
+					has_global_flag = cosmic_archive_guardian_defeated
+					has_global_flag = cosmic_archive_guardian_pacified
+				}
+			}
+			
+			random_list = {
+				25 = {
+					country_event = { id = cosmic_archive_crisis.5 }
+				}
+				75 = {}
+			}
+		}
+	}
+}

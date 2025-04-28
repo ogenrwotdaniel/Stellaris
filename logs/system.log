@@ -1,0 +1,97 @@
+[19:12:04][gfx_dx9.cpp:4485]: Loading settings for adapter -1, fullscreen=0, multisample=15
+[19:12:04][gfx_dx9.cpp:4526]: Graphic Adapters: 
+[19:12:04][gfx_dx9.cpp:4534]: 	0: Intel(R) Iris(R) Xe Graphics
+[19:12:04][gfx_dx9.cpp:4556]: Using Adapter [0] to check for multi-sampling support:
+[19:12:04][gfx_dx9.cpp:4579]: Using Adapter [0]:
+[19:12:04][gfx_dx9.cpp:4590]: Succeeded to create a device [D3DCREATE_HARDWARE_VERTEXPROCESSING].
+[19:12:04][gfx_dx9.cpp:4640]: Graphics device: Intel(R) Iris(R) Xe Graphics
+[19:12:04][gfx_dx9.cpp:4641]: Graphics driver: igd10iumd64.dll
+[19:12:04][gfx_dx9.cpp:4642]: Driver version: 4032
+[19:12:04][gfx_dx9.cpp:4657]: 
+
+
+Dumping all gfx info:
+DeviceIdentifier:	{D7B78E66-05E6-11CF-2474-2224A3C2D235}
+VendorId:	32902
+DeviceId:	18086
+SubSysId:	71768148
+Revision:	12
+DriverVersion.HighPart:	2031616
+DriverVersion.LowPart:	6623168
+
+
+[19:12:04][gfx_dx9.cpp:4680]: Instancing supported.
+[19:12:04][gfx_dx9.cpp:4730]: Video memory amount: 4095MB
+[19:12:04][gfx_dx9.cpp:4731]: MaxSimultaneousTextures: 8
+[19:12:04][gfx_dx9.cpp:4732]: MaxVertexBlendMatrices: 4
+[19:12:04][gfx_dx9.cpp:4733]: MaxVertexBlendMatrixIndex: 8
+[19:12:04][gfx_dx9.cpp:4734]: MaxSimultaneousTextures: 8
+[19:12:04][gfx_dx9.cpp:4735]: MaxTextureBlendStages: 8
+[19:12:04][gfx_dx9.cpp:4736]: MaxTextureWidth: 16384
+[19:12:04][gfx_dx9.cpp:4737]: MaxTextureHeight: 16384
+[19:12:04][gfx_dx9.cpp:4740]: Vertex Shader version: 3.0
+[19:12:04][gfx_dx9.cpp:4746]: Pixel Shader version: 3.0
+[19:12:04][graphicssettings.cpp:165]: 	2 samples supported.
+[19:12:04][graphicssettings.cpp:165]: 	4 samples supported.
+[19:12:04][graphicssettings.cpp:165]: 	8 samples supported.
+[19:12:04][graphicssettings.cpp:201]: Support for Anisotropic filtering found.
+[19:12:04][graphicssettings.cpp:205]: 	Max Anisotropic filtering supported: 16
+[19:12:04][graphicssettings.cpp:206]: 	Anisotropic filtering set to: 16
+[19:12:06][gfx_dx11.cpp:3735]: GetGraphicsSettings for Adapter: 0
+[19:12:06][gfx_dx11.cpp:3768]: Found Adapter: Intel(R) Iris(R) Xe Graphics
+[19:12:06][gfx_dx11.cpp:3794]: Using Adapter [0] to check for multi-sampling support:
+[19:12:06][gfx_dx11.cpp:3832]: Found available multisampling mode: 2 at Quality: 0
+[19:12:06][gfx_dx11.cpp:3832]: Found available multisampling mode: 4 at Quality: 0
+[19:12:06][gfx_dx11.cpp:3832]: Found available multisampling mode: 8 at Quality: 0
+[19:12:06][gfx_dx11.cpp:3832]: Found available multisampling mode: 16 at Quality: 0
+[19:12:06][graphicssettings.cpp:165]: 	2 samples supported.
+[19:12:06][graphicssettings.cpp:165]: 	4 samples supported.
+[19:12:06][graphicssettings.cpp:165]: 	8 samples supported.
+[19:12:06][graphicssettings.cpp:165]: 	16 samples supported.
+[19:12:06][graphicssettings.cpp:201]: Support for Anisotropic filtering found.
+[19:12:06][graphicssettings.cpp:205]: 	Max Anisotropic filtering supported: 16
+[19:12:06][graphicssettings.cpp:206]: 	Anisotropic filtering set to: 16
+[19:12:06][pdx_audio_sdl.cpp:111]: [0] Audio device: Speakers (THX Spatial)
+[19:12:06][pdx_audio_sdl.cpp:111]: [1] Audio device: Speakers (2- Realtek(R) Audio)
+[19:12:06][pdx_audio_sdl.cpp:118]: [0] Audio driver: wasapi
+[19:12:06][pdx_audio_sdl.cpp:118]: [1] Audio driver: directsound
+[19:12:06][pdx_audio_sdl.cpp:118]: [2] Audio driver: winmm
+[19:12:06][pdx_audio_sdl.cpp:118]: [3] Audio driver: disk
+[19:12:06][pdx_audio_sdl.cpp:118]: [4] Audio driver: dummy
+[19:12:09][pdx_audio_sdl.cpp:143]: Current audio driver: wasapi
+[19:12:09][pdx_audio_sdl.cpp:150]: 
+	Frequency: 44100
+	Format: 32784
+	Channels: 2
+	Samples: 1024
+[19:12:10][graphicssettings.cpp:774]: Using multisampling: 4
+[19:12:10][graphics.cpp:800]: Creating device with: HARDWARE_VERTEXPROCESSING
+	Fullscreen=no
+	Resolution=1707x1067
+[19:12:11][graphicssettings.cpp:741]: Usable res: 640 480 59
+[19:12:11][graphicssettings.cpp:741]: Usable res: 800 600 59
+[19:12:11][graphicssettings.cpp:741]: Usable res: 1024 768 59
+[19:12:11][graphicssettings.cpp:741]: Usable res: 1152 864 59
+[19:12:11][graphicssettings.cpp:741]: Usable res: 1280 600 59
+[19:12:11][graphicssettings.cpp:741]: Usable res: 1280 720 59
+[19:12:11][graphicssettings.cpp:741]: Usable res: 1280 768 59
+[19:12:11][graphicssettings.cpp:741]: Usable res: 1280 800 59
+[19:12:11][graphicssettings.cpp:741]: Usable res: 1280 960 59
+[19:12:11][graphicssettings.cpp:741]: Usable res: 1280 1024 59
+[19:12:11][graphicssettings.cpp:741]: Usable res: 1360 768 59
+[19:12:11][graphicssettings.cpp:741]: Usable res: 1366 768 59
+[19:12:11][graphicssettings.cpp:741]: Usable res: 1400 1050 59
+[19:12:11][graphicssettings.cpp:741]: Usable res: 1440 900 59
+[19:12:11][graphicssettings.cpp:741]: Usable res: 1600 900 59
+[19:12:11][graphicssettings.cpp:741]: Usable res: 1600 1200 59
+[19:12:11][graphicssettings.cpp:741]: Usable res: 1680 1050 59
+[19:12:11][graphicssettings.cpp:741]: Usable res: 1792 1344 59
+[19:12:11][graphicssettings.cpp:741]: Usable res: 1856 1392 59
+[19:12:11][graphicssettings.cpp:741]: Usable res: 1920 1080 59
+[19:12:11][graphicssettings.cpp:741]: Usable res: 1920 1200 59
+[19:12:11][graphicssettings.cpp:741]: Usable res: 1920 1440 59
+[19:12:11][graphicssettings.cpp:741]: Usable res: 2048 1152 59
+[19:12:11][graphicssettings.cpp:741]: Usable res: 2048 1536 59
+[19:12:11][graphicssettings.cpp:741]: Usable res: 2560 1440 59
+[19:12:11][graphicssettings.cpp:741]: Usable res: 2560 1600 59
+[19:12:11][graphics.cpp:857]: Done creating device.

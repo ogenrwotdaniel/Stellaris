@@ -1,0 +1,111 @@
+########## COSMIC ARCHIVE SOUND EFFECTS ##########
+
+# Cosmic Archive Discovery Sound
+sound = {
+	name = "cosmic_archive_discovery"
+	file = "sfx/cosmic_archive_discovery.wav"
+	volume = 0.7
+	always_load = no
+}
+
+# Cosmic Archive Signal Sound
+sound = {
+	name = "cosmic_archive_signal"
+	file = "sfx/cosmic_archive_signal.wav"
+	volume = 0.6
+	always_load = no
+}
+
+# Cosmic Archive Protocol Activation
+sound = {
+	name = "cosmic_archive_protocol_activation"
+	file = "sfx/cosmic_archive_protocol_activation.wav"
+	volume = 0.65
+	always_load = no
+}
+
+# Cosmic Archive Pulse
+sound = {
+	name = "cosmic_archive_pulse"
+	file = "sfx/cosmic_archive_pulse.wav"
+	volume = 0.7
+	always_load = no
+}
+
+# Cosmic Archive Stabilization
+sound = {
+	name = "cosmic_archive_stabilize"
+	file = "sfx/cosmic_archive_stabilize.wav"
+	volume = 0.55
+	always_load = no
+}
+
+# Cosmic Archive Malfunction
+sound = {
+	name = "cosmic_archive_malfunction"
+	file = "sfx/cosmic_archive_malfunction.wav"
+	volume = 0.75
+	always_load = no
+}
+
+# Guardian Awakening
+sound = {
+	name = "cosmic_guardian_awakening"
+	file = "sfx/cosmic_guardian_awakening.wav"
+	volume = 0.8
+	always_load = no
+}
+
+# Guardian Weapon
+sound = {
+	name = "cosmic_guardian_weapon"
+	file = "sfx/cosmic_guardian_weapon.wav"
+	volume = 0.7
+	always_load = no
+}
+
+# Guardian Shield
+sound = {
+	name = "cosmic_guardian_shield"
+	file = "sfx/cosmic_guardian_shield.wav"
+	volume = 0.6
+	always_load = no
+}
+
+# Guardian Communication
+sound = {
+	name = "cosmic_guardian_communication"
+	file = "sfx/cosmic_guardian_communication.wav"
+	volume = 0.65
+	always_load = no
+}
+
+# Guardian Defeat
+sound = {
+	name = "cosmic_guardian_defeat"
+	file = "sfx/cosmic_guardian_defeat.wav"
+	volume = 0.8
+	always_load = no
+}
+
+# Guardian Pacification
+sound = {
+	name = "cosmic_guardian_pacification"
+	file = "sfx/cosmic_guardian_pacification.wav"
+	volume = 0.7
+	always_load = no
+}
+
+########## SOUND DESIGN GUIDELINES ##########
+# cosmic_archive_discovery.wav - A mysterious, ethereal resonance with crystalline overtones
+# cosmic_archive_signal.wav - Rhythmic pulses of data-like tones, somewhat alien but mathematical
+# cosmic_archive_protocol_activation.wav - Escalating sequence of tones with rising intensity
+# cosmic_archive_pulse.wav - Deep, resonant wave of energy with harmonic overtones
+# cosmic_archive_stabilize.wav - Smooth transition from chaotic to harmonious tones
+# cosmic_archive_malfunction.wav - Dissonant, alarming sequence with electrical disruption effects
+# cosmic_guardian_awakening.wav - Grand, imposing sequence with deep resonance and crystalline harmonics
+# cosmic_guardian_weapon.wav - Sharp, energy-based attack sound with data-like undertones
+# cosmic_guardian_shield.wav - Shimmering energy field with resonant harmonics
+# cosmic_guardian_communication.wav - Complex, multi-layered tones suggesting intelligence beyond language
+# cosmic_guardian_defeat.wav - Massive energy collapse with crystalline shattering
+# cosmic_guardian_pacification.wav - Transformation from dissonance to harmony with ethereal qualities

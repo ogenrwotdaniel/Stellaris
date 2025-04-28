@@ -1,0 +1,326 @@
+# Cosmic Archive Scripted Triggers
+# Central configuration file for all triggers and conditions used in the Cosmic Archive mod
+
+# Check if the planet can spawn a cosmic archive
+can_spawn_cosmic_archive = {
+	is_colony = no
+	is_surveyed = {
+		who = from
+		status = yes
+	}
+	NOR = {
+		has_deposit = d_cosmic_archive_dormant
+		has_deposit = d_cosmic_archive_active_phase1
+		has_deposit = d_cosmic_archive_enhanced
+		has_deposit = d_cosmic_archive_stabilized
+		has_deposit = d_cosmic_archive_fully_activated
+		has_deposit = d_cosmic_archive_damaged
+		has_deposit = d_cosmic_archive_remnant
+		has_deposit = d_precursor_data_cache
+		has_deposit = d_dimensional_portal
+		has_deposit = d_sentient_coral
+	}
+	habitability = {
+		who = from
+		value > 0.5
+	}
+	OR = {
+		is_planet_class = pc_desert
+		is_planet_class = pc_tropical
+		is_planet_class = pc_arid
+		is_planet_class = pc_continental
+		is_planet_class = pc_ocean
+		is_planet_class = pc_tundra
+		is_planet_class = pc_arctic
+		is_planet_class = pc_alpine
+		is_planet_class = pc_savannah
+		is_planet_class = pc_gaia
+	}
+}
+
+# Check if planet has any type of cosmic archive
+has_any_cosmic_archive = {
+	OR = {
+		has_deposit = d_cosmic_archive_dormant
+		has_deposit = d_cosmic_archive_active_phase1
+		has_deposit = d_cosmic_archive_enhanced
+		has_deposit = d_cosmic_archive_stabilized
+		has_deposit = d_cosmic_archive_fully_activated
+		has_deposit = d_cosmic_archive_damaged
+		has_deposit = d_cosmic_archive_remnant
+	}
+}
+
+# Check if empire already has access to a cosmic archive
+empire_has_cosmic_archive = {
+	OR = {
+		any_owned_planet = {
+			has_any_cosmic_archive = yes
+		}
+		has_country_flag = found_cosmic_archive
+	}
+}
+
+# Check if empire has too many cosmic archives (soft cap)
+empire_has_max_cosmic_archives = {
+	count_owned_planet = {
+		count > @cosmic_archive_max_per_empire
+		has_any_cosmic_archive = yes
+	}
+}
+
+# Check if planet is eligible for Phase 1 progression
+can_progress_to_phase1 = {
+	has_deposit = d_cosmic_archive_dormant
+	is_colony = yes
+	has_owner = yes
+	owner = {
+		is_at_war = no
+	}
+}
+
+# Check if empire is eligible for Enhanced Technologies path
+can_choose_enhanced_path = {
+	owner = {
+		OR = {
+			has_ethic = ethic_materialist
+			has_ethic = ethic_fanatic_materialist
+			has_civic = civic_technocracy
+			has_tradition = tr_discovery_finisher
+			has_technology = tech_self_aware_logic
+		}
+	}
+}
+
+# Check if empire is eligible for Stabilized path
+can_choose_stabilize_path = {
+	owner = {
+		OR = {
+			has_ethic = ethic_pacifist
+			has_ethic = ethic_fanatic_pacifist
+			has_civic = civic_environmentalist
+			has_civic = civic_agrarian_idyll
+			has_civic = civic_inward_perfection
+			has_tradition = tr_harmony_finisher
+		}
+	}
+}
+
+# Check if empire is eligible for Risk It All path
+can_choose_risk_path = {
+	owner = {
+		OR = {
+			has_ethic = ethic_militarist
+			has_ethic = ethic_fanatic_militarist
+			has_civic = civic_barbaric_despoilers
+			has_civic = civic_fanatic_purifiers
+			has_tradition = tr_supremacy_finisher
+			has_technology = tech_sapient_ai
+			leader = {
+				OR = {
+					has_trait = leader_trait_expertise_computing
+					has_trait = leader_trait_expertise_psionics
+					has_trait = leader_trait_expertise_field_manipulation
+					has_trait = leader_trait_curator
+				}
+			}
+		}
+	}
+}
+
+# Check success chance for Risk It All path
+risk_path_success_chance = {
+	# Base success chance
+	set_variable = {
+		which = risk_success_chance
+		value = @cosmic_archive_risk_base_success
+	}
+	
+	# Technology level bonus
+	if = {
+		limit = {
+			owner = { has_technology = tech_sapient_ai }
+		}
+		change_variable = {
+			which = risk_success_chance
+			value = @cosmic_archive_risk_tech_bonus
+		}
+	}
+	
+	# Psionic bonus
+	if = {
+		limit = {
+			owner = { 
+				OR = {
+					has_ascension_perk = ap_mind_over_matter
+					has_ascension_perk = ap_transcendence
+				}
+			}
+		}
+		change_variable = {
+			which = risk_success_chance
+			value = @cosmic_archive_risk_psionic_bonus
+		}
+	}
+	
+	# Gestalt bonus
+	if = {
+		limit = {
+			owner = { is_gestalt = yes }
+		}
+		change_variable = {
+			which = risk_success_chance
+			value = @cosmic_archive_risk_gestalt_bonus
+		}
+	}
+	
+	# Materialist bonus
+	if = {
+		limit = {
+			owner = { 
+				OR = {
+					has_ethic = ethic_materialist
+					has_ethic = ethic_fanatic_materialist
+				}
+			}
+		}
+		change_variable = {
+			which = risk_success_chance
+			value = @cosmic_archive_risk_materialist_bonus
+		}
+	}
+	
+	# Spiritualist penalty
+	if = {
+		limit = {
+			owner = { 
+				OR = {
+					has_ethic = ethic_spiritualist
+					has_ethic = ethic_fanatic_spiritualist
+				}
+			}
+		}
+		change_variable = {
+			which = risk_success_chance
+			value = -@cosmic_archive_risk_spiritualist_penalty
+		}
+	}
+}
+
+# Check if guardian crisis should activate
+can_activate_guardian_crisis = {
+	has_deposit = d_cosmic_archive_fully_activated
+	owner = {
+		NOR = {
+			has_country_flag = archive_guardian_defeated
+			has_country_flag = archive_guardian_pacified
+			is_in_crisis = yes
+		}
+	}
+	
+	# If past crisis year threshold, much higher chance
+	OR = {
+		is_year_less_than = @cosmic_archive_crisis_year_threshold
+		random = {
+			chance = 75
+		}
+	}
+}
+
+# Calculate guardian scaling based on game settings
+calculate_guardian_scaling = {
+	# Base health
+	set_variable = {
+		which = guardian_scaled_health
+		value = @cosmic_archive_guardian_base_health
+	}
+	
+	# Year scaling
+	set_variable = {
+		which = year_factor
+		value = @cosmic_archive_guardian_health_scaling
+	}
+	multiply_variable = {
+		which = year_factor
+		value = current_age
+	}
+	
+	change_variable = {
+		which = guardian_scaled_health
+		value = year_factor
+	}
+	
+	# Difficulty scaling
+	switch = {
+		trigger = difficulty
+		
+		grand_admiral = {
+			multiply_variable = {
+				which = guardian_scaled_health
+				value = @cosmic_archive_guardian_grand_admiral_mult
+			}
+		}
+		commodore = {
+			multiply_variable = {
+				which = guardian_scaled_health
+				value = @cosmic_archive_guardian_commodore_mult
+			}
+		}
+		captain = {
+			multiply_variable = {
+				which = guardian_scaled_health
+				value = @cosmic_archive_guardian_captain_mult
+			}
+		}
+		ensign = {
+			multiply_variable = {
+				which = guardian_scaled_health
+				value = @cosmic_archive_guardian_ensign_mult
+			}
+		}
+		cadet = {
+			multiply_variable = {
+				which = guardian_scaled_health
+				value = @cosmic_archive_guardian_cadet_mult
+			}
+		}
+	}
+	
+	# Multiplayer scaling
+	if = {
+		limit = {
+			is_multiplayer = yes
+		}
+		
+		set_variable = {
+			which = player_count_factor
+			value = num_players
+		}
+		subtract_variable = {
+			which = player_count_factor
+			value = 1
+		}
+		multiply_variable = {
+			which = player_count_factor
+			value = @cosmic_archive_guardian_mp_scaling
+		}
+		multiply_variable = {
+			which = guardian_scaled_health
+			value = player_count_factor
+		}
+	}
+	
+	# Crisis active reduction
+	if = {
+		limit = {
+			OR = {
+				is_crisis_active = yes
+				has_global_flag = galactic_crisis_happened
+			}
+		}
+		multiply_variable = {
+			which = guardian_scaled_health
+			value = 0.75
+		}
+	}
+}

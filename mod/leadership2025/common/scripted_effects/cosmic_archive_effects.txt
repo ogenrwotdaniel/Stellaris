@@ -1,0 +1,358 @@
+# Cosmic Archive Scripted Effects
+# This file contains effects for spawning the guardian crisis, scaling its difficulty, and handling outcomes
+
+# Spawn a cosmic archive on a random valid planet
+spawn_cosmic_archive_deposit = {
+	random_planet = {
+		limit = {
+			can_spawn_cosmic_archive = yes
+			solar_system = {
+				NOR = {
+					has_star_flag = has_cosmic_archive
+					any_system_planet = {
+						has_any_cosmic_archive = yes
+					}
+				}
+			}
+		}
+		add_deposit = d_cosmic_archive_dormant
+		set_planet_flag = has_cosmic_archive
+		solar_system = {
+			set_star_flag = has_cosmic_archive
+		}
+		fromfrom = {
+			set_country_flag = found_cosmic_archive
+		}
+	}
+}
+
+# Spawn the guardian with scaled difficulty
+spawn_cosmic_archive_guardian = {
+	# Save the planet and system for reference
+	save_event_target_as = archive_guardian_planet
+	solar_system = {
+		save_event_target_as = archive_guardian_system
+	}
+	
+	# Calculate guardian scaling
+	calculate_guardian_scaling = yes
+	
+	# Spawn the actual guardian fleet
+	event_target:archive_guardian_system = {
+		spawn_fleet = {
+			name = "NAME_COSMIC_ARCHIVE_GUARDIAN"
+			effect = {
+				set_owner = event_target:archive_guardian_planet.owner
+				create_ship = {
+					name = "NAME_COSMIC_ARCHIVE_GUARDIAN"
+					design = "Cosmic Archive Guardian"
+					graphical_culture = event_target:archive_guardian_planet.owner
+				}
+				set_location = {
+					target = event_target:archive_guardian_system
+					distance = 25
+					angle = random
+				}
+				
+				# Apply the health scaling
+				get_variable = {
+					which = owner.guardian_scaled_health
+					var = guardian_health
+				}
+				
+				set_health_percentage = guardian_health
+				
+				# Set fleet as non-combatant until triggered
+				set_fleet_flag = guardian_dormant
+				set_fleet_stance = passive
+				
+				# Save as event target
+				save_event_target_as = cosmic_archive_guardian
+				
+				# Set crisis active flag on planet
+				event_target:archive_guardian_planet = {
+					set_planet_flag = cosmic_archive_guardian_active
+				}
+				
+				# Set global flag for tracking
+				set_global_flag = cosmic_archive_guardian_exists
+			}
+		}
+	}
+	
+	# Create guardian system effects
+	event_target:archive_guardian_system = {
+		# Add system effects
+		add_modifier = {
+			modifier = "archive_guardian_system"
+			days = -1
+		}
+		
+		# Visual effects
+		create_ambient_object = {
+			type = "energy_cloud_entity"
+			location = random_point
+		}
+		
+		create_ambient_object = {
+			type = "nebula_entity"
+			location = random_point
+		}
+	}
+}
+
+# Handle guardian activation, making it combat-ready
+activate_cosmic_archive_guardian = {
+	event_target:cosmic_archive_guardian = {
+		# Make guardian hostile
+		remove_fleet_flag = guardian_dormant
+		set_fleet_stance = aggressive
+		
+		# Apply combat buffs
+		add_modifier = {
+			modifier = "cosmic_archive_guardian_awakened"
+			days = -1
+		}
+		
+		# Damage nearby ships
+		every_fleet_in_system = {
+			limit = {
+				NOT = { is_same_value = event_target:cosmic_archive_guardian }
+				is_owned_by = event_target:archive_guardian_planet.owner
+			}
+			damage_ship = {
+				damage = 100
+				damage_type = energy
+			}
+		}
+		
+		# Apply debuff to owning empire
+		event_target:archive_guardian_planet.owner = {
+			add_modifier = {
+				modifier = "cosmic_archive_guardian_wrath"
+				days = 1800 # 5 years
+			}
+			
+			# Notification
+			country_event = {
+				id = cosmic_archive.300
+			}
+		}
+	}
+}
+
+# Guardian defeated - grant rewards scaled to difficulty
+cosmic_archive_guardian_defeated = {
+	# Grant research rewards
+	owner = {
+		# Remove penalty modifier
+		remove_modifier = cosmic_archive_guardian_wrath
+		
+		# Add rewards
+		add_resource = {
+			physics_research = @cosmic_archive_guardian_base_physics
+			multiplier = difficulty_value_mult
+		}
+		add_resource = {
+			society_research = @cosmic_archive_guardian_base_society
+			multiplier = difficulty_value_mult
+		}
+		add_resource = {
+			engineering_research = @cosmic_archive_guardian_base_engineering
+			multiplier = difficulty_value_mult
+		}
+		add_resource = {
+			alloys = @cosmic_archive_guardian_base_alloys
+			multiplier = difficulty_value_mult
+		}
+		
+		# Add aftermath modifier
+		add_modifier = {
+			modifier = "cosmic_archive_galactic_scar"
+			days = -1
+		}
+		
+		# Flag for tracing
+		set_country_flag = archive_guardian_defeated
+		
+		# Trigger tech options
+		if = {
+			limit = {
+				NOR = {
+					has_country_flag = unlocked_guardian_tech
+					has_technology = tech_cosmic_archive_manipulation
+				}
+			}
+			add_research_option = tech_cosmic_archive_manipulation
+			set_country_flag = unlocked_guardian_tech
+		}
+		
+		# Trigger relic discovery
+		country_event = { id = cosmic_archive.400 }
+	}
+	
+	# Transform deposit
+	change_deposit = {
+		from = d_cosmic_archive_fully_activated
+		to = d_cosmic_archive_remnant
+	}
+	
+	# Update planet
+	set_planet_flag = cosmic_archive_guardian_defeated
+	remove_planet_flag = cosmic_archive_guardian_active
+	
+	# Update system
+	solar_system = {
+		remove_modifier = archive_guardian_system
+		add_modifier = {
+			modifier = "archive_guardian_defeated_system"
+			days = -1
+		}
+	}
+	
+	# Remove global flag
+	remove_global_flag = cosmic_archive_guardian_exists
+}
+
+# Guardian pacified - alternative peaceful resolution
+cosmic_archive_guardian_pacified = {
+	# Grant research rewards - less than defeating it
+	owner = {
+		# Remove penalty modifier
+		remove_modifier = cosmic_archive_guardian_wrath
+		
+		# Add rewards (reduced compared to defeat)
+		add_resource = {
+			physics_research = @cosmic_archive_guardian_base_physics
+			multiplier = 0.75
+			multiplier = difficulty_value_mult
+		}
+		add_resource = {
+			society_research = @cosmic_archive_guardian_base_society
+			multiplier = 0.75
+			multiplier = difficulty_value_mult
+		}
+		add_resource = {
+			engineering_research = @cosmic_archive_guardian_base_engineering
+			multiplier = 0.75
+			multiplier = difficulty_value_mult
+		}
+		add_resource = {
+			alloys = @cosmic_archive_guardian_base_alloys
+			multiplier = 0.5
+			multiplier = difficulty_value_mult
+		}
+		
+		# Add diplomatic reputation bonus instead
+		add_modifier = {
+			modifier = "cosmic_archive_relic_defenders"
+			days = -1
+		}
+		
+		# Add knowledge guardians bonus
+		add_modifier = {
+			modifier = "cosmic_archive_knowledge_guardians"
+			days = -1
+		}
+		
+		# Flag for tracing
+		set_country_flag = archive_guardian_pacified
+		
+		# Trigger tech options - special peaceful ones
+		if = {
+			limit = {
+				NOR = {
+					has_country_flag = unlocked_guardian_tech
+					has_technology = tech_cosmic_archive_harmonization
+				}
+			}
+			add_research_option = tech_cosmic_archive_harmonization
+			set_country_flag = unlocked_guardian_tech
+		}
+		
+		# Trigger peaceful relic discovery
+		country_event = { id = cosmic_archive.450 }
+	}
+	
+	# Transform deposit - special version
+	change_deposit = {
+		from = d_cosmic_archive_fully_activated
+		to = d_cosmic_archive_remnant
+	}
+	
+	# Update planet
+	set_planet_flag = cosmic_archive_guardian_pacified
+	remove_planet_flag = cosmic_archive_guardian_active
+	
+	# Update system
+	solar_system = {
+		remove_modifier = archive_guardian_system
+		add_modifier = {
+			modifier = "archive_guardian_pacified_system"
+			days = -1
+		}
+	}
+	
+	# Remove global flag
+	remove_global_flag = cosmic_archive_guardian_exists
+}
+
+# Dynamic scaling of guardian difficulty with game age
+scale_guardian_difficulty = {
+	if = {
+		limit = {
+			is_global_flag_set = cosmic_archive_guardian_exists
+		}
+		
+		every_country = {
+			limit = {
+				any_owned_planet = {
+					has_planet_flag = cosmic_archive_guardian_active
+				}
+			}
+			
+			random_owned_planet = {
+				limit = { has_planet_flag = cosmic_archive_guardian_active }
+				calculate_guardian_scaling = yes
+				
+				every_system_fleet = {
+					limit = {
+						has_fleet_flag = cosmic_archive_guardian
+					}
+					
+					# Get the recalculated health
+					get_variable = {
+						which = owner.guardian_scaled_health
+						var = new_health_value
+					}
+					
+					# Apply the new health value
+					set_health_percentage = new_health_value
+				}
+			}
+		}
+	}
+}
+
+# Award contribution reputation to empires who helped defeat the guardian
+award_guardian_contribution_reputation = {
+	# Base empire who owns the archive
+	owner = {
+		add_modifier = {
+			modifier = "cosmic_archive_crisis_contributor"
+			days = -1
+		}
+	}
+	
+	# Any other empires that participated in the battle
+	every_country = {
+		limit = {
+			has_country_flag = helped_defeat_archive_guardian
+			NOT = { is_same_value = prev }
+		}
+		add_modifier = {
+			modifier = "cosmic_archive_crisis_contributor"
+			days = -1
+		}
+	}
+}

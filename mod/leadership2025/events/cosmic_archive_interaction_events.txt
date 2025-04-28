@@ -1,0 +1,814 @@
+namespace = cosmic_archive
+
+# Main interaction event - Player choice between investigate or abandon
+country_event = {
+    id = cosmic_archive.10
+    title = "cosmic_archive.10.name"
+    desc = "cosmic_archive.10.desc"
+    picture = GFX_evt_ancient_databank
+    
+    is_triggered_only = yes
+    
+    immediate = {
+        from = { save_event_target_as = archive_planet }
+    }
+    
+    # Option to investigate the Archive
+    option = {
+        name = "cosmic_archive.10.a"
+        custom_tooltip = cosmic_archive_investigate_tooltip
+        
+        event_target:archive_planet = {
+            set_deposit_flag = {
+                flag = cosmic_archive_investigated
+                deposit = d_cosmic_archive
+            }
+        }
+        
+        # Trigger the Archive Unveiled event chain - Phase 1: The First Signal
+        country_event = { id = cosmic_archive.11 days = 5 }
+    }
+    
+    # Option to abandon the Archive
+    option = {
+        name = "cosmic_archive.10.b"
+        custom_tooltip = cosmic_archive_abandon_tooltip
+        
+        # Immediate resource rewards
+        add_resource = {
+            energy = 250
+            minerals = 500
+            alloys = 100
+        }
+        
+        event_target:archive_planet = {
+            # Mark the archive as abandoned
+            set_deposit_flag = {
+                flag = cosmic_archive_abandoned
+                deposit = d_cosmic_archive
+            }
+            
+            # Remove the passive bonuses from the deposit
+            remove_deposit = d_cosmic_archive
+            
+            # Add a remnant deposit with reduced benefits
+            add_deposit = d_cosmic_archive_remnants
+        }
+    }
+}
+
+# Phase 1: First Signal Event
+country_event = {
+	id = cosmic_archive.11
+	title = "cosmic_archive.11.name"
+	desc = "cosmic_archive.11.desc"
+	picture = GFX_evt_psionics
+	location = from
+
+	is_triggered_only = yes
+	
+	immediate = {
+		set_country_flag = cosmic_archive_investigated
+		from = {
+			set_planet_flag = cosmic_archive_first_signal
+			save_event_target_as = archive_planet
+		}
+	}
+	
+	option = {
+		name = cosmic_archive.11.a
+		custom_tooltip = cosmic_archive_first_signal_tooltip
+		hidden_effect = {
+			owner = { 
+				add_modifier = {
+					modifier = "cosmic_archive_first_signal"
+					days = 360
+				}
+				country_event = { id = cosmic_archive.12 days = 180 random = 20 }
+			}
+		}
+	}
+	
+	option = {
+		name = cosmic_archive.11.b
+		custom_tooltip = cosmic_archive_intensive_analysis_tooltip
+		hidden_effect = {
+			random_list = {
+				70 = {
+					owner = { 
+						add_modifier = {
+							modifier = "cosmic_archive_first_signal"
+							days = 540
+						}
+						country_event = { id = cosmic_archive.12 days = 90 random = 20 }
+					}
+				}
+				30 = {
+					owner = { country_event = { id = cosmic_archive.20 days = 30 random = 10 } }
+					from = { save_event_target_as = protocol_incident_planet }
+				}
+			}
+		}
+	}
+}
+
+# Phase 2: Hidden Protocol Discovery Event
+country_event = {
+	id = cosmic_archive.12
+	title = "cosmic_archive.12.name"
+	desc = "cosmic_archive.12.desc"
+	picture = GFX_evt_psionics
+	location = event_target:archive_planet
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		event_target:archive_planet = {
+			set_planet_flag = cosmic_archive_protocol_discovered
+			save_event_target_as = archive_protocol_planet
+		}
+	}
+	
+	option = {
+		name = cosmic_archive.12.a
+		custom_tooltip = cosmic_archive_hidden_protocol_tooltip
+		hidden_effect = {
+			country_event = { id = cosmic_archive.30 days = 10 }
+		}
+	}
+}
+
+# Phase 2: Make Protocol Decision Event
+country_event = {
+	id = cosmic_archive.30
+	title = "cosmic_archive.30.name"
+	desc = "cosmic_archive.30.desc"
+	picture = GFX_evt_psionic_activity
+	location = event_target:archive_protocol_planet
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		event_target:archive_protocol_planet = {
+			enable_special_project = {
+				name = "Enhance Technologies"
+				location = this
+				owner = root
+			}
+			enable_special_project = {
+				name = "Stabilize the Archive"
+				location = this
+				owner = root
+			}
+			enable_special_project = {
+				name = "Risk It All"
+				location = this
+				owner = root
+			}
+		}
+	}
+	
+	option = {
+		name = cosmic_archive.30.a
+		custom_tooltip = cosmic_archive_make_protocol_decision_tooltip
+	}
+}
+
+# Phase 2: Enhanced Technologies Outcome Event
+country_event = {
+	id = cosmic_archive.31
+	title = "cosmic_archive.31.name"
+	desc = "cosmic_archive.31.desc"
+	picture = GFX_evt_psionics
+	location = from
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		from = {
+			set_planet_flag = cosmic_archive_enhanced_tech
+			remove_planet_flag = cosmic_archive_protocol_discovered
+		}
+		
+		# Increment global counter of activated archives
+		country_event = { id = cosmic_archive_crisis.1 }
+	}
+	
+	option = {
+		name = cosmic_archive.31.a
+		owner = { 
+			add_modifier = {
+				modifier = "cosmic_archive_enhanced_tech"
+				days = -1
+			}
+		}
+		hidden_effect = {
+			random_list = {
+				50 = { # 50% chance to trigger Phase 3 later
+					owner = { 
+						set_country_flag = cosmic_archive_phase3_pending
+						country_event = { id = cosmic_archive.40 days = 360 random = 180 }
+					}
+				}
+				50 = {} # No further events
+			}
+		}
+	}
+}
+
+# Phase 2: Stabilized Archive Outcome Event
+country_event = {
+	id = cosmic_archive.32
+	title = "cosmic_archive.32.name"
+	desc = "cosmic_archive.32.desc"
+	picture = GFX_evt_psionics
+	location = from
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		from = {
+			set_planet_flag = cosmic_archive_stabilized
+			remove_planet_flag = cosmic_archive_protocol_discovered
+		}
+		
+		# Increment global counter of activated archives, but with lower priority
+		# since stabilized archives are less likely to trigger the guardian
+		random_list = {
+			25 = { country_event = { id = cosmic_archive_crisis.1 } }
+			75 = {}
+		}
+	}
+	
+	option = {
+		name = cosmic_archive.32.a
+		owner = { 
+			add_modifier = {
+				modifier = "cosmic_archive_stabilized"
+				days = -1
+			}
+		}
+		hidden_effect = {
+			random_list = {
+				25 = { # Only 25% chance to trigger Phase 3 later - safest option
+					owner = { 
+						set_country_flag = cosmic_archive_phase3_pending
+						country_event = { id = cosmic_archive.40 days = 540 random = 180 }
+					}
+				}
+				75 = {} # No further events - highest chance of safety
+			}
+		}
+	}
+}
+
+# Phase 2: Risk It All Outcome Event
+country_event = {
+	id = cosmic_archive.33
+	title = "cosmic_archive.33.name"
+	desc = "cosmic_archive.33.desc"
+	picture = GFX_evt_psionics
+	location = from
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		from = {
+			set_planet_flag = cosmic_archive_risky_protocols
+			save_event_target_as = archive_risky_planet
+			remove_planet_flag = cosmic_archive_protocol_discovered
+		}
+		
+		# Always increment global counter for risky path
+		country_event = { id = cosmic_archive_crisis.1 }
+	}
+	
+	option = {
+		name = cosmic_archive.33.a
+		owner = { 
+			add_modifier = {
+				modifier = "cosmic_archive_risky_protocols"
+				days = 1800 # 5 years
+			}
+		}
+		hidden_effect = {
+			owner = { 
+				# Risk It All path almost certainly leads to Phase 3
+				set_country_flag = cosmic_archive_risky_path
+				country_event = { id = cosmic_archive.34 days = 180 random = 30 }
+			}
+		}
+	}
+}
+
+# Phase 2: Risk It All Follow-up Event
+country_event = {
+	id = cosmic_archive.34
+	title = "cosmic_archive.34.name"
+	desc = "cosmic_archive.34.desc"
+	picture = GFX_evt_psionics
+	location = event_target:archive_risky_planet
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = cosmic_archive.34.a
+		hidden_effect = {
+			random_list = {
+				40 = { # 40% chance of full success
+					owner = { country_event = { id = cosmic_archive.13 days = 90 random = 30 } }
+				}
+				60 = { # 60% chance of Phase 3 triggering faster for risky path
+					owner = { 
+						set_country_flag = cosmic_archive_phase3_pending
+						country_event = { id = cosmic_archive.40 days = 180 random = 60 }
+					}
+				}
+			}
+		}
+	}
+}
+
+# Phase 3: Echoes of the Past - First Warning
+country_event = {
+	id = cosmic_archive.40
+	title = "cosmic_archive.40.name"
+	desc = "cosmic_archive.40.desc"
+	picture = GFX_evt_psionics
+	location = capital_scope
+	
+	is_triggered_only = yes
+	
+	trigger = {
+		OR = {
+			has_country_flag = cosmic_archive_phase3_pending
+			has_country_flag = cosmic_archive_risky_path
+			count_owned_planet = {
+				count >= 2
+				limit = {
+					OR = {
+						has_planet_flag = cosmic_archive_risky_protocols
+						has_planet_flag = cosmic_archive_enhanced_tech
+					}
+				}
+			}
+		}
+	}
+	
+	immediate = {
+		set_country_flag = cosmic_archive_echoes_begin
+		remove_country_flag = cosmic_archive_phase3_pending
+	}
+	
+	option = {
+		name = cosmic_archive.40.a
+		custom_tooltip = cosmic_archive_first_warning_tooltip
+		hidden_effect = {
+			country_event = { id = cosmic_archive.41 days = 60 random = 30 }
+		}
+	}
+}
+
+# Phase 3: Researcher Reports
+country_event = {
+	id = cosmic_archive.41
+	title = "cosmic_archive.41.name"
+	desc = "cosmic_archive.41.desc"
+	picture = GFX_evt_society_research
+	
+	is_triggered_only = yes
+	
+	trigger = {
+		has_country_flag = cosmic_archive_echoes_begin
+	}
+	
+	option = {
+		name = cosmic_archive.41.a
+		add_resource = { 
+			physics_research = 50 
+			society_research = 50
+			engineering_research = 50
+		}
+		custom_tooltip = cosmic_archive_researcher_reports_tooltip
+		hidden_effect = {
+			country_event = { id = cosmic_archive.42 days = 90 random = 30 }
+		}
+	}
+	
+	option = {
+		name = cosmic_archive.41.b
+		add_resource = { 
+			physics_research = 100
+			society_research = 100
+			engineering_research = 100
+		}
+		custom_tooltip = cosmic_archive_deep_analysis_tooltip
+		hidden_effect = {
+			random_list = {
+				60 = { # 60% chance of faster escalation
+					country_event = { id = cosmic_archive.42 days = 30 random = 15 }
+				}
+				40 = { # 40% chance of serious incident
+					random_owned_planet = {
+						limit = { 
+							OR = {
+								has_planet_flag = cosmic_archive_first_signal
+								has_planet_flag = cosmic_archive_risky_protocols
+								has_planet_flag = cosmic_archive_enhanced_tech
+							}
+						}
+						planet_event = { id = cosmic_archive.45 days = 15 random = 5 }
+					}
+				}
+			}
+		}
+	}
+}
+
+# Phase 3: Energy Fluctuations
+country_event = {
+	id = cosmic_archive.42
+	title = "cosmic_archive.42.name"
+	desc = "cosmic_archive.42.desc"
+	picture = GFX_evt_energy_signature
+	
+	is_triggered_only = yes
+	
+	trigger = {
+		has_country_flag = cosmic_archive_echoes_begin
+	}
+	
+	option = {
+		name = cosmic_archive.42.a
+		add_resource = { energy = -50 }
+		custom_tooltip = cosmic_archive_minor_fluctuation_tooltip
+		hidden_effect = {
+			country_event = { id = cosmic_archive.43 days = 60 random = 30 }
+		}
+	}
+}
+
+# Phase 3: Troubling Dreams
+country_event = {
+	id = cosmic_archive.43
+	title = "cosmic_archive.43.name"
+	desc = "cosmic_archive.43.desc"
+	picture = GFX_evt_psionics
+	
+	is_triggered_only = yes
+	
+	trigger = {
+		has_country_flag = cosmic_archive_echoes_begin
+	}
+	
+	option = {
+		name = cosmic_archive.43.a
+		custom_tooltip = cosmic_archive_dreams_tooltip
+		random_owned_pop = {
+			limit = { 
+				is_enslaved = no
+				NOT = { has_trait = trait_mechanical }
+			}
+			kill_pop = yes
+		}
+		hidden_effect = {
+			country_event = { id = cosmic_archive.44 days = 45 random = 15 }
+		}
+	}
+}
+
+# Phase 3: Final Warning
+country_event = {
+	id = cosmic_archive.44
+	title = "cosmic_archive.44.name"
+	desc = "cosmic_archive.44.desc"
+	picture = GFX_evt_cybernetics
+	
+	is_triggered_only = yes
+	
+	trigger = {
+		has_country_flag = cosmic_archive_echoes_begin
+	}
+	
+	option = {
+		name = cosmic_archive.44.a
+		custom_tooltip = cosmic_archive_final_warning_tooltip
+		hidden_effect = {
+			if = {
+				limit = { has_country_flag = cosmic_archive_risky_path }
+				# The guardian awakens faster if Risk It All path was chosen
+				country_event = { id = cosmic_archive.50 days = 30 random = 10 }
+			}
+			else = {
+				country_event = { id = cosmic_archive.50 days = 60 random = 30 }
+			}
+		}
+	}
+	
+	option = {
+		name = cosmic_archive.44.b
+		custom_tooltip = cosmic_archive_attempt_shutdown_tooltip
+		hidden_effect = {
+			random_list = {
+				40 = { # 40% chance to succeed and avoid crisis
+					country_event = { id = cosmic_archive.46 days = 10 random = 5 }
+				}
+				60 = { # 60% chance to fail and trigger guardian immediately
+					country_event = { id = cosmic_archive.50 days = 5 }
+				}
+			}
+		}
+	}
+}
+
+# Phase 3: Planet Unrest Event
+planet_event = {
+	id = cosmic_archive.45
+	title = "cosmic_archive.45.name"
+	desc = "cosmic_archive.45.desc"
+	picture = GFX_evt_ship_explosion
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		add_modifier = {
+			modifier = "cosmic_archive_disruption"
+			days = 180
+		}
+	}
+	
+	option = {
+		name = cosmic_archive.45.a
+		custom_tooltip = cosmic_archive_unrest_tooltip
+		add_stability = -10
+		hidden_effect = {
+			owner = { country_event = { id = cosmic_archive.42 days = 30 random = 15 } }
+		}
+	}
+}
+
+# Phase 3: Successful Shutdown
+country_event = {
+	id = cosmic_archive.46
+	title = "cosmic_archive.46.name"
+	desc = "cosmic_archive.46.desc"
+	picture = GFX_evt_psionics
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		remove_country_flag = cosmic_archive_echoes_begin
+		remove_country_flag = cosmic_archive_risky_path
+	}
+	
+	option = {
+		name = cosmic_archive.46.a
+		custom_tooltip = cosmic_archive_crisis_averted_tooltip
+		random_owned_planet = {
+			limit = { 
+				OR = {
+					has_planet_flag = cosmic_archive_risky_protocols
+					has_planet_flag = cosmic_archive_enhanced_tech
+				}
+			}
+			set_planet_flag = cosmic_archive_dormant
+			# Change deposit type to dormant
+		}
+	}
+}
+
+# Phase 3: Guardian Awakens - Mid-game Crisis Begins
+country_event = {
+	id = cosmic_archive.50
+	title = "cosmic_archive.50.name"
+	desc = "cosmic_archive.50.desc"
+	picture = GFX_evt_psionics
+	diplomatic = yes
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		set_country_flag = cosmic_archive_guardian_awakened
+		remove_country_flag = cosmic_archive_echoes_begin
+		
+		# Notify all other countries that have Cosmic Archives
+		every_country = {
+			limit = {
+				NOT = { is_same_value = root }
+				OR = {
+					has_country_flag = cosmic_archive_investigated
+					has_country_flag = cosmic_archive_risky_path
+					has_country_flag = cosmic_archive_phase3_pending
+				}
+			}
+			country_event = { id = cosmic_archive.51 days = 30 random = 10 }
+		}
+	}
+	
+	option = {
+		name = cosmic_archive.50.a
+		custom_tooltip = cosmic_archive_guardian_awakened_tooltip
+		
+		# Apply the Guardian's Wrath empire-wide modifier
+		add_modifier = {
+			modifier = "cosmic_archives_guardian_wrath"
+			days = 1800 # 5 years
+		}
+		
+		# Mark all archive planets with the guardian's presence
+		every_owned_planet = {
+			limit = {
+				OR = {
+					has_planet_flag = cosmic_archive_first_signal
+					has_planet_flag = cosmic_archive_enhanced_tech
+					has_planet_flag = cosmic_archive_stabilized
+					has_planet_flag = cosmic_archive_risky_protocols
+				}
+			}
+			set_planet_flag = cosmic_archive_guardian_present
+			
+			# Create unrest on these planets
+			add_modifier = {
+				modifier = "cosmic_archive_planetary_disruption"
+				days = 1800 # 5 years
+			}
+		}
+		
+		# Set mid-game crisis effects
+		hidden_effect = {
+			# Trigger the Guardian entity spawning
+			country_event = { id = cosmic_archive_crisis.10 days = 5 }
+			
+			# Set up follow-up events (these would be implemented in future updates)
+			country_event = { id = cosmic_archive.52 days = 180 random = 30 }
+		}
+	}
+}
+
+# Notification for other empires about the Guardian awakening
+country_event = {
+	id = cosmic_archive.51
+	title = "cosmic_archive.51.name"
+	desc = "cosmic_archive.51.desc"
+	picture = GFX_evt_psionics
+	diplomatic = yes
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		set_country_flag = cosmic_archive_guardian_aware
+	}
+	
+	option = {
+		name = cosmic_archive.51.a
+		custom_tooltip = cosmic_archive_guardian_awareness_tooltip
+		
+		# Apply a milder version of the effect to empires that weren't directly responsible
+		add_modifier = {
+			modifier = "cosmic_archives_guardian_presence"
+			days = 900 # 2.5 years
+		}
+	}
+}
+
+# Follow-up event for the Guardian's test (placeholder for future implementation)
+country_event = {
+	id = cosmic_archive.52
+	title = "cosmic_archive.52.name"
+	desc = "cosmic_archive.52.desc"
+	picture = GFX_evt_psionics
+	diplomatic = yes
+	
+	is_triggered_only = yes
+	
+	trigger = {
+		has_country_flag = cosmic_archive_guardian_awakened
+	}
+	
+	option = {
+		name = cosmic_archive.52.a
+		custom_tooltip = cosmic_archive_guardian_test_tooltip
+		
+		# Placeholder for future implementation of mid-game crisis progression
+		# This would include choices and events that determine whether players
+		# can prove their civilization's worthiness to the Guardian
+	}
+}
+
+# Protocol Activation Event
+country_event = {
+	id = cosmic_archive.20
+	title = "cosmic_archive.20.name" 
+	desc = "cosmic_archive.20.desc"
+	picture = GFX_evt_unspeakable_horror
+	location = event_target:protocol_incident_planet
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		event_target:protocol_incident_planet = {
+			add_modifier = {
+				modifier = "cosmic_archive_disruption"
+				days = 360
+			}
+		}
+	}
+	
+	option = {
+		name = cosmic_archive.20.a
+		custom_tooltip = cosmic_archive_contain_incident_tooltip
+		hidden_effect = {
+			random_list = {
+				60 = {
+					country_event = { id = cosmic_archive.21 days = 30 }
+				}
+				40 = {
+					country_event = { id = cosmic_archive.22 days = 30 }
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = cosmic_archive.20.b
+		custom_tooltip = cosmic_archive_shutdown_tooltip
+		hidden_effect = {
+			country_event = { id = cosmic_archive.22 days = 5 }
+		}
+	}
+}
+
+country_event = {
+	id = cosmic_archive.21
+	title = "cosmic_archive.21.name"
+	desc = "cosmic_archive.21.desc"
+	picture = GFX_evt_psionics
+	location = event_target:protocol_incident_planet
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		event_target:protocol_incident_planet = {
+			remove_modifier = "cosmic_archive_disruption"
+		}
+	}
+	
+	option = {
+		name = cosmic_archive.21.a
+		custom_tooltip = cosmic_archive_resume_research_tooltip
+		hidden_effect = {
+			country_event = { id = cosmic_archive.12 days = 60 random = 30 }
+		}
+	}
+}
+
+country_event = {
+	id = cosmic_archive.22
+	title = "cosmic_archive.22.name"
+	desc = "cosmic_archive.22.desc"
+	picture = GFX_evt_ship_explosion
+	location = event_target:protocol_incident_planet
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		event_target:protocol_incident_planet = {
+			remove_modifier = "cosmic_archive_disruption"
+			# Change deposit type to damaged
+		}
+	}
+	
+	option = {
+		name = cosmic_archive.22.a
+		custom_tooltip = cosmic_archive_forced_abandon_tooltip
+		add_resource = {
+			energy = 150
+			minerals = 300
+			alloys = 75
+		}
+	}
+}
+
+# Successful Culmination Event - Full Archive Unlock
+country_event = {
+	id = cosmic_archive.13
+	title = "cosmic_archive.13.name"
+	desc = "cosmic_archive.13.desc"
+	picture = GFX_evt_psionics
+	location = capital_scope
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		remove_country_flag = cosmic_archive_risky_path
+	}
+	
+	option = {
+		name = cosmic_archive.13.a
+		custom_tooltip = cosmic_archive_full_activation_tooltip
+		add_modifier = {
+			modifier = "cosmic_archive_enlightenment"
+			days = -1
+		}
+	}
+}

@@ -1,0 +1,337 @@
+# Cosmic Archive Technologies
+# This file contains the technology rewards from the Cosmic Archive with balanced benefits
+
+# Base technology from Archive investigation
+tech_cosmic_archive_insights = {
+	cost = @tier3cost2
+	area = physics
+	tier = 3
+	category = { particles }
+	is_rare = yes
+	weight = 0
+	
+	# Only appears after investigating an archive
+	potential = {
+		has_country_flag = found_cosmic_archive
+	}
+	
+	# Moderate research boost
+	modifier = {
+		country_physics_tech_research_speed_mult = 0.05
+		country_society_tech_research_speed_mult = 0.05
+		country_engineering_tech_research_speed_mult = 0.05
+	}
+	
+	weight_modifier = {
+		factor = 0
+		modifier = {
+			factor = 2
+			has_country_flag = found_cosmic_archive
+		}
+	}
+	
+	ai_weight = {
+		factor = 3
+		modifier = {
+			factor = 2
+			research_leader = {
+				area = physics
+				has_trait = "leader_trait_expertise_particles"
+			}
+		}
+	}
+}
+
+# Enhanced Technologies path reward (better but focused research)
+tech_cosmic_archive_enhanced_protocols = {
+	cost = @tier4cost1
+	area = physics
+	tier = 4
+	category = { particles }
+	prerequisites = { "tech_cosmic_archive_insights" }
+	is_rare = yes
+	weight = 0
+	
+	# Only appears after enhanced tech path
+	potential = {
+		has_country_flag = archive_enhanced_tech_path
+	}
+	
+	# Focused on physics and engineering, stronger bonuses
+	modifier = {
+		country_physics_tech_research_speed_mult = 0.10
+		country_engineering_tech_research_speed_mult = 0.10
+		planet_researchers_physics_produces_mult = 0.15
+		planet_researchers_engineering_produces_mult = 0.15
+	}
+	
+	weight_modifier = {
+		factor = 0
+		modifier = {
+			factor = 5
+			has_country_flag = archive_enhanced_tech_path
+		}
+	}
+	
+	ai_weight = {
+		factor = 5
+	}
+}
+
+# Stabilized path reward (balanced but modest boost)
+tech_cosmic_archive_stabilization = {
+	cost = @tier3cost3
+	area = society
+	tier = 3
+	category = { statecraft }
+	prerequisites = { "tech_cosmic_archive_insights" }
+	is_rare = yes
+	weight = 0
+	
+	# Only appears after stabilized path
+	potential = {
+		has_country_flag = archive_stabilized_path
+	}
+	
+	# Balanced bonuses across all areas plus stability
+	modifier = {
+		country_physics_tech_research_speed_mult = 0.05
+		country_society_tech_research_speed_mult = 0.05
+		country_engineering_tech_research_speed_mult = 0.05
+		planet_stability_add = 5
+		pop_happiness = 0.05
+	}
+	
+	weight_modifier = {
+		factor = 0
+		modifier = {
+			factor = 5
+			has_country_flag = archive_stabilized_path
+		}
+	}
+	
+	ai_weight = {
+		factor = 5
+	}
+}
+
+# Risk It All path success reward (powerful but specialized)
+tech_cosmic_archive_full_activation = {
+	cost = @tier5cost1
+	area = physics
+	tier = 5
+	category = { particles }
+	prerequisites = { "tech_cosmic_archive_insights" }
+	is_rare = yes
+	weight = 0
+	
+	# Only appears after risk path success
+	potential = {
+		has_country_flag = archive_risk_path_success
+	}
+	
+	# Powerful research bonuses plus rare resources
+	modifier = {
+		country_physics_tech_research_speed_mult = 0.15
+		country_society_tech_research_speed_mult = 0.10
+		country_engineering_tech_research_speed_mult = 0.15
+		country_rare_tech_research_speed_mult = 0.10
+		planet_researchers_produces_mult = 0.10
+		planet_researchers_physics_produces_mult = 0.10
+		planet_exotic_gases_produces_mult = 0.10
+		planet_rare_crystals_produces_mult = 0.10
+	}
+	
+	# Unlocks additional research options
+	prereqfor_desc = {
+		ship = {
+			title = "TECH_UNLOCK_ARCHIVE_WEAPON_TITLE"
+			desc = "TECH_UNLOCK_ARCHIVE_WEAPON_DESC"
+		}
+	}
+	
+	weight_modifier = {
+		factor = 0
+		modifier = {
+			factor = 10
+			has_country_flag = archive_risk_path_success
+		}
+	}
+	
+	ai_weight = {
+		factor = 10
+	}
+}
+
+# Guardian defeat technology - combat focused
+tech_cosmic_archive_manipulation = {
+	cost = @tier5cost2
+	area = physics
+	tier = 5
+	category = { field_manipulation }
+	prerequisites = { "tech_battleships" }
+	is_rare = yes
+	weight = 0
+	
+	# Only appears after defeating the guardian
+	potential = {
+		has_country_flag = archive_guardian_defeated
+	}
+	
+	# Combat-focused buffs and resource production
+	modifier = {
+		ship_weapon_damage = 0.15
+		ship_shield_mult = 0.15
+		ship_hull_add = 500
+		country_physics_tech_research_speed_mult = 0.10
+	}
+	
+	# Unlocks "Archive Beam" weapon
+	prereqfor_desc = {
+		ship = {
+			title = "TECH_UNLOCK_ARCHIVE_BEAM_TITLE"
+			desc = "TECH_UNLOCK_ARCHIVE_BEAM_DESC"
+		}
+	}
+	
+	weight_modifier = {
+		factor = 0
+		modifier = {
+			factor = 10
+			has_country_flag = archive_guardian_defeated
+		}
+	}
+	
+	ai_weight = {
+		factor = 10
+	}
+}
+
+# Guardian pacification technology - unity and diplomacy focused
+tech_cosmic_archive_harmonization = {
+	cost = @tier5cost2
+	area = society
+	tier = 5
+	category = { statecraft }
+	prerequisites = { "tech_colonial_centralization" }
+	is_rare = yes
+	weight = 0
+	
+	# Only appears after pacifying the guardian
+	potential = {
+		has_country_flag = archive_guardian_pacified
+	}
+	
+	# Diplomatic and unity bonuses
+	modifier = {
+		country_unity_produces_mult = 0.15
+		planet_stability_add = 5
+		pop_happiness = 0.10
+		diplo_weight_mult = 0.15
+		country_society_tech_research_speed_mult = 0.10
+	}
+	
+	# Unlocks "Archive Harmony" edict
+	prereqfor_desc = {
+		ship = {
+			title = "TECH_UNLOCK_ARCHIVE_HARMONY_TITLE"
+			desc = "TECH_UNLOCK_ARCHIVE_HARMONY_DESC"
+		}
+	}
+	
+	weight_modifier = {
+		factor = 0
+		modifier = {
+			factor = 10
+			has_country_flag = archive_guardian_pacified
+		}
+	}
+	
+	ai_weight = {
+		factor = 10
+	}
+}
+
+# Emergency containment technology - fallback option
+tech_cosmic_archive_containment = {
+	cost = @tier4cost1
+	area = engineering
+	tier = 4
+	category = { materials }
+	prerequisites = { "tech_cosmic_archive_insights" }
+	is_rare = yes
+	weight = 0
+	
+	# Only appears after emergency containment
+	potential = {
+		has_country_flag = archive_emergency_containment
+	}
+	
+	# Recovery bonuses
+	modifier = {
+		planet_stability_add = 8
+		pop_happiness = 0.05
+		country_engineering_tech_research_speed_mult = 0.08
+		ship_hull_regen_add_perc = 0.5
+	}
+	
+	weight_modifier = {
+		factor = 0
+		modifier = {
+			factor = 5
+			has_country_flag = archive_emergency_containment
+		}
+	}
+	
+	ai_weight = {
+		factor = 5
+	}
+}
+
+# Technology from both approaches to the guardian
+tech_cosmic_archive_mastery = {
+	cost = @tier5cost3
+	area = physics
+	tier = 5
+	category = { particles }
+	prerequisites = { 
+		"tech_cosmic_archive_manipulation"
+		"tech_cosmic_archive_harmonization"
+	}
+	is_rare = yes
+	weight = 0
+	
+	# Only appears after obtaining both previous tech paths
+	potential = {
+		OR = {
+			has_technology = tech_cosmic_archive_manipulation
+			has_technology = tech_cosmic_archive_harmonization
+		}
+	}
+	
+	# Comprehensive benefits
+	modifier = {
+		all_technology_research_speed = 0.08
+		planet_jobs_produces_mult = 0.05
+		ship_weapon_damage = 0.08
+		ship_hull_add = 300
+		ship_shield_mult = 0.08
+		country_naval_cap_mult = 0.10
+		starbase_shipyard_build_speed_mult = 0.15
+	}
+	
+	weight_modifier = {
+		factor = 0
+		modifier = {
+			factor = 10
+			OR = {
+				has_technology = tech_cosmic_archive_manipulation
+				has_technology = tech_cosmic_archive_harmonization
+			}
+		}
+	}
+	
+	ai_weight = {
+		factor = 10
+	}
+}
